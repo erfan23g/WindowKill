@@ -2,18 +2,17 @@ package view;
 
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicPanelUI;
 
 import java.awt.*;
-import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.Random;
 
 import static controller.Constants.INITIAL_PANEL_SIZE;
-import static controller.Constants.MINIMUM_PANEL_SIZE;
 
 public final class GamePanel extends JPanel {
+
+
     private static GamePanel INSTANCE;
     private final Random rng = new Random();
 
@@ -22,23 +21,28 @@ public final class GamePanel extends JPanel {
         setBackground(Color.black);
         setSize(INITIAL_PANEL_SIZE);
         setLocationToCenter(GameFrame.getINSTANCE());
+
         GameFrame.getINSTANCE().add(this);
+
 //        Collidable.collidables.add(this);
     }
+
 
     public void setLocationToCenter(GameFrame glassFrame) {
         setLocation(glassFrame.getWidth() / 2 - getWidth() / 2, glassFrame.getHeight() / 2 - getHeight() / 2);
     }
 
-//    @Override
-//    protected void paintComponent(Graphics g) {
-//        for (BallView ballView: BallView.ballViews){
-//            g.setColor(new Color(rng.nextInt(100,200),rng.nextInt(100,200),rng.nextInt(100,200)));
-//            Point2D location=ballView.getCurrentLocation();
-//            double radius=ballView.getCurrentRadius();
-//            g.fillOval((int) (location.getX()-radius), (int) (location.getY()-radius), (int) (2 *radius), (int) (2*radius));
-//        }
-//    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        for (EntityView entityView : EntityView.entityViews){
+            if (entityView instanceof EpsilonView) {
+                g.setColor(Color.red);
+                g.drawOval((int) entityView.getLocation().getX(), (int) entityView.getLocation().getY(), (int) ((EpsilonView) entityView).radius, (int) ((EpsilonView) entityView).radius);
+            }
+        }
+    }
 
     public static GamePanel getINSTANCE() {
         if (INSTANCE == null) INSTANCE = new GamePanel();
@@ -65,4 +69,5 @@ public final class GamePanel extends JPanel {
 //        return new ArrayList<>(List.of(new Point2D.Double(getX(),getY()),new Point2D.Double(getX()+getWidth(),getY()),
 //                new Point2D.Double(getX()+getWidth(),getY()+getHeight()),new Point2D.Double(getX(),getY()+getHeight())));
 //    }
+
 }
