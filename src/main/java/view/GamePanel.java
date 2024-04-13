@@ -1,13 +1,20 @@
 package view;
 
 
+import controller.Constants;
+import controller.Controller;
+import controller.Update;
+
 import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Random;
 
+import static controller.Constants.BULLET_RADIUS;
 import static controller.Constants.INITIAL_PANEL_SIZE;
 
 public final class GamePanel extends JPanel {
@@ -21,10 +28,33 @@ public final class GamePanel extends JPanel {
         setBackground(Color.black);
         setSize(INITIAL_PANEL_SIZE);
         setLocationToCenter(GameFrame.getINSTANCE());
+        this.addMouseListener(new MouseListener() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                Controller.fireBullet(e.getPoint());
+            }
 
+            @Override
+            public void mousePressed(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseReleased(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseExited(MouseEvent e) {
+
+            }
+        });
         GameFrame.getINSTANCE().add(this);
-
-//        Collidable.collidables.add(this);
     }
 
 
@@ -39,8 +69,12 @@ public final class GamePanel extends JPanel {
         for (EntityView entityView : EntityView.entityViews){
             if (entityView instanceof EpsilonView) {
                 g.setColor(Color.red);
-                g.drawOval((int) entityView.getLocation().getX(), (int) entityView.getLocation().getY(), (int) ((EpsilonView) entityView).radius, (int) ((EpsilonView) entityView).radius);
+                g.drawOval((int) (entityView.getLocation().getX() - ((EpsilonView) entityView).radius), (int) (entityView.getLocation().getY() - ((EpsilonView) entityView).radius), (int) (((EpsilonView) entityView).radius * 2), (int) (((EpsilonView) entityView).radius) * 2);
             }
+        }
+        for (BulletView bulletView : BulletView.bulletViews) {
+            g.setColor(Color.red);
+            g.drawOval((int) (bulletView.getLocation().getX() - BULLET_RADIUS), (int) (bulletView.getLocation().getY() - BULLET_RADIUS), (int) ((BULLET_RADIUS * 2)), (int) (BULLET_RADIUS * 2));
         }
     }
 

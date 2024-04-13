@@ -15,8 +15,10 @@ public class Constants {
     public static final int WIDTH_REDUCTION_PER_UPDATE = 3;
     public static final int INITIAL_HEIGHT_REDUCTION_PER_UPDATE = 6;
     public static final int HEIGHT_REDUCTION_PER_UPDATE = 2;
-    public static final double EPSILON_SPEED = 0.5;
-    public static final double EPSILON_RADIUS = 25;
+    public static final double EPSILON_SPEED = 1;
+    public static final double BULLET_SPEED = 4;
+    public static final double EPSILON_RADIUS = 20;
+    public static final double BULLET_RADIUS = 2;
 
 
 }

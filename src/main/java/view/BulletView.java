@@ -1,28 +1,17 @@
 package view;
 
-import model.Entity;
+import model.Bullet;
 
-import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
-import java.util.UUID;
 
-import static model.Entity.entities;
-
-public abstract class EntityView {
-    public static ArrayList<EntityView> entityViews = new ArrayList<>();
-
+public class BulletView {
+    public static ArrayList<BulletView> bulletViews = new ArrayList<>();
+    private final String id;
     private Point2D location = new Point2D.Double(0, 0);
 
     public String getId() {
         return id;
-    }
-
-    private final String id;
-
-    public EntityView(String id) {
-        this.id = id;
-        entityViews.add(this);
     }
 
     public Point2D getLocation() {
@@ -33,5 +22,8 @@ public abstract class EntityView {
         this.location = location;
     }
 
-
+    public BulletView(String id) {
+        this.id = id;
+        bulletViews.add(this);
+    }
 }

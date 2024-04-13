@@ -1,17 +1,16 @@
 package controller;
 
+import model.Bullet;
 import model.Entity;
 import model.Epsilon;
 import model.movement.Direction;
-import view.EntityView;
-import view.EpsilonView;
-import view.GameFrame;
-import view.GamePanel;
+import view.*;
 
 import javax.swing.*;
 
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
@@ -36,6 +35,9 @@ public class Update {
         for (EntityView entityView : EpsilonView.entityViews) {
             entityView.setLocation(Controller.findEntityLocation(entityView.getId()));
         }
+        for (BulletView bulletView : BulletView.bulletViews) {
+            bulletView.setLocation(Controller.findBulletLocation(bulletView.getId()));
+        }
         GamePanel.getINSTANCE().repaint();
     }
 
@@ -51,6 +53,9 @@ public class Update {
         }
         if (GameFrame.getINSTANCE().isD()) {
             Epsilon.getINSTANCE().move(Direction.RIGHT, EPSILON_SPEED);
+        }
+        for (Bullet bullet : Bullet.bullets){
+            bullet.move();
         }
     }
 

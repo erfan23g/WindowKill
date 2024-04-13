@@ -10,10 +10,4 @@ public class EpsilonView extends EntityView{
         super(id);
     }
 
-    @Override
-    public void paint(Graphics g) {
-        g.setColor(Color.red);
-        g.drawOval((int) getLocation().getX(), (int) getLocation().getY(), (int) radius, (int) radius);
-        g.fillOval((int) getLocation().getX(), (int) getLocation().getY(), (int) radius, (int) radius);
-    }
 }

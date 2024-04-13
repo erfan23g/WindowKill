@@ -1,7 +1,9 @@
 package controller;
 
+import model.Bullet;
 import model.Entity;
 import model.Epsilon;
+import view.BulletView;
 import view.EntityView;
 import view.EpsilonView;
 
@@ -13,7 +15,8 @@ public class Controller {
             new EpsilonView(id);
         }
     }
-    public static Entity findEntity (String id) {
+
+    public static Entity findEntity(String id) {
         for (Entity entity : Entity.entities) {
             if (entity.getId().equals(id)) {
                 return entity;
@@ -21,9 +24,32 @@ public class Controller {
         }
         return null;
     }
-    public static Point2D findEntityLocation (String id) {
+
+    public static Point2D findEntityLocation(String id) {
         Entity entity = findEntity(id);
         assert entity != null;
         return entity.getLocation();
+    }
+
+    public static void createBulletView(String id) {
+        new BulletView(id);
+    }
+
+    public static Bullet findBullet(String id) {
+        for (Bullet bullet : Bullet.bullets) {
+            if (bullet.getId().equals(id)) {
+                return bullet;
+            }
+        }
+        return null;
+    }
+    public static Point2D findBulletLocation (String id) {
+        Bullet bullet = findBullet(id);
+        assert bullet != null;
+        return bullet.getLocation();
+    }
+    public static void fireBullet(Point2D point){
+        double angle = Math.atan2(point.getY() - Epsilon.getINSTANCE().getLocation().getY(), point.getX() - Epsilon.getINSTANCE().getLocation().getX());
+        new Bullet(Epsilon.getINSTANCE().getLocation(), angle);
     }
 }
