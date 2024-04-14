@@ -3,6 +3,7 @@ package org.example;
 import controller.Update;
 import model.Entity;
 import model.Epsilon;
+import model.GamePanelModel;
 import view.GameFrame;
 import view.GamePanel;
 
@@ -14,6 +15,7 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             GameFrame.getINSTANCE();
             GamePanel.getINSTANCE();
+            GamePanelModel.getINSTANCE();
             Epsilon.getINSTANCE();
             new Update();
         });

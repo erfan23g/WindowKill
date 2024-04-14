@@ -2,6 +2,8 @@ package view;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
@@ -10,17 +12,22 @@ import static controller.Constants.GAME_FRAME_SIZE;
 
 public class GameFrame extends JFrame implements KeyListener {
     private static GameFrame INSTANCE;
-    private boolean w, s, a, d;
+    public static boolean w, s, a, d;
 
 
     private GameFrame() throws HeadlessException {
         setUndecorated(true);
         setBackground(new Color(0, 0, 0, 0));
         setSize(GAME_FRAME_SIZE);
+        setFocusable(true);
+//        requestFocus();
+
         this.addKeyListener(this);
         setLocationRelativeTo(null);
+
         setVisible(true);
         setLayout(null);
+
     }
 
     public static GameFrame getINSTANCE() {
@@ -95,4 +102,5 @@ public class GameFrame extends JFrame implements KeyListener {
             d = false;
         }
     }
+
 }

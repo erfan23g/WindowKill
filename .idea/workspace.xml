@@ -4,16 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2175a850-78b1-4066-86a5-a04006f6e081" name="Changes" comment="Epsilon movement with keys implemented">
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Bullet.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/BulletView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/gradle.xml" afterDir="false" />
+    <list default="true" id="2175a850-78b1-4066-86a5-a04006f6e081" name="Changes" comment="Shooting mechanism added">
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/GamePanelModel.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/model/collision/Collidable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/Update.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Update.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/EntityView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/EntityView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/EpsilonView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/EpsilonView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/GameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GameFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GamePanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -30,6 +28,7 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="package-info" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -90,12 +89,21 @@
       <option name="project" value="LOCAL" />
       <updated>1713011674036</updated>
     </task>
-    <option name="localTasksCounter" value="3" />
+    <task id="LOCAL-00003" summary="Shooting mechanism added">
+      <option name="closed" value="true" />
+      <created>1713029679153</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1713029679153</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="GameFrame created" />
     <MESSAGE value="Epsilon movement with keys implemented" />
-    <option name="LAST_COMMIT_MESSAGE" value="Epsilon movement with keys implemented" />
+    <MESSAGE value="Shooting mechanism added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Shooting mechanism added" />
   </component>
 </project>

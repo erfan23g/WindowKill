@@ -4,6 +4,7 @@ package view;
 import controller.Constants;
 import controller.Controller;
 import controller.Update;
+import model.GamePanelModel;
 
 import javax.swing.*;
 
@@ -14,8 +15,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Random;
 
-import static controller.Constants.BULLET_RADIUS;
-import static controller.Constants.INITIAL_PANEL_SIZE;
+import static controller.Constants.*;
 
 public final class GamePanel extends JPanel {
 
@@ -27,7 +27,9 @@ public final class GamePanel extends JPanel {
         setBorder(BorderFactory.createLineBorder(Color.green, 3));
         setBackground(Color.black);
         setSize(INITIAL_PANEL_SIZE);
-        setLocationToCenter(GameFrame.getINSTANCE());
+        setLocationToCenter();
+//        setFocusable(true);
+//        requestFocus();
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -58,8 +60,8 @@ public final class GamePanel extends JPanel {
     }
 
 
-    public void setLocationToCenter(GameFrame glassFrame) {
-        setLocation(glassFrame.getWidth() / 2 - getWidth() / 2, glassFrame.getHeight() / 2 - getHeight() / 2);
+    public void setLocationToCenter() {
+        setLocation((int) (GameFrame.getINSTANCE().getWidth() / 2 - GamePanelModel.getINSTANCE().getSize().getWidth() / 2), (int) (GameFrame.getINSTANCE().getHeight() / 2 - GamePanelModel.getINSTANCE().getSize().getHeight() / 2));
     }
 
 
