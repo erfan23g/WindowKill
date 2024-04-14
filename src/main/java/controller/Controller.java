@@ -43,6 +43,14 @@ public class Controller {
         }
         return null;
     }
+    public static BulletView findBulletView(String id) {
+        for (BulletView bulletView : BulletView.bulletViews) {
+            if (bulletView.getId().equals(id)) {
+                return bulletView;
+            }
+        }
+        return null;
+    }
     public static Point2D findBulletLocation (String id) {
         Bullet bullet = findBullet(id);
         assert bullet != null;

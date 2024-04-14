@@ -1,5 +1,6 @@
 package model;
 
+import model.collision.Collidable;
 import view.GameFrame;
 import view.GamePanel;
 
@@ -9,7 +10,7 @@ import java.awt.geom.Point2D;
 import static controller.Constants.INITIAL_PANEL_SIZE;
 import static controller.Constants.PAGE_CENTER;
 
-public class GamePanelModel {
+public class GamePanelModel implements Collidable {
     private Point2D location;
     private Dimension size;
 

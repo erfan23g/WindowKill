@@ -75,8 +75,10 @@ public final class GamePanel extends JPanel {
             }
         }
         for (BulletView bulletView : BulletView.bulletViews) {
-            g.setColor(Color.red);
-            g.drawOval((int) (bulletView.getLocation().getX() - BULLET_RADIUS), (int) (bulletView.getLocation().getY() - BULLET_RADIUS), (int) ((BULLET_RADIUS * 2)), (int) (BULLET_RADIUS * 2));
+            if (bulletView.isActive()) {
+                g.setColor(Color.red);
+                g.drawOval((int) (bulletView.getLocation().getX() - BULLET_RADIUS), (int) (bulletView.getLocation().getY() - BULLET_RADIUS), (int) ((BULLET_RADIUS * 2)), (int) (BULLET_RADIUS * 2));
+            }
         }
     }
 

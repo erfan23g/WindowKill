@@ -17,10 +17,10 @@ public class Constants {
     public static final double FRAME_UPDATE_TIME = (double) TimeUnit.SECONDS.toMillis(1) / FPS;
     public static final int UPS = 200;
     public static final double MODEL_UPDATE_TIME = (double) TimeUnit.SECONDS.toMillis(1) / UPS;
-    public static final int INITIAL_WIDTH_REDUCTION_PER_UPDATE = 9;
-    public static final int WIDTH_REDUCTION_PER_UPDATE = 3;
-    public static final int INITIAL_HEIGHT_REDUCTION_PER_UPDATE = 6;
-    public static final int HEIGHT_REDUCTION_PER_UPDATE = 2;
+    public static final double INITIAL_WIDTH_REDUCTION_PER_UPDATE = 1.2;
+    public static final double WIDTH_REDUCTION_PER_UPDATE = 0.3;
+    public static final double INITIAL_HEIGHT_REDUCTION_PER_UPDATE = 0.8;
+    public static final double HEIGHT_REDUCTION_PER_UPDATE = 0.2;
     public static final double EPSILON_SPEED = 1;
     public static final double BULLET_SPEED = 4;
     public static final double EPSILON_RADIUS = 20;

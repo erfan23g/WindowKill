@@ -1,5 +1,6 @@
 package model;
 
+import model.collision.Collidable;
 import model.movement.Direction;
 import view.GamePanel;
 

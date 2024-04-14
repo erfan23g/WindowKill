@@ -1,6 +1,7 @@
 package model;
 
 import controller.Controller;
+import model.collision.Collidable;
 
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -9,11 +10,21 @@ import java.util.UUID;
 
 import static controller.Constants.BULLET_SPEED;
 
-public class Bullet {
+public class Bullet implements Collidable {
     public static ArrayList<Bullet> bullets = new ArrayList<>();
     private Point2D location;
     private final String id;
     private double angle;
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
+    }
+
+    private boolean isActive;
 
     public Point2D getLocation() {
         return location;
@@ -31,6 +42,7 @@ public class Bullet {
         this.location = location;
         this.angle = angle;
         this.id = UUID.randomUUID().toString();
+        this.isActive = true;
         bullets.add(this);
         Controller.createBulletView(id);
     }

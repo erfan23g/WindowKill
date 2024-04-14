@@ -1,6 +1,7 @@
 package model;
 
 import controller.Controller;
+import model.collision.Collidable;
 import model.movement.Direction;
 
 import java.awt.*;
@@ -8,7 +9,7 @@ import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.UUID;
 
-public abstract class Entity {
+public abstract class Entity implements Collidable {
     public static ArrayList<Entity> entities = new ArrayList<>();
     private Point2D location;
     public String getId() {
