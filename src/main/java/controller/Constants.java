@@ -10,6 +10,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Constants {
     public static final Dimension GAME_FRAME_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    public static final Point2D EPSILON_STARTING_LOCATION = new Point2D.Double(Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2, Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2);
     public static final Dimension INITIAL_PANEL_SIZE = new Dimension((int) (GAME_FRAME_SIZE.getWidth() / 2), (int) (GAME_FRAME_SIZE.getHeight() / 2));
     public static final Dimension MINIMUM_PANEL_SIZE = new Dimension((int) (GAME_FRAME_SIZE.getWidth() / 4), (int) (GAME_FRAME_SIZE.getHeight() / 4));
     public static final Point2D PAGE_CENTER = new Point2D.Double((GameFrame.getINSTANCE().getWidth() / 2 - GamePanelModel.getINSTANCE().getSize().getWidth() / 2), (GameFrame.getINSTANCE().getHeight() / 2 - GamePanelModel.getINSTANCE().getSize().getHeight() / 2));
@@ -21,10 +22,12 @@ public class Constants {
     public static final double WIDTH_REDUCTION_PER_UPDATE = 0.3;
     public static final double INITIAL_HEIGHT_REDUCTION_PER_UPDATE = 0.8;
     public static final double HEIGHT_REDUCTION_PER_UPDATE = 0.2;
-    public static final double EPSILON_SPEED = 1;
-    public static final double BULLET_SPEED = 4;
+    public static final double EPSILON_SPEED = (double) 200 / UPS;
+    public static final double EPSILON_ACCELERATION = (double) 1 / UPS;
+    public static final double BULLET_SPEED = (double) 800 / UPS;
     public static final double EPSILON_RADIUS = 20;
     public static final double BULLET_RADIUS = 2;
-
+    public static final double EXPANSION_SPEED = 10;
+    public static final double EXPANSION_SPEED2 = 1;
 
 }

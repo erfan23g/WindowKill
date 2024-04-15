@@ -3,6 +3,7 @@ package controller;
 import model.Bullet;
 import model.Entity;
 import model.Epsilon;
+import model.GamePanelModel;
 import view.BulletView;
 import view.EntityView;
 import view.EpsilonView;
@@ -57,7 +58,7 @@ public class Controller {
         return bullet.getLocation();
     }
     public static void fireBullet(Point2D point){
-        double angle = Math.atan2(point.getY() - Epsilon.getINSTANCE().getLocation().getY(), point.getX() - Epsilon.getINSTANCE().getLocation().getX());
+        double angle = Math.atan2(point.getY() - Utils.relativeLocation(Epsilon.getINSTANCE().getLocation(), GamePanelModel.getINSTANCE().getLocation()).getY(), point.getX() - Utils.relativeLocation(Epsilon.getINSTANCE().getLocation(), GamePanelModel.getINSTANCE().getLocation()).getX());
         new Bullet(Epsilon.getINSTANCE().getLocation(), angle);
     }
 }

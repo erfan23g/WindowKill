@@ -20,6 +20,7 @@ import static controller.Constants.*;
 import static controller.Utils.relativeLocation;
 
 public class Update {
+    public static int upsCount = 0, fpsCount = 0;
     private boolean beginning;
 
     public Update() {
@@ -33,48 +34,64 @@ public class Update {
     }
 
     public void updateView() {
-        // TODO fix shrink
-
         for (EntityView entityView : EpsilonView.entityViews) {
-            entityView.setLocation(Controller.findEntityLocation(entityView.getId()));
+            entityView.setLocation(relativeLocation(Controller.findEntityLocation(entityView.getId()), GamePanelModel.getINSTANCE().getLocation()));
         }
         for (BulletView bulletView : BulletView.bulletViews) {
             if (bulletView.isActive()) {
-                bulletView.setLocation(Controller.findBulletLocation(bulletView.getId()));
+                bulletView.setLocation(relativeLocation(Controller.findBulletLocation(bulletView.getId()), GamePanelModel.getINSTANCE().getLocation()));
             }
         }
         GamePanel.getINSTANCE().setLocation((int) GamePanelModel.getINSTANCE().getLocation().getX(), (int) GamePanelModel.getINSTANCE().getLocation().getY());
         GamePanel.getINSTANCE().setSize(GamePanelModel.getINSTANCE().getSize());
 
         GamePanel.getINSTANCE().repaint();
-
+        fpsCount++;
     }
 
     public void updateModel() {
-        shrink();
+//        shrink();
         if (GameFrame.w) {
-            Epsilon.getINSTANCE().move(Direction.UP, EPSILON_SPEED);
+            Epsilon.getINSTANCE().accelerate(Direction.UP, true);
+        } else {
+            Epsilon.getINSTANCE().accelerate(Direction.UP, false);
         }
         if (GameFrame.s) {
-            Epsilon.getINSTANCE().move(Direction.DOWN, EPSILON_SPEED);
+            Epsilon.getINSTANCE().accelerate(Direction.DOWN, true);
+        } else {
+            Epsilon.getINSTANCE().accelerate(Direction.DOWN, false);
         }
         if (GameFrame.a) {
-            Epsilon.getINSTANCE().move(Direction.LEFT, EPSILON_SPEED);
+            Epsilon.getINSTANCE().accelerate(Direction.LEFT, true);
+        } else {
+            Epsilon.getINSTANCE().accelerate(Direction.LEFT, false);
         }
         if (GameFrame.d) {
-            Epsilon.getINSTANCE().move(Direction.RIGHT, EPSILON_SPEED);
+            Epsilon.getINSTANCE().accelerate(Direction.RIGHT, true);
+        } else {
+            Epsilon.getINSTANCE().accelerate(Direction.RIGHT, false);
         }
+        Epsilon.getINSTANCE().move();
         for (Bullet bullet : Bullet.bullets){
             if (bullet.isActive()) {
                 bullet.move();
                 if (bullet.collisionPoint(GamePanelModel.getINSTANCE()) != null) {
-                    System.out.println(bullet.collisionPoint(GamePanelModel.getINSTANCE()));
-                    System.out.println("collision detected");
                     bullet.setActive(false);
                     Controller.findBulletView(bullet.getId()).setActive(false);
+                    // TODO expand
+//                    if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getY() == 0) {
+//                        GamePanelModel.getINSTANCE().expand(Direction.UP);
+//                    } else if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getY() == GamePanelModel.getINSTANCE().getSize().getHeight()) {
+//                        GamePanelModel.getINSTANCE().expand(Direction.DOWN);
+//                    } else if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getX() == 0) {
+//                        GamePanelModel.getINSTANCE().expand(Direction.LEFT);
+//                    } else if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getX() == GamePanelModel.getINSTANCE().getSize().getWidth()) {
+//                        GamePanelModel.getINSTANCE().expand(Direction.RIGHT);
+//                    }
                 }
             }
         }
+        upsCount++;
     }
 
     private void shrink() {
