@@ -25,6 +25,7 @@ public class Constants {
     public static final double EPSILON_SPEED = (double) 200 / UPS;
     public static final double EPSILON_ACCELERATION = (double) 1 / UPS;
     public static final double BULLET_SPEED = (double) 800 / UPS;
+    public static final double BULLET_ACCELERATION = (double) 4 / UPS;
     public static final double EPSILON_RADIUS = 20;
     public static final double BULLET_RADIUS = 2;
     public static final double EXPANSION_SPEED = 10;

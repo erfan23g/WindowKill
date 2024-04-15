@@ -74,6 +74,7 @@ public class Update {
         Epsilon.getINSTANCE().move();
         for (Bullet bullet : Bullet.bullets){
             if (bullet.isActive()) {
+                bullet.accelerate();
                 bullet.move();
                 if (bullet.collisionPoint(GamePanelModel.getINSTANCE()) != null) {
                     bullet.setActive(false);
