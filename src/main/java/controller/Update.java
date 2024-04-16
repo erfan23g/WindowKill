@@ -1,9 +1,6 @@
 package controller;
 
-import model.Bullet;
-import model.Entity;
-import model.Epsilon;
-import model.GamePanelModel;
+import model.*;
 import model.movement.Direction;
 import view.*;
 
@@ -34,7 +31,7 @@ public class Update {
     }
 
     public void updateView() {
-        for (EntityView entityView : EpsilonView.entityViews) {
+        for (EntityView entityView : EntityView.entityViews) {
             entityView.setLocation(relativeLocation(Controller.findEntityLocation(entityView.getId()), GamePanelModel.getINSTANCE().getLocation()));
         }
         for (BulletView bulletView : BulletView.bulletViews) {
@@ -72,6 +69,14 @@ public class Update {
             Epsilon.getINSTANCE().accelerate(Direction.RIGHT, false);
         }
         Epsilon.getINSTANCE().move();
+        for (Entity entity : Entity.entities) {
+            if (entity instanceof Enemy) {
+                ((Enemy) entity).updateAngle(Epsilon.getINSTANCE().getLocation());
+                ((Enemy) entity).accelerate();
+                ((Enemy) entity).move();
+//                System.out.println("angle: " + ((Enemy) entity).getAngle() + "| location: " + entity.getLocation());
+            }
+        }
         for (Bullet bullet : Bullet.bullets){
             if (bullet.isActive()) {
                 bullet.accelerate();
@@ -94,7 +99,6 @@ public class Update {
         }
         GamePanelModel.getINSTANCE().accelerate();
         GamePanelModel.getINSTANCE().expand();
-        System.out.println(GamePanelModel.getINSTANCE().getSize());
         upsCount++;
     }
 

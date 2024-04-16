@@ -1,11 +1,10 @@
 package org.example;
 
 import controller.Update;
-import model.Entity;
-import model.Epsilon;
-import model.GamePanelModel;
+import model.*;
 import view.GameFrame;
 import view.GamePanel;
+import view.TrigorathView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -19,6 +18,8 @@ public class Main {
             GamePanel.getINSTANCE();
             GamePanelModel.getINSTANCE();
             Epsilon.getINSTANCE();
+            new Squarantine(new Point2D.Double(500, 500));
+            new Trigorath(new Point2D.Double(800, 600));
             new Update();
             new Timer(1000, new ActionListener() {
                 @Override

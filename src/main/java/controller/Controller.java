@@ -1,12 +1,7 @@
 package controller;
 
-import model.Bullet;
-import model.Entity;
-import model.Epsilon;
-import model.GamePanelModel;
-import view.BulletView;
-import view.EntityView;
-import view.EpsilonView;
+import model.*;
+import view.*;
 
 import java.awt.geom.Point2D;
 
@@ -14,6 +9,10 @@ public class Controller {
     public static void createEntityView(String id) {
         if (findEntity(id) != null && findEntity(id) instanceof Epsilon) {
             new EpsilonView(id);
+        } else if (findEntity(id) != null && findEntity(id) instanceof Squarantine) {
+            new SquarantineView(id);
+        } else if (findEntity(id) != null && findEntity(id) instanceof Trigorath) {
+            new TrigorathView(id);
         }
     }
 

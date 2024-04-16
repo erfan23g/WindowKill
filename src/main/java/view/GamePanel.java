@@ -68,10 +68,30 @@ public final class GamePanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (EntityView entityView : EntityView.entityViews){
+        for (EntityView entityView : EntityView.entityViews) {
+            // TODO spin enemies
             if (entityView instanceof EpsilonView) {
                 g.setColor(Color.red);
-                g.drawOval((int) (entityView.getLocation().getX() - ((EpsilonView) entityView).radius), (int) (entityView.getLocation().getY() - ((EpsilonView) entityView).radius), (int) (((EpsilonView) entityView).radius * 2), (int) (((EpsilonView) entityView).radius) * 2);
+                g.drawOval((int) (entityView.getLocation().getX() - ((EpsilonView) entityView).radius),
+                        (int) (entityView.getLocation().getY() - ((EpsilonView) entityView).radius),
+                        (int) (((EpsilonView) entityView).radius * 2),
+                        (int) (((EpsilonView) entityView).radius) * 2);
+            } else if (entityView instanceof SquarantineView) {
+                g.setColor(Color.green);
+                g.fillRect((int) (entityView.getLocation().getX() - ((SquarantineView) entityView).sideLength / 2),
+                        (int) (entityView.getLocation().getY() - ((SquarantineView) entityView).sideLength / 2),
+                        (int) ((SquarantineView) entityView).sideLength,
+                        (int) ((SquarantineView) entityView).sideLength);
+            } else if (entityView instanceof TrigorathView) {
+                g.setColor(Color.yellow);
+                double height = Math.sqrt(3) * ((TrigorathView) entityView).sideLength / 2;
+                int[] xPoints = {(int) entityView.getLocation().getX(),
+                        (int) (entityView.getLocation().getX() - ((TrigorathView) entityView).sideLength / 2),
+                        (int) (entityView.getLocation().getX() + ((TrigorathView) entityView).sideLength / 2)};
+                int[] yPoints = {(int) (entityView.getLocation().getY() - height),
+                        (int) (entityView.getLocation().getY() + height / 2),
+                        (int) (entityView.getLocation().getY() + height / 2)};
+                g.fillPolygon(xPoints, yPoints, 3);
             }
         }
         for (BulletView bulletView : BulletView.bulletViews) {

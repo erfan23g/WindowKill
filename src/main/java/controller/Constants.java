@@ -28,8 +28,10 @@ public class Constants {
     public static final double BULLET_ACCELERATION = (double) 4 / UPS;
     public static final double EPSILON_RADIUS = 20;
     public static final double BULLET_RADIUS = 2;
-    public static final double EXPANSION_SPEED = 2;
-    public static final double EXPANSION_SPEED2 = 1;
-    public static final double EXPANSION_ACCELERATION = 0.05;
+    public static final double EXPANSION_SPEED = (double) 400 / UPS;
+    public static final double EXPANSION_ACCELERATION = (double) 10 / UPS;
+    public static final double ENEMY_SPEED = (double) 100 / UPS;
+    public static final double ENEMY_ACCELERATION = (double) 5 / UPS;
+    public static final double ENEMY_SIDE_LENGTH = 30;
 
 }
