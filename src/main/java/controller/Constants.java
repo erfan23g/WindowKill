@@ -19,16 +19,17 @@ public class Constants {
     public static final int UPS = 200;
     public static final double MODEL_UPDATE_TIME = (double) TimeUnit.SECONDS.toMillis(1) / UPS;
     public static final double INITIAL_WIDTH_REDUCTION_PER_UPDATE = 1.2;
-    public static final double WIDTH_REDUCTION_PER_UPDATE = 0.3;
+    public static final double WIDTH_REDUCTION_PER_UPDATE = 0.03;
     public static final double INITIAL_HEIGHT_REDUCTION_PER_UPDATE = 0.8;
-    public static final double HEIGHT_REDUCTION_PER_UPDATE = 0.2;
+    public static final double HEIGHT_REDUCTION_PER_UPDATE = 0.02;
     public static final double EPSILON_SPEED = (double) 200 / UPS;
     public static final double EPSILON_ACCELERATION = (double) 1 / UPS;
     public static final double BULLET_SPEED = (double) 800 / UPS;
     public static final double BULLET_ACCELERATION = (double) 4 / UPS;
     public static final double EPSILON_RADIUS = 20;
     public static final double BULLET_RADIUS = 2;
-    public static final double EXPANSION_SPEED = 10;
+    public static final double EXPANSION_SPEED = 2;
     public static final double EXPANSION_SPEED2 = 1;
+    public static final double EXPANSION_ACCELERATION = 0.05;
 
 }

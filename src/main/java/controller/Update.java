@@ -80,18 +80,21 @@ public class Update {
                     bullet.setActive(false);
                     Controller.findBulletView(bullet.getId()).setActive(false);
                     // TODO expand
-//                    if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getY() == 0) {
-//                        GamePanelModel.getINSTANCE().expand(Direction.UP);
-//                    } else if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getY() == GamePanelModel.getINSTANCE().getSize().getHeight()) {
-//                        GamePanelModel.getINSTANCE().expand(Direction.DOWN);
-//                    } else if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getX() == 0) {
-//                        GamePanelModel.getINSTANCE().expand(Direction.LEFT);
-//                    } else if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getX() == GamePanelModel.getINSTANCE().getSize().getWidth()) {
-//                        GamePanelModel.getINSTANCE().expand(Direction.RIGHT);
-//                    }
+                    if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getY() == 0) {
+                        GamePanelModel.getINSTANCE().setExpandUp(true);
+                    }  else if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getY() == GamePanelModel.getINSTANCE().getSize().getHeight()) {
+                        GamePanelModel.getINSTANCE().setExpandDown(true);
+                    } else if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getX() == 0) {
+                        GamePanelModel.getINSTANCE().setExpandLeft(true);
+                    } else if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getX() == GamePanelModel.getINSTANCE().getSize().getWidth()) {
+                        GamePanelModel.getINSTANCE().setExpandRight(true);
+                    }
                 }
             }
         }
+        GamePanelModel.getINSTANCE().accelerate();
+        GamePanelModel.getINSTANCE().expand();
+        System.out.println(GamePanelModel.getINSTANCE().getSize());
         upsCount++;
     }
 
