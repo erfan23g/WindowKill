@@ -8,6 +8,7 @@ import static controller.Constants.ENEMY_SIDE_LENGTH;
 public class Squarantine extends Enemy{
     public Squarantine(Point2D location) {
         super(location);
+        setHp(10);
     }
     public Polygon getShape () {
         return super.getShape();

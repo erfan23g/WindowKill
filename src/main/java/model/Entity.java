@@ -12,6 +12,16 @@ import java.util.UUID;
 public abstract class Entity implements Collidable {
     public static ArrayList<Entity> entities = new ArrayList<>();
     private Point2D location;
+    private int hp;
+
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        this.hp = hp;
+    }
+
     public String getId() {
         return id;
     }
@@ -32,4 +42,5 @@ public abstract class Entity implements Collidable {
     public void setLocation(Point2D location) {
         this.location = location;
     }
+    public abstract void damage(int reduction);
 }

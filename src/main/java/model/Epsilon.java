@@ -25,6 +25,11 @@ public class Epsilon extends Entity {
         super(location);
     }
 
+    @Override
+    public void damage(int reduction) {
+
+    }
+
     public void accelerate (Direction direction, boolean isPositive) {
         if (isPositive) {
             if (direction.equals(Direction.UP) && upSpeed < EPSILON_SPEED) {

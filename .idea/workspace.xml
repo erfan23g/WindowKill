@@ -4,13 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2175a850-78b1-4066-86a5-a04006f6e081" name="Changes" comment="Enemies added">
+    <list default="true" id="2175a850-78b1-4066-86a5-a04006f6e081" name="Changes" comment="Enemy-Bullet collision added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/Update.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Update.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Enemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Entity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Epsilon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Epsilon.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Squarantine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Squarantine.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Trigorath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Trigorath.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/collision/Collidable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/collision/Collidable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GamePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/SquarantineView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SquarantineView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/TrigorathView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/TrigorathView.java" afterDir="false" />
@@ -146,7 +147,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713287414141</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Enemy-Bullet collision added">
+      <option name="closed" value="true" />
+      <created>1713358193246</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1713358193246</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -159,6 +168,7 @@
     <MESSAGE value="Bullet acceleration added" />
     <MESSAGE value="Panel expansion added" />
     <MESSAGE value="Enemies added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Enemies added" />
+    <MESSAGE value="Enemy-Bullet collision added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Enemy-Bullet collision added" />
   </component>
 </project>

@@ -76,25 +76,28 @@ public final class GamePanel extends JPanel {
                         (int) (entityView.getLocation().getY() - ((EpsilonView) entityView).radius),
                         (int) (((EpsilonView) entityView).radius * 2),
                         (int) (((EpsilonView) entityView).radius) * 2);
-            } else if (entityView instanceof SquarantineView) {
+            } else if (entityView instanceof SquarantineView && ((SquarantineView) entityView).isActive()) {
                 g.setColor(Color.green);
-//                g.fillRect((int) (entityView.getLocation().getX() - ((SquarantineView) entityView).sideLength / 2),
-//                        (int) (entityView.getLocation().getY() - ((SquarantineView) entityView).sideLength / 2),
-//                        (int) ((SquarantineView) entityView).sideLength,
-//                        (int) ((SquarantineView) entityView).sideLength);
                 g.fillPolygon(((SquarantineView) entityView).getShape());
-
-            } else if (entityView instanceof TrigorathView) {
+                Font font = new Font("Calibri", Font.PLAIN, 12);
+                g.setFont(font);
+                FontMetrics fm = g.getFontMetrics();
+                double stringWidth = SwingUtilities.computeStringWidth(fm, ((SquarantineView) entityView).getHp() + "");
+                int centerX = (int) (entityView.getLocation().getX() - stringWidth / 2);
+                int centerY = (int) (entityView.getLocation().getY() + fm.getHeight() / 4);
+                g.setColor(Color.black);
+                g.drawString(((SquarantineView) entityView).getHp() + "", centerX, centerY);
+            } else if (entityView instanceof TrigorathView && ((TrigorathView) entityView).isActive()) {
                 g.setColor(Color.yellow);
-//                double height = Math.sqrt(3) * ((TrigorathView) entityView).sideLength / 2;
-//                int[] xPoints = {(int) entityView.getLocation().getX(),
-//                        (int) (entityView.getLocation().getX() - ((TrigorathView) entityView).sideLength / 2),
-//                        (int) (entityView.getLocation().getX() + ((TrigorathView) entityView).sideLength / 2)};
-//                int[] yPoints = {(int) (entityView.getLocation().getY() - height),
-//                        (int) (entityView.getLocation().getY() + height / 2),
-//                        (int) (entityView.getLocation().getY() + height / 2)};
-//                g.fillPolygon(xPoints, yPoints, 3);
                 g.fillPolygon(((TrigorathView) entityView).getShape());
+                Font font = new Font("Calibri", Font.PLAIN, 12);
+                g.setFont(font);
+                FontMetrics fm = g.getFontMetrics();
+                double stringWidth = SwingUtilities.computeStringWidth(fm, ((TrigorathView) entityView).getHp() + "");
+                int centerX = (int) (entityView.getLocation().getX() - stringWidth / 2);
+                int centerY = (int) (entityView.getLocation().getY() + fm.getHeight() / 4);
+                g.setColor(Color.black);
+                g.drawString(((TrigorathView) entityView).getHp() + "", centerX, centerY);
             }
         }
         for (BulletView bulletView : BulletView.bulletViews) {

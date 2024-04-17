@@ -22,7 +22,7 @@ public abstract class Enemy extends Entity implements Collidable {
 
     private double verticalSpeed, horizontalSpeed;
     private double angle = 0;
-    private boolean isActive;
+    private boolean isActive = true;
 
     public double getAngle() {
         return angle;
@@ -39,6 +39,7 @@ public abstract class Enemy extends Entity implements Collidable {
     public void setActive(boolean active) {
         isActive = active;
     }
+
     public abstract void updateShape();
 
     public Enemy(Point2D location) {
@@ -46,7 +47,7 @@ public abstract class Enemy extends Entity implements Collidable {
         updateShape();
     }
 
-    public void accelerate () {
+    public void accelerate() {
         if (angle < 0 && verticalSpeed > -ENEMY_SPEED) {
             verticalSpeed -= ENEMY_ACCELERATION;
             verticalSpeed = Math.max(-ENEMY_SPEED, verticalSpeed);
@@ -62,11 +63,19 @@ public abstract class Enemy extends Entity implements Collidable {
             horizontalSpeed = Math.max(-ENEMY_SPEED, horizontalSpeed);
         }
     }
+
     public void move() {
         double dx = Math.abs(Math.cos(angle)) * horizontalSpeed, dy = Math.abs(Math.sin(angle)) * verticalSpeed;
         setLocation(new Point2D.Double(getLocation().getX() + dx, getLocation().getY() + dy));
     }
-    public void updateAngle (Point2D point) {
+
+    public void updateAngle(Point2D point) {
         angle = Math.atan2(point.getY() - getLocation().getY(), point.getX() - getLocation().getX());
+    }
+
+    @Override
+    public void damage(int reduction) {
+        setHp(getHp() - reduction);
+        if (getHp() <= 0) setActive(false);
     }
 }

@@ -33,8 +33,13 @@ public class Update {
     public void updateView() {
         for (EntityView entityView : EntityView.entityViews) {
             entityView.setLocation(relativeLocation(Controller.findEntityLocation(entityView.getId()), GamePanelModel.getINSTANCE().getLocation()));
-            if (entityView instanceof SquarantineView) {
+            if (entityView instanceof SquarantineView && ((SquarantineView) entityView).isActive()) {
                 Enemy entityModel = (Enemy) Controller.findEntity(entityView.getId());
+                if (!entityModel.isActive()){
+                    ((SquarantineView) entityView).setActive(false);
+                    continue;
+                }
+                ((SquarantineView) entityView).setHp(entityModel.getHp());
                 Polygon shape = entityModel.getShape();
                 int[] xPoints = new int[4];
                 int[] yPoints = new int[4];
@@ -44,8 +49,13 @@ public class Update {
                     yPoints[i] = (int) point2D.getY();
                 }
                 ((SquarantineView) entityView).setShape(new Polygon(xPoints, yPoints, 4));
-            } else if (entityView instanceof TrigorathView) {
+            } else if (entityView instanceof TrigorathView && ((TrigorathView) entityView).isActive()) {
                 Enemy entityModel = (Enemy) Controller.findEntity(entityView.getId());
+                if (!entityModel.isActive()) {
+                    ((TrigorathView) entityView).setActive(false);
+                    continue;
+                }
+                ((TrigorathView) entityView).setHp(entityModel.getHp());
                 Polygon shape = entityModel.getShape();
                 int[] xPoints = new int[3];
                 int[] yPoints = new int[3];
@@ -93,7 +103,7 @@ public class Update {
         }
         Epsilon.getINSTANCE().move();
         for (Entity entity : Entity.entities) {
-            if (entity instanceof Enemy) {
+            if (entity instanceof Enemy && ((Enemy) entity).isActive()) {
                 ((Enemy) entity).updateAngle(Epsilon.getINSTANCE().getLocation());
                 ((Enemy) entity).accelerate();
                 ((Enemy) entity).move();
@@ -110,6 +120,7 @@ public class Update {
                         if (bullet.collisionPoint(entity) != null) {
                             bullet.setActive(false);
                             Controller.findBulletView(bullet.getId()).setActive(false);
+                            entity.damage(5);
                         }
                     }
                 }

@@ -10,6 +10,7 @@ import static controller.Constants.ENEMY_SIDE_LENGTH;
 public class Trigorath extends Enemy{
     public Trigorath(Point2D location) {
         super(location);
+        setHp(15);
     }
     public Polygon getShape () {
         return super.getShape();
