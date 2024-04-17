@@ -78,20 +78,23 @@ public final class GamePanel extends JPanel {
                         (int) (((EpsilonView) entityView).radius) * 2);
             } else if (entityView instanceof SquarantineView) {
                 g.setColor(Color.green);
-                g.fillRect((int) (entityView.getLocation().getX() - ((SquarantineView) entityView).sideLength / 2),
-                        (int) (entityView.getLocation().getY() - ((SquarantineView) entityView).sideLength / 2),
-                        (int) ((SquarantineView) entityView).sideLength,
-                        (int) ((SquarantineView) entityView).sideLength);
+//                g.fillRect((int) (entityView.getLocation().getX() - ((SquarantineView) entityView).sideLength / 2),
+//                        (int) (entityView.getLocation().getY() - ((SquarantineView) entityView).sideLength / 2),
+//                        (int) ((SquarantineView) entityView).sideLength,
+//                        (int) ((SquarantineView) entityView).sideLength);
+                g.fillPolygon(((SquarantineView) entityView).getShape());
+
             } else if (entityView instanceof TrigorathView) {
                 g.setColor(Color.yellow);
-                double height = Math.sqrt(3) * ((TrigorathView) entityView).sideLength / 2;
-                int[] xPoints = {(int) entityView.getLocation().getX(),
-                        (int) (entityView.getLocation().getX() - ((TrigorathView) entityView).sideLength / 2),
-                        (int) (entityView.getLocation().getX() + ((TrigorathView) entityView).sideLength / 2)};
-                int[] yPoints = {(int) (entityView.getLocation().getY() - height),
-                        (int) (entityView.getLocation().getY() + height / 2),
-                        (int) (entityView.getLocation().getY() + height / 2)};
-                g.fillPolygon(xPoints, yPoints, 3);
+//                double height = Math.sqrt(3) * ((TrigorathView) entityView).sideLength / 2;
+//                int[] xPoints = {(int) entityView.getLocation().getX(),
+//                        (int) (entityView.getLocation().getX() - ((TrigorathView) entityView).sideLength / 2),
+//                        (int) (entityView.getLocation().getX() + ((TrigorathView) entityView).sideLength / 2)};
+//                int[] yPoints = {(int) (entityView.getLocation().getY() - height),
+//                        (int) (entityView.getLocation().getY() + height / 2),
+//                        (int) (entityView.getLocation().getY() + height / 2)};
+//                g.fillPolygon(xPoints, yPoints, 3);
+                g.fillPolygon(((TrigorathView) entityView).getShape());
             }
         }
         for (BulletView bulletView : BulletView.bulletViews) {

@@ -4,19 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2175a850-78b1-4066-86a5-a04006f6e081" name="Changes" comment="Panel expansion added">
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Enemy.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Squarantine.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/model/Trigorath.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/SquarantineView.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/view/TrigorathView.java" afterDir="false" />
+    <list default="true" id="2175a850-78b1-4066-86a5-a04006f6e081" name="Changes" comment="Enemies added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Constants.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Controller.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Controller.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/Update.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Update.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/GamePanelModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/GamePanelModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Enemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Squarantine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Squarantine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Trigorath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Trigorath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/collision/Collidable.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/collision/Collidable.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GamePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/SquarantineView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SquarantineView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/TrigorathView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/TrigorathView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -141,7 +138,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713250447101</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Enemies added">
+      <option name="closed" value="true" />
+      <created>1713287414141</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1713287414141</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -153,6 +158,7 @@
     <MESSAGE value="Epsilon acceleration added" />
     <MESSAGE value="Bullet acceleration added" />
     <MESSAGE value="Panel expansion added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Panel expansion added" />
+    <MESSAGE value="Enemies added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Enemies added" />
   </component>
 </project>

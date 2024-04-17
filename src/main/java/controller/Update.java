@@ -33,6 +33,29 @@ public class Update {
     public void updateView() {
         for (EntityView entityView : EntityView.entityViews) {
             entityView.setLocation(relativeLocation(Controller.findEntityLocation(entityView.getId()), GamePanelModel.getINSTANCE().getLocation()));
+            if (entityView instanceof SquarantineView) {
+                Enemy entityModel = (Enemy) Controller.findEntity(entityView.getId());
+                Polygon shape = entityModel.getShape();
+                int[] xPoints = new int[4];
+                int[] yPoints = new int[4];
+                for (int i = 0; i < 4; i++) {
+                    Point2D point2D = relativeLocation(new Point2D.Double(shape.xpoints[i], shape.ypoints[i]), GamePanelModel.getINSTANCE().getLocation());
+                    xPoints[i] = (int) point2D.getX();
+                    yPoints[i] = (int) point2D.getY();
+                }
+                ((SquarantineView) entityView).setShape(new Polygon(xPoints, yPoints, 4));
+            } else if (entityView instanceof TrigorathView) {
+                Enemy entityModel = (Enemy) Controller.findEntity(entityView.getId());
+                Polygon shape = entityModel.getShape();
+                int[] xPoints = new int[3];
+                int[] yPoints = new int[3];
+                for (int i = 0; i < 3; i++) {
+                    Point2D point2D = relativeLocation(new Point2D.Double(shape.xpoints[i], shape.ypoints[i]), GamePanelModel.getINSTANCE().getLocation());
+                    xPoints[i] = (int) point2D.getX();
+                    yPoints[i] = (int) point2D.getY();
+                }
+                ((TrigorathView) entityView).setShape(new Polygon(xPoints, yPoints, 3));
+            }
         }
         for (BulletView bulletView : BulletView.bulletViews) {
             if (bulletView.isActive()) {
@@ -74,6 +97,7 @@ public class Update {
                 ((Enemy) entity).updateAngle(Epsilon.getINSTANCE().getLocation());
                 ((Enemy) entity).accelerate();
                 ((Enemy) entity).move();
+                ((Enemy) entity).updateShape();
 //                System.out.println("angle: " + ((Enemy) entity).getAngle() + "| location: " + entity.getLocation());
             }
         }
@@ -81,10 +105,17 @@ public class Update {
             if (bullet.isActive()) {
                 bullet.accelerate();
                 bullet.move();
+                for (Entity entity : Entity.entities) {
+                    if (!(entity instanceof Epsilon)) {
+                        if (bullet.collisionPoint(entity) != null) {
+                            bullet.setActive(false);
+                            Controller.findBulletView(bullet.getId()).setActive(false);
+                        }
+                    }
+                }
                 if (bullet.collisionPoint(GamePanelModel.getINSTANCE()) != null) {
                     bullet.setActive(false);
                     Controller.findBulletView(bullet.getId()).setActive(false);
-                    // TODO expand
                     if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getY() == 0) {
                         GamePanelModel.getINSTANCE().setExpandUp(true);
                     }  else if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getY() == GamePanelModel.getINSTANCE().getSize().getHeight()) {

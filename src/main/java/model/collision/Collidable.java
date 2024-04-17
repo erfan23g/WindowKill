@@ -2,10 +2,12 @@ package model.collision;
 
 import controller.Utils;
 import model.Bullet;
+import model.Enemy;
 import model.Epsilon;
 import model.GamePanelModel;
 import controller.Utils.*;
 
+import java.awt.*;
 import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -42,6 +44,12 @@ public interface Collidable {
             } else {
                 return null;
             }
+        } else if (this instanceof Bullet && collidable instanceof Enemy) {
+            Polygon shape = ((Enemy) collidable).getShape();
+            if (shape.contains(((Bullet) this).getLocation())) {
+                return ((Bullet) this).getLocation();
+            }
+            return null;
         }
         return null;
     }
