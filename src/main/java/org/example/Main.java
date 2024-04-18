@@ -4,7 +4,6 @@ import controller.Update;
 import model.*;
 import view.GameFrame;
 import view.GamePanel;
-import view.TrigorathView;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

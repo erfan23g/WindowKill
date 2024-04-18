@@ -33,5 +33,6 @@ public class Constants {
     public static final double ENEMY_SPEED = (double) 100 / UPS;
     public static final double ENEMY_ACCELERATION = (double) 5 / UPS;
     public static final double ENEMY_SIDE_LENGTH = 30;
+    public static final double IMPACT_RADIUS = 60;
 
 }

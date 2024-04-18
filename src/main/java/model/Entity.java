@@ -7,10 +7,16 @@ import model.movement.Direction;
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.UUID;
 
 public abstract class Entity implements Collidable {
     public static ArrayList<Entity> entities = new ArrayList<>();
+    private final ArrayList<HashMap<String, Double>> impactAngles = new ArrayList<>();
+
+    public ArrayList<HashMap<String, Double>> getImpactAngles() {
+        return impactAngles;
+    }
     private Point2D location;
     private int hp;
 

@@ -7,11 +7,11 @@ import view.*;
 import javax.swing.*;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import static controller.Constants.*;
 import static controller.Utils.relativeLocation;
@@ -35,7 +35,7 @@ public class Update {
             entityView.setLocation(relativeLocation(Controller.findEntityLocation(entityView.getId()), GamePanelModel.getINSTANCE().getLocation()));
             if (entityView instanceof SquarantineView && ((SquarantineView) entityView).isActive()) {
                 Enemy entityModel = (Enemy) Controller.findEntity(entityView.getId());
-                if (!entityModel.isActive()){
+                if (!entityModel.isActive()) {
                     ((SquarantineView) entityView).setActive(false);
                     continue;
                 }
@@ -102,34 +102,46 @@ public class Update {
             Epsilon.getINSTANCE().accelerate(Direction.RIGHT, false);
         }
         Epsilon.getINSTANCE().move();
+        if (Epsilon.getINSTANCE().collisionPoint(GamePanelModel.getINSTANCE()) != null) {
+            impact(Epsilon.getINSTANCE().collisionPoint(GamePanelModel.getINSTANCE()));
+        }
         for (Entity entity : Entity.entities) {
             if (entity instanceof Enemy && ((Enemy) entity).isActive()) {
                 ((Enemy) entity).updateAngle(Epsilon.getINSTANCE().getLocation());
                 ((Enemy) entity).accelerate();
                 ((Enemy) entity).move();
                 ((Enemy) entity).updateShape();
-//                System.out.println("angle: " + ((Enemy) entity).getAngle() + "| location: " + entity.getLocation());
+                if (Epsilon.getINSTANCE().collisionPoint(entity) != null) {
+                    impact(Epsilon.getINSTANCE().collisionPoint(entity));
+                }
+                for (Entity entity2 : Entity.entities) {
+                    if (entity2 instanceof Enemy && !entity2.getId().equals(entity.getId()) && ((Enemy) entity2).isActive() && entity.collisionPoint(entity2) != null) {
+                        impact(entity.collisionPoint(entity2));
+                    }
+                }
             }
         }
-        for (Bullet bullet : Bullet.bullets){
+        for (Bullet bullet : Bullet.bullets) {
             if (bullet.isActive()) {
                 bullet.accelerate();
                 bullet.move();
                 for (Entity entity : Entity.entities) {
-                    if (!(entity instanceof Epsilon)) {
+                    if (entity instanceof Enemy && ((Enemy) entity).isActive()) {
                         if (bullet.collisionPoint(entity) != null) {
                             bullet.setActive(false);
                             Controller.findBulletView(bullet.getId()).setActive(false);
                             entity.damage(5);
+                            impact(bullet.collisionPoint(entity));
                         }
                     }
                 }
                 if (bullet.collisionPoint(GamePanelModel.getINSTANCE()) != null) {
                     bullet.setActive(false);
+                    impact(bullet.collisionPoint(GamePanelModel.getINSTANCE()));
                     Controller.findBulletView(bullet.getId()).setActive(false);
                     if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getY() == 0) {
                         GamePanelModel.getINSTANCE().setExpandUp(true);
-                    }  else if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getY() == GamePanelModel.getINSTANCE().getSize().getHeight()) {
+                    } else if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getY() == GamePanelModel.getINSTANCE().getSize().getHeight()) {
                         GamePanelModel.getINSTANCE().setExpandDown(true);
                     } else if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getX() == 0) {
                         GamePanelModel.getINSTANCE().setExpandLeft(true);
@@ -166,4 +178,19 @@ public class Update {
         }
     }
 
+    public void impact(Point2D point) {
+        for (Entity entity : Entity.entities) {
+//            System.out.println(entity.getLocation());
+//            System.out.println(point.distance(entity.getLocation()));
+            if (point.distance(entity.getLocation()) < IMPACT_RADIUS) {
+                double angle = Math.atan2(point.getY() - entity.getLocation().getY(), point.getX() - entity.getLocation().getX());
+                double angle2 = (angle > 0) ? angle - Math.PI : angle + Math.PI;
+                HashMap<String, Double> map = new HashMap<>();
+                map.put("angle", angle2);
+                map.put("count", 50.0);
+                map.put("acceleration", (IMPACT_RADIUS - point.distance(entity.getLocation())) * 0.01);
+                entity.getImpactAngles().add(map);
+            }
+        }
+    }
 }

@@ -24,7 +24,7 @@ public final class GamePanel extends JPanel {
     private final Random rng = new Random();
 
     private GamePanel() {
-        setBorder(BorderFactory.createLineBorder(Color.green, 3));
+//        setBorder(BorderFactory.createLineBorder(Color.green, 3));
         setBackground(Color.black);
         setSize(INITIAL_PANEL_SIZE);
         setLocationToCenter();

@@ -8,6 +8,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.Timer;
 
 import static controller.Constants.*;
@@ -60,12 +62,38 @@ public class Epsilon extends Entity {
                 leftSpeed = Math.max(0, leftSpeed);
             }
         }
+        ArrayList<HashMap<String, Double>> anglesToRemove = new ArrayList<>();
+        for (HashMap<String, Double> impactAngle : getImpactAngles()) {
+            if (impactAngle.get("angle") < 0 && upSpeed < EPSILON_SPEED) {
+                upSpeed += impactAngle.get("acceleration");
+                upSpeed = Math.max(EPSILON_SPEED, upSpeed);
+            } else if (impactAngle.get("angle") > 0 && downSpeed < EPSILON_SPEED) {
+                downSpeed += impactAngle.get("acceleration");
+                downSpeed = Math.min(EPSILON_SPEED, downSpeed);
+            }
+            if (impactAngle.get("angle") > -Math.PI / 2 && impactAngle.get("angle") < Math.PI / 2 & rightSpeed < EPSILON_SPEED) {
+                rightSpeed += impactAngle.get("acceleration");
+                rightSpeed = Math.min(EPSILON_SPEED, rightSpeed);
+            } else if ((impactAngle.get("angle") < -Math.PI / 2 || impactAngle.get("angle") > Math.PI / 2) && leftSpeed < EPSILON_SPEED) {
+                leftSpeed += impactAngle.get("acceleration");
+                leftSpeed = Math.max(EPSILON_SPEED, leftSpeed);
+            }
+            Double count = impactAngle.get("count") - 1;
+            impactAngle.put("count", count);
+            if (impactAngle.get("count") < 1) {
+                anglesToRemove.add(impactAngle);
+            }
+        }
+        getImpactAngles().removeAll(anglesToRemove);
     }
 
     public void move() {
-        setLocation(new Point2D.Double(getLocation().getX(), getLocation().getY() - upSpeed));
-        setLocation(new Point2D.Double(getLocation().getX(), getLocation().getY() + downSpeed));
-        setLocation(new Point2D.Double(getLocation().getX() + rightSpeed, getLocation().getY()));
-        setLocation(new Point2D.Double(getLocation().getX() - leftSpeed, getLocation().getY()));
+        double x = getLocation().getX() + rightSpeed - leftSpeed;
+        double y = getLocation().getY() + downSpeed - upSpeed;
+        x = Math.max(GamePanelModel.getINSTANCE().getLocation().getX() + EPSILON_RADIUS, x);
+        x = Math.min(GamePanelModel.getINSTANCE().getLocation().getX() + GamePanelModel.getINSTANCE().getSize().getWidth() - EPSILON_RADIUS, x);
+        y = Math.max(GamePanelModel.getINSTANCE().getLocation().getY() + EPSILON_RADIUS, y);
+        y = Math.min(GamePanelModel.getINSTANCE().getLocation().getY() + GamePanelModel.getINSTANCE().getSize().getHeight() - EPSILON_RADIUS, y);
+        setLocation(new Point2D.Double(x, y));
     }
 }
