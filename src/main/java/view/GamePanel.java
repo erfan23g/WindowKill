@@ -26,7 +26,7 @@ public final class GamePanel extends JPanel {
     private GamePanel() {
 //        setBorder(BorderFactory.createLineBorder(Color.green, 3));
         setBackground(Color.black);
-        setSize(INITIAL_PANEL_SIZE);
+        setSize(new Dimension((int) INITIAL_PANEL_SIZE.getWidth(), (int) INITIAL_PANEL_SIZE.getHeight()));
         setLocationToCenter();
 //        setFocusable(true);
 //        requestFocus();

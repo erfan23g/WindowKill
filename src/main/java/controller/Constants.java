@@ -9,10 +9,10 @@ import java.awt.geom.Point2D;
 import java.util.concurrent.TimeUnit;
 
 public class Constants {
-    public static final Dimension GAME_FRAME_SIZE = Toolkit.getDefaultToolkit().getScreenSize();
+    public static final MyDimension GAME_FRAME_SIZE = new MyDimension(Toolkit.getDefaultToolkit().getScreenSize().getWidth(), Toolkit.getDefaultToolkit().getScreenSize().getHeight());
     public static final Point2D EPSILON_STARTING_LOCATION = new Point2D.Double(Toolkit.getDefaultToolkit().getScreenSize().getWidth() / 2, Toolkit.getDefaultToolkit().getScreenSize().getHeight() / 2);
-    public static final Dimension INITIAL_PANEL_SIZE = new Dimension((int) (GAME_FRAME_SIZE.getWidth() / 2), (int) (GAME_FRAME_SIZE.getHeight() / 2));
-    public static final Dimension MINIMUM_PANEL_SIZE = new Dimension((int) (GAME_FRAME_SIZE.getWidth() / 4), (int) (GAME_FRAME_SIZE.getHeight() / 4));
+    public static final MyDimension INITIAL_PANEL_SIZE = new MyDimension((GAME_FRAME_SIZE.getWidth() / 2),(GAME_FRAME_SIZE.getHeight() / 2));
+    public static final MyDimension MINIMUM_PANEL_SIZE = new MyDimension((GAME_FRAME_SIZE.getWidth() / 3), (GAME_FRAME_SIZE.getHeight() / 3));
     public static final Point2D PAGE_CENTER = new Point2D.Double((GameFrame.getINSTANCE().getWidth() / 2 - GamePanelModel.getINSTANCE().getSize().getWidth() / 2), (GameFrame.getINSTANCE().getHeight() / 2 - GamePanelModel.getINSTANCE().getSize().getHeight() / 2));
     public static final int FPS = GraphicsEnvironment.getLocalGraphicsEnvironment().getScreenDevices()[0].getDisplayMode().getRefreshRate();
     public static final double FRAME_UPDATE_TIME = (double) TimeUnit.SECONDS.toMillis(1) / FPS;
@@ -28,8 +28,12 @@ public class Constants {
     public static final double BULLET_ACCELERATION = (double) 4 / UPS;
     public static final double EPSILON_RADIUS = 20;
     public static final double BULLET_RADIUS = 2;
-    public static final double EXPANSION_SPEED = (double) 400 / UPS;
+    public static final double EXPANSION_SPEED = (double) 500 / UPS;
     public static final double EXPANSION_ACCELERATION = (double) 10 / UPS;
+    public static final double SHRINKAGE_SPEED = (double) 40 / UPS;
+    public static final double SHRINKAGE_ACCELERATION = (double) SHRINKAGE_SPEED / 100;
+    public static final double INITIAL_SHRINKAGE_SPEED = (double) 100 / UPS;
+    public static final double INITIAL_SHRINKAGE_ACCELERATION = (double) INITIAL_SHRINKAGE_SPEED / 100;
     public static final double ENEMY_SPEED = (double) 100 / UPS;
     public static final double ENEMY_ACCELERATION = (double) 5 / UPS;
     public static final double ENEMY_SIDE_LENGTH = 30;

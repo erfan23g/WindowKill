@@ -94,23 +94,6 @@ public abstract class Enemy extends Entity implements Collidable {
             getImpactAngles().removeAll(anglesToRemove);
         }
     }
-//    public void accelerate(double angle, double acceleration) {
-//        if (angle < 0) {
-//            verticalSpeed -= acceleration;
-////            verticalSpeed = Math.max(-ENEMY_SPEED, verticalSpeed);
-//        } else if (angle > 0) {
-//            verticalSpeed += acceleration;
-////            verticalSpeed = Math.min(ENEMY_SPEED, verticalSpeed);
-//        }
-//        if (angle > -Math.PI / 2 && angle < Math.PI / 2) {
-//            horizontalSpeed += acceleration;
-////            horizontalSpeed = Math.min(ENEMY_SPEED, horizontalSpeed);
-//        } else if ((angle < -Math.PI / 2 || angle > Math.PI / 2)) {
-//            horizontalSpeed -= acceleration;
-////            horizontalSpeed = Math.max(-ENEMY_SPEED, horizontalSpeed);
-//        }
-//    }
-
     public void move() {
         double dx = Math.abs(Math.cos(angle)) * horizontalSpeed, dy = Math.abs(Math.sin(angle)) * verticalSpeed;
         setLocation(new Point2D.Double(getLocation().getX() + dx, getLocation().getY() + dy));

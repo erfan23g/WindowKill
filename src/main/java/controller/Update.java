@@ -18,10 +18,8 @@ import static controller.Utils.relativeLocation;
 
 public class Update {
     public static int upsCount = 0, fpsCount = 0;
-    private boolean beginning;
 
     public Update() {
-        beginning = true;
         new Timer((int) FRAME_UPDATE_TIME, e -> updateView()) {{
             setCoalesce(true);
         }}.start();
@@ -73,7 +71,7 @@ public class Update {
             }
         }
         GamePanel.getINSTANCE().setLocation((int) GamePanelModel.getINSTANCE().getLocation().getX(), (int) GamePanelModel.getINSTANCE().getLocation().getY());
-        GamePanel.getINSTANCE().setSize(GamePanelModel.getINSTANCE().getSize());
+        GamePanel.getINSTANCE().setSize(new Dimension((int) GamePanelModel.getINSTANCE().getSize().getWidth(), (int) GamePanelModel.getINSTANCE().getSize().getHeight()));
 
         GamePanel.getINSTANCE().repaint();
         fpsCount++;
@@ -153,30 +151,10 @@ public class Update {
         }
         GamePanelModel.getINSTANCE().accelerate();
         GamePanelModel.getINSTANCE().expand();
+        GamePanelModel.getINSTANCE().shrink();
         upsCount++;
     }
 
-    private void shrink() {
-        if (beginning) {
-            if (GamePanelModel.getINSTANCE().getSize().getWidth() > MINIMUM_PANEL_SIZE.getWidth()) {
-                GamePanelModel.getINSTANCE().setSize(new Dimension((int) (GamePanelModel.getINSTANCE().getSize().getWidth() - INITIAL_WIDTH_REDUCTION_PER_UPDATE), (int) GamePanelModel.getINSTANCE().getSize().getHeight()));
-            }
-            if (GamePanelModel.getINSTANCE().getSize().getHeight() > MINIMUM_PANEL_SIZE.getHeight()) {
-                GamePanelModel.getINSTANCE().setSize(new Dimension((int) (GamePanelModel.getINSTANCE().getSize().getWidth()), (int) (GamePanelModel.getINSTANCE().getSize().getHeight() - INITIAL_HEIGHT_REDUCTION_PER_UPDATE)));
-            }
-            GamePanelModel.getINSTANCE().setLocationToCenter();
-            if (GamePanelModel.getINSTANCE().getSize().getWidth() <= MINIMUM_PANEL_SIZE.getWidth() && GamePanelModel.getINSTANCE().getSize().getHeight() <= MINIMUM_PANEL_SIZE.getHeight()) {
-                beginning = false;
-            }
-        } else {
-            if (GamePanelModel.getINSTANCE().getSize().getWidth() > MINIMUM_PANEL_SIZE.getWidth()) {
-                GamePanelModel.getINSTANCE().setSize(new Dimension((int) (GamePanelModel.getINSTANCE().getSize().getWidth() - WIDTH_REDUCTION_PER_UPDATE), (int) GamePanelModel.getINSTANCE().getSize().getHeight()));
-            }
-            if (GamePanelModel.getINSTANCE().getSize().getHeight() > MINIMUM_PANEL_SIZE.getHeight()) {
-                GamePanelModel.getINSTANCE().setSize(new Dimension((int) (GamePanelModel.getINSTANCE().getSize().getWidth()), (int) (GamePanelModel.getINSTANCE().getSize().getHeight() - HEIGHT_REDUCTION_PER_UPDATE)));
-            }
-        }
-    }
 
     public void impact(Point2D point) {
         for (Entity entity : Entity.entities) {
