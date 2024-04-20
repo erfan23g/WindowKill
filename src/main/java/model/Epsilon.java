@@ -1,5 +1,6 @@
 package model;
 
+import controller.Controller;
 import model.collision.Collidable;
 import model.movement.Direction;
 import view.GamePanel;
@@ -33,58 +34,61 @@ public class Epsilon extends Entity {
     }
 
     public void accelerate (Direction direction, boolean isPositive) {
-        if (isPositive) {
-            if (direction.equals(Direction.UP) && upSpeed < EPSILON_SPEED) {
-                upSpeed += EPSILON_ACCELERATION;
-                upSpeed = Math.min(EPSILON_SPEED, upSpeed);
-            } else if (direction.equals(Direction.DOWN) && downSpeed < EPSILON_SPEED) {
-                downSpeed += EPSILON_ACCELERATION;
-                downSpeed = Math.min(EPSILON_SPEED, downSpeed);
-            } else if (direction.equals(Direction.RIGHT) && rightSpeed < EPSILON_SPEED) {
-                rightSpeed += EPSILON_ACCELERATION;
-                rightSpeed = Math.min(EPSILON_SPEED, rightSpeed);
-            } else if (direction.equals(Direction.LEFT) && leftSpeed < EPSILON_SPEED) {
-                leftSpeed += EPSILON_ACCELERATION;
-                leftSpeed = Math.min(EPSILON_SPEED, leftSpeed);
+        if (getImpactAngles().isEmpty()) {
+            if (isPositive) {
+                if (direction.equals(Direction.UP) && upSpeed < EPSILON_SPEED) {
+                    upSpeed += EPSILON_ACCELERATION;
+                    upSpeed = Math.min(EPSILON_SPEED, upSpeed);
+                } else if (direction.equals(Direction.DOWN) && downSpeed < EPSILON_SPEED) {
+                    downSpeed += EPSILON_ACCELERATION;
+                    downSpeed = Math.min(EPSILON_SPEED, downSpeed);
+                } else if (direction.equals(Direction.RIGHT) && rightSpeed < EPSILON_SPEED) {
+                    rightSpeed += EPSILON_ACCELERATION;
+                    rightSpeed = Math.min(EPSILON_SPEED, rightSpeed);
+                } else if (direction.equals(Direction.LEFT) && leftSpeed < EPSILON_SPEED) {
+                    leftSpeed += EPSILON_ACCELERATION;
+                    leftSpeed = Math.min(EPSILON_SPEED, leftSpeed);
+                }
+            } else {
+                if (direction.equals(Direction.UP) && upSpeed > 0) {
+                    upSpeed -= EPSILON_ACCELERATION;
+                    upSpeed = Math.max(0, upSpeed);
+                } else if (direction.equals(Direction.DOWN) && downSpeed > 0) {
+                    downSpeed -= EPSILON_ACCELERATION;
+                    downSpeed = Math.max(0, downSpeed);
+                } else if (direction.equals(Direction.RIGHT) && rightSpeed > 0) {
+                    rightSpeed -= EPSILON_ACCELERATION;
+                    rightSpeed = Math.max(0, rightSpeed);
+                } else if (direction.equals(Direction.LEFT) && leftSpeed > 0) {
+                    leftSpeed -= EPSILON_ACCELERATION;
+                    leftSpeed = Math.max(0, leftSpeed);
+                }
             }
         } else {
-            if (direction.equals(Direction.UP) && upSpeed > 0) {
-                upSpeed -= EPSILON_ACCELERATION;
-                upSpeed = Math.max(0, upSpeed);
-            } else if (direction.equals(Direction.DOWN) && downSpeed > 0) {
-                downSpeed -= EPSILON_ACCELERATION;
-                downSpeed = Math.max(0, downSpeed);
-            } else if (direction.equals(Direction.RIGHT) && rightSpeed > 0) {
-                rightSpeed -= EPSILON_ACCELERATION;
-                rightSpeed = Math.max(0, rightSpeed);
-            } else if (direction.equals(Direction.LEFT) && leftSpeed > 0) {
-                leftSpeed -= EPSILON_ACCELERATION;
-                leftSpeed = Math.max(0, leftSpeed);
+            ArrayList<HashMap<String, Double>> anglesToRemove = new ArrayList<>();
+            for (HashMap<String, Double> impactAngle : getImpactAngles()) {
+                if (impactAngle.get("angle") < 0 && upSpeed < EPSILON_SPEED) {
+                    upSpeed += impactAngle.get("acceleration");
+                    upSpeed = Math.max(EPSILON_SPEED, upSpeed);
+                } else if (impactAngle.get("angle") > 0 && downSpeed < EPSILON_SPEED) {
+                    downSpeed += impactAngle.get("acceleration");
+                    downSpeed = Math.min(EPSILON_SPEED, downSpeed);
+                }
+                if (impactAngle.get("angle") > -Math.PI / 2 && impactAngle.get("angle") < Math.PI / 2 & rightSpeed < EPSILON_SPEED) {
+                    rightSpeed += impactAngle.get("acceleration");
+                    rightSpeed = Math.min(EPSILON_SPEED, rightSpeed);
+                } else if ((impactAngle.get("angle") < -Math.PI / 2 || impactAngle.get("angle") > Math.PI / 2) && leftSpeed < EPSILON_SPEED) {
+                    leftSpeed += impactAngle.get("acceleration");
+                    leftSpeed = Math.max(EPSILON_SPEED, leftSpeed);
+                }
+                Double count = impactAngle.get("count") - 1;
+                impactAngle.put("count", count);
+                if (impactAngle.get("count") < 1) {
+                    anglesToRemove.add(impactAngle);
+                }
             }
+            getImpactAngles().removeAll(anglesToRemove);
         }
-        ArrayList<HashMap<String, Double>> anglesToRemove = new ArrayList<>();
-        for (HashMap<String, Double> impactAngle : getImpactAngles()) {
-            if (impactAngle.get("angle") < 0 && upSpeed < EPSILON_SPEED) {
-                upSpeed += impactAngle.get("acceleration");
-                upSpeed = Math.max(EPSILON_SPEED, upSpeed);
-            } else if (impactAngle.get("angle") > 0 && downSpeed < EPSILON_SPEED) {
-                downSpeed += impactAngle.get("acceleration");
-                downSpeed = Math.min(EPSILON_SPEED, downSpeed);
-            }
-            if (impactAngle.get("angle") > -Math.PI / 2 && impactAngle.get("angle") < Math.PI / 2 & rightSpeed < EPSILON_SPEED) {
-                rightSpeed += impactAngle.get("acceleration");
-                rightSpeed = Math.min(EPSILON_SPEED, rightSpeed);
-            } else if ((impactAngle.get("angle") < -Math.PI / 2 || impactAngle.get("angle") > Math.PI / 2) && leftSpeed < EPSILON_SPEED) {
-                leftSpeed += impactAngle.get("acceleration");
-                leftSpeed = Math.max(EPSILON_SPEED, leftSpeed);
-            }
-            Double count = impactAngle.get("count") - 1;
-            impactAngle.put("count", count);
-            if (impactAngle.get("count") < 1) {
-                anglesToRemove.add(impactAngle);
-            }
-        }
-        getImpactAngles().removeAll(anglesToRemove);
     }
 
     public void move() {
@@ -95,5 +99,9 @@ public class Epsilon extends Entity {
         y = Math.max(GamePanelModel.getINSTANCE().getLocation().getY() + EPSILON_RADIUS, y);
         y = Math.min(GamePanelModel.getINSTANCE().getLocation().getY() + GamePanelModel.getINSTANCE().getSize().getHeight() - EPSILON_RADIUS, y);
         setLocation(new Point2D.Double(x, y));
+    }
+    public void eat (Collectible collectible) {
+        collectible.setActive(false);
+        Controller.deactivateCollectibleView(collectible.getId());
     }
 }

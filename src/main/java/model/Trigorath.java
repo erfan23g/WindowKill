@@ -5,6 +5,7 @@ import view.TrigorathView;
 import java.awt.*;
 import java.awt.geom.Point2D;
 
+import static controller.Constants.COLLECTIBLE_XP;
 import static controller.Constants.ENEMY_SIDE_LENGTH;
 
 public class Trigorath extends Enemy{
@@ -12,6 +13,14 @@ public class Trigorath extends Enemy{
         super(location);
         setHp(15);
     }
+
+    @Override
+    public void die() {
+        setActive(false);
+        new Collectible(Color.yellow, getLocation(), COLLECTIBLE_XP);
+        new Collectible(Color.yellow, getVertices()[0], COLLECTIBLE_XP);
+    }
+
     public Polygon getShape () {
         return super.getShape();
     }

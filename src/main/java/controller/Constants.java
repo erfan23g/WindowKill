@@ -28,6 +28,7 @@ public class Constants {
     public static final double BULLET_ACCELERATION = (double) 4 / UPS;
     public static final double EPSILON_RADIUS = 20;
     public static final double BULLET_RADIUS = 2;
+    public static final double COLLECTIBLE_RADIUS = 4;
     public static final double EXPANSION_SPEED = (double) 500 / UPS;
     public static final double EXPANSION_ACCELERATION = (double) 10 / UPS;
     public static final double SHRINKAGE_SPEED = (double) 40 / UPS;
@@ -38,5 +39,6 @@ public class Constants {
     public static final double ENEMY_ACCELERATION = (double) 5 / UPS;
     public static final double ENEMY_SIDE_LENGTH = 30;
     public static final double IMPACT_RADIUS = 60;
+    public static final int COLLECTIBLE_XP = 5;
 
 }

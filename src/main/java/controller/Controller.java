@@ -60,4 +60,26 @@ public class Controller {
         double angle = Math.atan2(point.getY() - Utils.relativeLocation(Epsilon.getINSTANCE().getLocation(), GamePanelModel.getINSTANCE().getLocation()).getY(), point.getX() - Utils.relativeLocation(Epsilon.getINSTANCE().getLocation(), GamePanelModel.getINSTANCE().getLocation()).getX());
         new Bullet(Epsilon.getINSTANCE().getLocation(), angle);
     }
+    public static void createCollectibleView (String id) {
+        Collectible collectible = findCollectible(id);
+        new CollectibleView(id, collectible.getColor());
+    }
+    public static Collectible findCollectible (String id) {
+        for (Collectible collectible : Collectible.collectibles) {
+            if (collectible.getId().equals(id)) {
+                return collectible;
+            }
+        }
+        return null;
+    }
+    public static Point2D findCollectibleLocation(String id) {
+        Collectible collectible = findCollectible(id);
+        assert collectible != null;
+        return collectible.getLocation();
+    }
+    public static void deactivateCollectibleView (String id) {
+        for (CollectibleView collectibleView : CollectibleView.collectibleViews) {
+            if (collectibleView.getId().equals(id)) collectibleView.setActive(false);
+        }
+    }
 }

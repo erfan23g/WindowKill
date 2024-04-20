@@ -181,6 +181,5 @@ public class GamePanelModel implements Collidable {
         if (width == MINIMUM_PANEL_SIZE.getWidth()) horizontalSpeed = 0;
         if (height == MINIMUM_PANEL_SIZE.getHeight()) verticalSpeed = 0;
         if (width == MINIMUM_PANEL_SIZE.getWidth() && height == MINIMUM_PANEL_SIZE.getHeight()) beginning = false;
-        System.out.println(getLocation().getX() + " " + getLocation().getY());
     }
 }

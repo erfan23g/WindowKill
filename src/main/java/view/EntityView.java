@@ -14,11 +14,11 @@ public abstract class EntityView {
 
     private Point2D location = new Point2D.Double(0, 0);
 
+    private final String id;
+
     public String getId() {
         return id;
     }
-
-    private final String id;
 
     public EntityView(String id) {
         this.id = id;

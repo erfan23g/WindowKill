@@ -1,10 +1,7 @@
 package model.collision;
 
 import controller.Utils;
-import model.Bullet;
-import model.Enemy;
-import model.Epsilon;
-import model.GamePanelModel;
+import model.*;
 import controller.Utils.*;
 
 import java.awt.*;
@@ -12,8 +9,7 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
-import static controller.Constants.BULLET_RADIUS;
-import static controller.Constants.EPSILON_RADIUS;
+import static controller.Constants.*;
 
 public interface Collidable {
     ArrayList<Collidable> collidables=new ArrayList<>();
@@ -82,6 +78,14 @@ public interface Collidable {
             Point2D[] vertices = ((Enemy) collidable).getVertices();
             for (Point2D point : vertices) {
                 if (shape.contains(point)) return point;
+            }
+            return null;
+        } else if (this instanceof Epsilon && collidable instanceof Collectible) {
+            double distance = ((Epsilon) this).getLocation().distance(((Collectible) collidable).getLocation());
+            if (distance <= EPSILON_RADIUS + COLLECTIBLE_RADIUS) {
+                double x = (((Epsilon) this).getLocation().getX() + ((Collectible) collidable).getLocation().getX()) / 2;
+                double y = (((Epsilon) this).getLocation().getY() + ((Collectible) collidable).getLocation().getY()) / 2;
+                return new Point2D.Double(x, y);
             }
             return null;
         }

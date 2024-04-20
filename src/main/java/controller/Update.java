@@ -70,6 +70,11 @@ public class Update {
                 bulletView.setLocation(relativeLocation(Controller.findBulletLocation(bulletView.getId()), GamePanelModel.getINSTANCE().getLocation()));
             }
         }
+        for (CollectibleView collectibleView : CollectibleView.collectibleViews) {
+            if (collectibleView.isActive()) {
+                collectibleView.setLocation(Utils.relativeLocation(Controller.findCollectibleLocation(collectibleView.getId()), GamePanelModel.getINSTANCE().getLocation()));
+            }
+        }
         GamePanel.getINSTANCE().setLocation((int) GamePanelModel.getINSTANCE().getLocation().getX(), (int) GamePanelModel.getINSTANCE().getLocation().getY());
         GamePanel.getINSTANCE().setSize(new Dimension((int) GamePanelModel.getINSTANCE().getSize().getWidth(), (int) GamePanelModel.getINSTANCE().getSize().getHeight()));
 
@@ -100,9 +105,14 @@ public class Update {
             Epsilon.getINSTANCE().accelerate(Direction.RIGHT, false);
         }
         Epsilon.getINSTANCE().move();
-        if (Epsilon.getINSTANCE().collisionPoint(GamePanelModel.getINSTANCE()) != null) {
-            impact(Epsilon.getINSTANCE().collisionPoint(GamePanelModel.getINSTANCE()));
+        for (Collectible collectible : Collectible.collectibles) {
+            if (collectible.isActive() && Epsilon.getINSTANCE().collisionPoint(collectible) != null) {
+                Epsilon.getINSTANCE().eat(collectible);
+            }
         }
+//        if (Epsilon.getINSTANCE().collisionPoint(GamePanelModel.getINSTANCE()) != null) {
+//            impact(Epsilon.getINSTANCE().collisionPoint(GamePanelModel.getINSTANCE()));
+//        }
         for (Entity entity : Entity.entities) {
             if (entity instanceof Enemy && ((Enemy) entity).isActive()) {
                 ((Enemy) entity).updateAngle(Epsilon.getINSTANCE().getLocation());
@@ -166,7 +176,11 @@ public class Update {
                 HashMap<String, Double> map = new HashMap<>();
                 map.put("angle", angle2);
                 map.put("count", 50.0);
-                map.put("acceleration", (IMPACT_RADIUS - point.distance(entity.getLocation())) * 0.01);
+                if (entity instanceof Epsilon) {
+                    map.put("acceleration", (IMPACT_RADIUS - point.distance(entity.getLocation())) * 0.001);
+                } else {
+                    map.put("acceleration", (IMPACT_RADIUS - point.distance(entity.getLocation())) * 0.01);
+                }
                 entity.getImpactAngles().add(map);
             }
         }

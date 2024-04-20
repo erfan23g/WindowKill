@@ -106,7 +106,7 @@ public abstract class Enemy extends Entity implements Collidable {
     @Override
     public void damage(int reduction) {
         setHp(getHp() - reduction);
-        if (getHp() <= 0) setActive(false);
+        if (getHp() <= 0) die();
     }
     public Point2D[] getVertices () {
         Point2D[] vertices = new Point2D[getShape().npoints];
@@ -115,4 +115,5 @@ public abstract class Enemy extends Entity implements Collidable {
         }
         return vertices;
     }
+    public abstract void die ();
 }

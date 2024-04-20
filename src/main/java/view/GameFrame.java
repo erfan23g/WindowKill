@@ -20,7 +20,6 @@ public class GameFrame extends JFrame implements KeyListener {
         setBackground(new Color(0, 0, 0, 0));
         setSize(new Dimension((int) GAME_FRAME_SIZE.getWidth(), (int) GAME_FRAME_SIZE.getHeight()));
         setFocusable(true);
-//        requestFocus();
 
         this.addKeyListener(this);
         setLocationRelativeTo(null);
