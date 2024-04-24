@@ -12,6 +12,7 @@ public class Squarantine extends Enemy{
     public Squarantine(Point2D location) {
         super(location);
         setHp(10);
+        power = 6;
     }
 
     @Override

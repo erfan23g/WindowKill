@@ -16,8 +16,17 @@ import javax.swing.Timer;
 import static controller.Constants.*;
 
 public class Epsilon extends Entity {
-    public static Epsilon INSTANCE;
-    double upSpeed, downSpeed, leftSpeed, rightSpeed;
+    private static Epsilon INSTANCE;
+    private double upSpeed, downSpeed, leftSpeed, rightSpeed;
+    private int xp;
+
+    public int getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
 
     public static Epsilon getINSTANCE() {
         if (INSTANCE == null) INSTANCE = new Epsilon(EPSILON_STARTING_LOCATION);
@@ -26,11 +35,12 @@ public class Epsilon extends Entity {
 
     public Epsilon(Point2D location) {
         super(location);
+        setHp(100);
     }
 
     @Override
     public void damage(int reduction) {
-
+        setHp(getHp() - reduction);
     }
 
     public void accelerate (Direction direction, boolean isPositive) {
@@ -101,6 +111,7 @@ public class Epsilon extends Entity {
         setLocation(new Point2D.Double(x, y));
     }
     public void eat (Collectible collectible) {
+        setXp(getXp() + collectible.getXp());
         collectible.setActive(false);
         Controller.deactivateCollectibleView(collectible.getId());
     }

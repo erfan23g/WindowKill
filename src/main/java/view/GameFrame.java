@@ -8,11 +8,12 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import static controller.Constants.GAME_FRAME_SIZE;
+import static controller.KeyCodes.*;
 
 
 public class GameFrame extends JFrame implements KeyListener {
     private static GameFrame INSTANCE;
-    public static boolean w, s, a, d;
+    public static boolean w, s, a, d, info;
 
 
     private GameFrame() throws HeadlessException {
@@ -72,33 +73,39 @@ public class GameFrame extends JFrame implements KeyListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_UP) {
+        if (e.getKeyCode() == MOVE_UP) {
             w = true;
         }
-        if (e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_DOWN) {
+        if (e.getKeyCode() == MOVE_DOWN) {
             s = true;
         }
-        if (e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT) {
+        if (e.getKeyCode() == MOVE_LEFT) {
             a = true;
         }
-        if (e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT) {
+        if (e.getKeyCode() == MOVE_RIGHT) {
             d = true;
+        }
+        if (e.getKeyCode() == SHOW_INFO) {
+            info = true;
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_W || e.getKeyCode() == KeyEvent.VK_UP) {
+        if (e.getKeyCode() == MOVE_UP) {
             w = false;
         }
-        if (e.getKeyCode() == KeyEvent.VK_S || e.getKeyCode() == KeyEvent.VK_DOWN) {
+        if (e.getKeyCode() == MOVE_DOWN) {
             s = false;
         }
-        if (e.getKeyCode() == KeyEvent.VK_A || e.getKeyCode() == KeyEvent.VK_LEFT) {
+        if (e.getKeyCode() == MOVE_LEFT) {
             a = false;
         }
-        if (e.getKeyCode() == KeyEvent.VK_D || e.getKeyCode() == KeyEvent.VK_RIGHT) {
+        if (e.getKeyCode() == MOVE_RIGHT) {
             d = false;
+        }
+        if (e.getKeyCode() == SHOW_INFO) {
+            info = false;
         }
     }
 

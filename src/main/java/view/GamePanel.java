@@ -21,7 +21,25 @@ public final class GamePanel extends JPanel {
 
 
     private static GamePanel INSTANCE;
-    private final Random rng = new Random();
+    private int epsilonXp;
+
+    public int getEpsilonHp() {
+        return epsilonHp;
+    }
+
+    public void setEpsilonHp(int epsilonHp) {
+        this.epsilonHp = epsilonHp;
+    }
+
+    private int epsilonHp;
+
+    public int getEpsilonXp() {
+        return epsilonXp;
+    }
+
+    public void setEpsilonXp(int epsilonXp) {
+        this.epsilonXp = epsilonXp;
+    }
 
     private GamePanel() {
 //        setBorder(BorderFactory.createLineBorder(Color.green, 3));
@@ -69,13 +87,12 @@ public final class GamePanel extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         for (EntityView entityView : EntityView.entityViews) {
-            // TODO spin enemies
             if (entityView instanceof EpsilonView) {
                 g.setColor(Color.red);
-                g.drawOval((int) (entityView.getLocation().getX() - ((EpsilonView) entityView).radius),
-                        (int) (entityView.getLocation().getY() - ((EpsilonView) entityView).radius),
-                        (int) (((EpsilonView) entityView).radius * 2),
-                        (int) (((EpsilonView) entityView).radius) * 2);
+                g.drawOval((int) (entityView.getLocation().getX() - EPSILON_RADIUS),
+                        (int) (entityView.getLocation().getY() - EPSILON_RADIUS),
+                        (int) (EPSILON_RADIUS * 2),
+                        (int) (EPSILON_RADIUS * 2));
             } else if (entityView instanceof SquarantineView && ((SquarantineView) entityView).isActive()) {
                 g.setColor(Color.green);
                 g.fillPolygon(((SquarantineView) entityView).getShape());
@@ -111,6 +128,15 @@ public final class GamePanel extends JPanel {
                 g.setColor(collectibleView.getColor());
                 g.fillOval((int) (collectibleView.getLocation().getX() - COLLECTIBLE_RADIUS), (int) (collectibleView.getLocation().getY() - COLLECTIBLE_RADIUS), (int) ((COLLECTIBLE_RADIUS * 2)), (int) (COLLECTIBLE_RADIUS * 2));
             }
+        }
+        if (GameFrame.info) {
+            g.setColor(Color.cyan);
+            Font font = new Font("Times New Roman", Font.PLAIN, 20);
+            g.setFont(font);
+            FontMetrics fm = g.getFontMetrics();
+            double stringWidth = SwingUtilities.computeStringWidth(fm, "XP: " + epsilonXp);
+            g.drawString("HP: " + epsilonHp + "/100", 8, 20);
+            g.drawString("XP: " + epsilonXp, (int) (getSize().getWidth() - 8 - stringWidth), 20);
         }
     }
 

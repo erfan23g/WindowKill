@@ -12,6 +12,7 @@ public class Trigorath extends Enemy{
     public Trigorath(Point2D location) {
         super(location);
         setHp(15);
+        power = 10;
     }
 
     @Override

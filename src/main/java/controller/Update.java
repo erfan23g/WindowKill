@@ -77,6 +77,8 @@ public class Update {
         }
         GamePanel.getINSTANCE().setLocation((int) GamePanelModel.getINSTANCE().getLocation().getX(), (int) GamePanelModel.getINSTANCE().getLocation().getY());
         GamePanel.getINSTANCE().setSize(new Dimension((int) GamePanelModel.getINSTANCE().getSize().getWidth(), (int) GamePanelModel.getINSTANCE().getSize().getHeight()));
+        GamePanel.getINSTANCE().setEpsilonXp(Epsilon.getINSTANCE().getXp());
+        GamePanel.getINSTANCE().setEpsilonHp(Epsilon.getINSTANCE().getHp());
 
         GamePanel.getINSTANCE().repaint();
         fpsCount++;
@@ -118,15 +120,25 @@ public class Update {
                 ((Enemy) entity).updateAngle(Epsilon.getINSTANCE().getLocation());
                 ((Enemy) entity).accelerate();
                 ((Enemy) entity).move();
-                ((Enemy) entity).updateShape();
                 if (Epsilon.getINSTANCE().collisionPoint(entity) != null) {
+//                    ((Enemy) entity).rotate(true);
                     impact(Epsilon.getINSTANCE().collisionPoint(entity));
+                    for (Point2D point2D : ((Enemy) entity).getVertices()) {
+                        if (point2D.equals(Epsilon.getINSTANCE().collisionPoint(entity))) {
+                            Epsilon.getINSTANCE().damage(((Enemy) entity).getPower());
+                        }
+                    }
                 }
                 for (Entity entity2 : Entity.entities) {
                     if (entity2 instanceof Enemy && !entity2.getId().equals(entity.getId()) && ((Enemy) entity2).isActive() && entity.collisionPoint(entity2) != null) {
+//                        ((Enemy) entity).rotate(true);
+//                        ((Enemy) entity2).rotate(true);
                         impact(entity.collisionPoint(entity2));
                     }
                 }
+                ((Enemy) entity).updateShape();
+//                ((Enemy) entity).rotatePolygon(((Enemy) entity).getShape());
+//                ((Enemy) entity).accelerateRotation();
             }
         }
         for (Bullet bullet : Bullet.bullets) {

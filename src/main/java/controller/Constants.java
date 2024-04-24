@@ -18,17 +18,15 @@ public class Constants {
     public static final double FRAME_UPDATE_TIME = (double) TimeUnit.SECONDS.toMillis(1) / FPS;
     public static final int UPS = 200;
     public static final double MODEL_UPDATE_TIME = (double) TimeUnit.SECONDS.toMillis(1) / UPS;
-    public static final double INITIAL_WIDTH_REDUCTION_PER_UPDATE = 1.2;
-    public static final double WIDTH_REDUCTION_PER_UPDATE = 0.03;
-    public static final double INITIAL_HEIGHT_REDUCTION_PER_UPDATE = 0.8;
-    public static final double HEIGHT_REDUCTION_PER_UPDATE = 0.02;
+    public static final double EPSILON_RADIUS = 20;
+    public static final double BULLET_RADIUS = 2;
+    public static final double COLLECTIBLE_RADIUS = 4;
+    public static final double IMPACT_RADIUS = 60;
+    public static final double ENEMY_SIDE_LENGTH = 30;
     public static final double EPSILON_SPEED = (double) 200 / UPS;
     public static final double EPSILON_ACCELERATION = (double) 1 / UPS;
     public static final double BULLET_SPEED = (double) 800 / UPS;
     public static final double BULLET_ACCELERATION = (double) 4 / UPS;
-    public static final double EPSILON_RADIUS = 20;
-    public static final double BULLET_RADIUS = 2;
-    public static final double COLLECTIBLE_RADIUS = 4;
     public static final double EXPANSION_SPEED = (double) 500 / UPS;
     public static final double EXPANSION_ACCELERATION = (double) 10 / UPS;
     public static final double SHRINKAGE_SPEED = (double) 40 / UPS;
@@ -37,8 +35,8 @@ public class Constants {
     public static final double INITIAL_SHRINKAGE_ACCELERATION = (double) INITIAL_SHRINKAGE_SPEED / 100;
     public static final double ENEMY_SPEED = (double) 100 / UPS;
     public static final double ENEMY_ACCELERATION = (double) 5 / UPS;
-    public static final double ENEMY_SIDE_LENGTH = 30;
-    public static final double IMPACT_RADIUS = 60;
+    public static final double ENEMY_ROTATION_SPEED = (double) 4500 / UPS;
+    public static final double ENEMY_ROTATION_ACCELERATION = (double) 200 / UPS;
     public static final int COLLECTIBLE_XP = 5;
 
 }
