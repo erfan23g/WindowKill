@@ -34,7 +34,10 @@ public class Constants {
     public static final double INITIAL_SHRINKAGE_SPEED = (double) 100 / UPS;
     public static final double INITIAL_SHRINKAGE_ACCELERATION = (double) INITIAL_SHRINKAGE_SPEED / 100;
     public static final double ENEMY_SPEED = (double) 100 / UPS;
+    public static final double FAR_SPEED = (double) 200 / UPS;
+    public static final double DASH_SPEED = (double) 500 / UPS;
     public static final double ENEMY_ACCELERATION = (double) 5 / UPS;
+    public static final double DASH_ACCELERATION = (double) 50 / UPS;
     public static final double ENEMY_ROTATION_SPEED = (double) 4500 / UPS;
     public static final double ENEMY_ROTATION_ACCELERATION = (double) 200 / UPS;
     public static final int COLLECTIBLE_XP = 5;

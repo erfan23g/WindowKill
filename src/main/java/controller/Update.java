@@ -79,6 +79,7 @@ public class Update {
         GamePanel.getINSTANCE().setSize(new Dimension((int) GamePanelModel.getINSTANCE().getSize().getWidth(), (int) GamePanelModel.getINSTANCE().getSize().getHeight()));
         GamePanel.getINSTANCE().setEpsilonXp(Epsilon.getINSTANCE().getXp());
         GamePanel.getINSTANCE().setEpsilonHp(Epsilon.getINSTANCE().getHp());
+        GamePanel.getINSTANCE().getHpBar().setValue(Epsilon.getINSTANCE().getHp());
 
         GamePanel.getINSTANCE().repaint();
         fpsCount++;
@@ -118,14 +119,20 @@ public class Update {
         for (Entity entity : Entity.entities) {
             if (entity instanceof Enemy && ((Enemy) entity).isActive()) {
                 ((Enemy) entity).updateAngle(Epsilon.getINSTANCE().getLocation());
+                if (entity instanceof Squarantine) ((Squarantine) entity).changeDash();
                 ((Enemy) entity).accelerate();
                 ((Enemy) entity).move();
                 if (Epsilon.getINSTANCE().collisionPoint(entity) != null) {
 //                    ((Enemy) entity).rotate(true);
+                    if (entity instanceof Squarantine) ((Squarantine) entity).setDash(false);
                     impact(Epsilon.getINSTANCE().collisionPoint(entity));
-                    for (Point2D point2D : ((Enemy) entity).getVertices()) {
-                        if (point2D.equals(Epsilon.getINSTANCE().collisionPoint(entity))) {
-                            Epsilon.getINSTANCE().damage(((Enemy) entity).getPower());
+                    if (!((Enemy) entity).isCoolDown()) {
+                        for (Point2D point2D : ((Enemy) entity).getVertices()) {
+                            if (point2D.equals(Epsilon.getINSTANCE().collisionPoint(entity))) {
+                                Epsilon.getINSTANCE().damage(((Enemy) entity).getPower());
+                                ((Enemy) entity).setCoolDown(true);
+                                ((Enemy) entity).startCoolDownTimer();
+                            }
                         }
                     }
                 }
@@ -133,6 +140,7 @@ public class Update {
                     if (entity2 instanceof Enemy && !entity2.getId().equals(entity.getId()) && ((Enemy) entity2).isActive() && entity.collisionPoint(entity2) != null) {
 //                        ((Enemy) entity).rotate(true);
 //                        ((Enemy) entity2).rotate(true);
+                        if (entity instanceof Squarantine) ((Squarantine) entity).setDash(false);
                         impact(entity.collisionPoint(entity2));
                     }
                 }
@@ -173,7 +181,7 @@ public class Update {
         }
         GamePanelModel.getINSTANCE().accelerate();
         GamePanelModel.getINSTANCE().expand();
-        GamePanelModel.getINSTANCE().shrink();
+//        GamePanelModel.getINSTANCE().shrink();
         upsCount++;
     }
 

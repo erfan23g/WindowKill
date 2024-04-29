@@ -33,5 +33,6 @@ public abstract class EntityView {
         this.location = location;
     }
 
+    public abstract void draw(Graphics g);
 
 }

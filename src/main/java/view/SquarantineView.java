@@ -1,5 +1,6 @@
 package view;
 
+import javax.swing.*;
 import java.awt.*;
 
 import static controller.Constants.ENEMY_SIDE_LENGTH;
@@ -36,5 +37,21 @@ public class SquarantineView extends EntityView {
 
     public SquarantineView(String id) {
         super(id);
+    }
+
+    @Override
+    public void draw(Graphics g) {
+        if (isActive) {
+            g.setColor(Color.green);
+            g.fillPolygon(getShape());
+            Font font = new Font("Calibri", Font.PLAIN, 12);
+            g.setFont(font);
+            FontMetrics fm = g.getFontMetrics();
+            double stringWidth = SwingUtilities.computeStringWidth(fm, (getHp() + ""));
+            int centerX = (int) (getLocation().getX() - stringWidth / 2);
+            int centerY = (int) (getLocation().getY() + fm.getHeight() / 4);
+            g.setColor(Color.black);
+            g.drawString(getHp() + "", centerX, centerY);
+        }
     }
 }

@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.swing.Timer;
+import javax.swing.*;
 
 import static controller.Constants.*;
 
@@ -41,6 +41,9 @@ public class Epsilon extends Entity {
     @Override
     public void damage(int reduction) {
         setHp(getHp() - reduction);
+        if (getHp() <= 0) {
+            die();
+        }
     }
 
     public void accelerate (Direction direction, boolean isPositive) {
@@ -114,5 +117,8 @@ public class Epsilon extends Entity {
         setXp(getXp() + collectible.getXp());
         collectible.setActive(false);
         Controller.deactivateCollectibleView(collectible.getId());
+    }
+    private void die () {
+        JOptionPane.showMessageDialog(null, "Game Over!");
     }
 }

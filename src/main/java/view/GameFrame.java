@@ -74,6 +74,7 @@ public class GameFrame extends JFrame implements KeyListener {
     @Override
     public void keyPressed(KeyEvent e) {
         if (e.getKeyCode() == MOVE_UP) {
+            System.out.println("hi");
             w = true;
         }
         if (e.getKeyCode() == MOVE_DOWN) {

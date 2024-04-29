@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
+import static controller.Constants.COLLECTIBLE_RADIUS;
+
 public class CollectibleView {
     public static ArrayList<CollectibleView> collectibleViews = new ArrayList<>();
     private final Color color;
@@ -45,5 +47,9 @@ public class CollectibleView {
         this.color = color;
         isActive = true;
         collectibleViews.add(this);
+    }
+    public void draw (Graphics g) {
+        g.setColor(getColor());
+        g.fillOval((int) (getLocation().getX() - COLLECTIBLE_RADIUS), (int) (getLocation().getY() - COLLECTIBLE_RADIUS), (int) ((COLLECTIBLE_RADIUS * 2)), (int) (COLLECTIBLE_RADIUS * 2));
     }
 }

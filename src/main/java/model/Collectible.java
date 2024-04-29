@@ -46,7 +46,7 @@ public class Collectible implements Collidable {
                 setActive(false);
                 Controller.deactivateCollectibleView(id);
             }
-        });
+        }).start();
     }
 
     public Color getColor() {

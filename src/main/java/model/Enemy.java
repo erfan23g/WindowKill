@@ -5,16 +5,28 @@ import model.collision.Collidable;
 import view.SquarantineView;
 
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.Timer;
 
 import static controller.Constants.*;
 
 public abstract class Enemy extends Entity implements Collidable {
     private Polygon shape;
     protected int power;
+    private boolean coolDown;
+
+    public boolean isCoolDown() {
+        return coolDown;
+    }
+
+    public void setCoolDown(boolean coolDown) {
+        this.coolDown = coolDown;
+    }
 
     public int getPower() {
         return power;
@@ -28,9 +40,9 @@ public abstract class Enemy extends Entity implements Collidable {
         this.shape = shape;
     }
 
-
-    private double verticalSpeed, horizontalSpeed;
-    private double angle = 0;
+    private final Timer coolDownTimer;
+    protected double verticalSpeed, horizontalSpeed;
+    protected double angle = 0;
     private boolean isActive = true;
     private double rotationSpeed;
     public double getAngle() {
@@ -54,54 +66,19 @@ public abstract class Enemy extends Entity implements Collidable {
     public Enemy(Point2D location) {
         super(location);
         updateShape();
+        coolDownTimer = new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setCoolDown(false);
+                coolDownTimer.stop();
+            }
+        });
     }
 
 
 
 
-    public void accelerate() {
-        if (getImpactAngles().isEmpty()) {
-
-            if (angle < 0 && verticalSpeed > -ENEMY_SPEED) {
-                verticalSpeed -= ENEMY_ACCELERATION;
-                verticalSpeed = Math.max(-ENEMY_SPEED, verticalSpeed);
-            } else if (angle > 0 && verticalSpeed < ENEMY_SPEED) {
-                verticalSpeed += ENEMY_ACCELERATION;
-                verticalSpeed = Math.min(ENEMY_SPEED, verticalSpeed);
-            }
-            if (angle > -Math.PI / 2 && angle < Math.PI / 2 & horizontalSpeed < ENEMY_SPEED) {
-                horizontalSpeed += ENEMY_ACCELERATION;
-                horizontalSpeed = Math.min(ENEMY_SPEED, horizontalSpeed);
-            } else if ((angle < -Math.PI / 2 || angle > Math.PI / 2) && horizontalSpeed > -ENEMY_SPEED) {
-                horizontalSpeed -= ENEMY_ACCELERATION;
-                horizontalSpeed = Math.max(-ENEMY_SPEED, horizontalSpeed);
-            }
-        } else {
-            ArrayList<HashMap<String, Double>> anglesToRemove = new ArrayList<>();
-            for (HashMap<String, Double> impactAngle : getImpactAngles()) {
-                if (impactAngle.get("angle") < 0 && verticalSpeed > -ENEMY_SPEED) {
-                    verticalSpeed -= impactAngle.get("acceleration");
-                    verticalSpeed = Math.max(-ENEMY_SPEED, verticalSpeed);
-                } else if (impactAngle.get("angle") > 0 && verticalSpeed < ENEMY_SPEED) {
-                    verticalSpeed += impactAngle.get("acceleration");
-                    verticalSpeed = Math.min(ENEMY_SPEED, verticalSpeed);
-                }
-                if (impactAngle.get("angle") > -Math.PI / 2 && impactAngle.get("angle") < Math.PI / 2 & horizontalSpeed < ENEMY_SPEED) {
-                    horizontalSpeed += impactAngle.get("acceleration");
-                    horizontalSpeed = Math.min(ENEMY_SPEED, horizontalSpeed);
-                } else if ((impactAngle.get("angle") < -Math.PI / 2 || impactAngle.get("angle") > Math.PI / 2) && horizontalSpeed > -ENEMY_SPEED) {
-                    horizontalSpeed -= impactAngle.get("acceleration");
-                    horizontalSpeed = Math.max(-ENEMY_SPEED, horizontalSpeed);
-                }
-                Double count = impactAngle.get("count") - 1;
-                impactAngle.put("count", count);
-                if (impactAngle.get("count") < 1) {
-                    anglesToRemove.add(impactAngle);
-                }
-            }
-            getImpactAngles().removeAll(anglesToRemove);
-        }
-    }
+    public abstract void accelerate();
     public void move() {
         double dx = Math.abs(Math.cos(angle)) * horizontalSpeed, dy = Math.abs(Math.sin(angle)) * verticalSpeed;
         setLocation(new Point2D.Double(getLocation().getX() + dx, getLocation().getY() + dy));
@@ -172,5 +149,8 @@ public abstract class Enemy extends Entity implements Collidable {
         rotationAngle.put("direction", (double) (isClockwise ? 1 : -1));
         rotationAngle.put("accelerating", 1.0);
         rotationAngles.add(rotationAngle);
+    }
+    public void startCoolDownTimer() {
+        coolDownTimer.start();
     }
 }
