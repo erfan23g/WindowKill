@@ -49,9 +49,9 @@ public class Main {
 //            new Squarantine(new Point2D.Double(600, 500));
 //            new Squarantine(new Point2D.Double(700, 500));
 //            new Trigorath(new Point2D.Double(800, 600));
-            new Trigorath(new Point2D.Double(800, 700));
+//            new Trigorath(new Point2D.Double(800, 700));
 //            new Trigorath(new Point2D.Double(800, 800));
-            new Update();
+            Update.start();
             new Timer(1000, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {

@@ -42,4 +42,6 @@ public class Constants {
     public static final double ENEMY_ROTATION_ACCELERATION = (double) 200 / UPS;
     public static final int COLLECTIBLE_XP = 5;
 
+    public static final int ENEMIES_PER_WAVE = 4;
+
 }

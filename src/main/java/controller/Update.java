@@ -19,24 +19,22 @@ import static controller.Utils.relativeLocation;
 public class Update {
     public static int upsCount = 0, fpsCount = 0;
 
+
+
+    public static int wave;
+    public static boolean inBetweenWaves;
+    private static Timer modelTimer, viewTimer, waveTimer;
+
     public Update() {
-        new Timer((int) FRAME_UPDATE_TIME, e -> updateView()) {{
-            setCoalesce(true);
-        }}.start();
-        new Timer((int) MODEL_UPDATE_TIME, e -> updateModel()) {{
-            setCoalesce(true);
-        }}.start();
+
     }
 
-    public void updateView() {
+    public static void updateView() {
         for (EntityView entityView : EntityView.entityViews) {
             entityView.setLocation(relativeLocation(Controller.findEntityLocation(entityView.getId()), GamePanelModel.getINSTANCE().getLocation()));
-            if (entityView instanceof SquarantineView && ((SquarantineView) entityView).isActive()) {
+            if (entityView instanceof SquarantineView) {
                 Enemy entityModel = (Enemy) Controller.findEntity(entityView.getId());
-                if (!entityModel.isActive()) {
-                    ((SquarantineView) entityView).setActive(false);
-                    continue;
-                }
+                ((SquarantineView) entityView).setActive(entityModel.isActive());
                 ((SquarantineView) entityView).setHp(entityModel.getHp());
                 Polygon shape = entityModel.getShape();
                 int[] xPoints = new int[4];
@@ -47,12 +45,9 @@ public class Update {
                     yPoints[i] = (int) point2D.getY();
                 }
                 ((SquarantineView) entityView).setShape(new Polygon(xPoints, yPoints, 4));
-            } else if (entityView instanceof TrigorathView && ((TrigorathView) entityView).isActive()) {
+            } else if (entityView instanceof TrigorathView) {
                 Enemy entityModel = (Enemy) Controller.findEntity(entityView.getId());
-                if (!entityModel.isActive()) {
-                    ((TrigorathView) entityView).setActive(false);
-                    continue;
-                }
+                ((TrigorathView) entityView).setActive(entityModel.isActive());
                 ((TrigorathView) entityView).setHp(entityModel.getHp());
                 Polygon shape = entityModel.getShape();
                 int[] xPoints = new int[3];
@@ -85,7 +80,7 @@ public class Update {
         fpsCount++;
     }
 
-    public void updateModel() {
+    public static void updateModel() {
 //        shrink();
         if (GameFrame.w) {
             Epsilon.getINSTANCE().accelerate(Direction.UP, true);
@@ -181,12 +176,19 @@ public class Update {
         }
         GamePanelModel.getINSTANCE().accelerate();
         GamePanelModel.getINSTANCE().expand();
-//        GamePanelModel.getINSTANCE().shrink();
+        if (!inBetweenWaves && !Enemy.enemiesLeft()) {
+            wave += 1;
+            inBetweenWaves = true;
+            waveTimer.restart();
+        }
+        if (!inBetweenWaves) {
+            GamePanelModel.getINSTANCE().shrink();
+        }
         upsCount++;
     }
 
 
-    public void impact(Point2D point) {
+    public static void impact(Point2D point) {
         for (Entity entity : Entity.entities) {
 //            System.out.println(entity.getLocation());
 //            System.out.println(point.distance(entity.getLocation()));
@@ -204,5 +206,60 @@ public class Update {
                 entity.getImpactAngles().add(map);
             }
         }
+    }
+    public static void spawnEnemies () {
+        for (int i = 0; i < ENEMIES_PER_WAVE * wave / 2; i++) {
+            Point2D sqPoint;
+            do {
+                sqPoint = new Point2D.Double(Math.random() * GameFrame.getINSTANCE().getWidth(), Math.random() * GameFrame.getINSTANCE().getHeight());
+            } while (sqPoint.getX() > GamePanelModel.getINSTANCE().getLocation().getX() && sqPoint.getX() < GamePanelModel.getINSTANCE().getLocation().getX() + GamePanelModel.getINSTANCE().getSize().getWidth() && sqPoint.getY() > GamePanelModel.getINSTANCE().getLocation().getY() && sqPoint.getY() < GamePanelModel.getINSTANCE().getLocation().getY() + GamePanelModel.getINSTANCE().getSize().getHeight());
+            Point2D trPoint;
+            do {
+                trPoint = new Point2D.Double(Math.random() * GameFrame.getINSTANCE().getWidth(), Math.random() * GameFrame.getINSTANCE().getHeight());
+            } while (trPoint.getX() > GamePanelModel.getINSTANCE().getLocation().getX() && trPoint.getX() < GamePanelModel.getINSTANCE().getLocation().getX() + GamePanelModel.getINSTANCE().getSize().getWidth() && trPoint.getY() > GamePanelModel.getINSTANCE().getLocation().getY() && trPoint.getY() < GamePanelModel.getINSTANCE().getLocation().getY() + GamePanelModel.getINSTANCE().getSize().getHeight());
+            Enemy.spawn(sqPoint, true);
+            Enemy.spawn(trPoint, false);
+        }
+    }
+    public static void gameOver(){
+        JOptionPane.showMessageDialog(null, "Game Over!");
+        JOptionPane.showMessageDialog(null, "Collected XP: " + Epsilon.getINSTANCE().getXp(), "Game Over!", JOptionPane.INFORMATION_MESSAGE);
+        Epsilon.dispose();
+        GamePanelModel.dispose();
+        GamePanel.dispose();
+        Bullet.bullets = new ArrayList<>();
+        BulletView.bulletViews = new ArrayList<>();
+        Collectible.collectibles = new ArrayList<>();
+        CollectibleView.collectibleViews = new ArrayList<>();
+        Entity.entities = new ArrayList<>();
+        EpsilonView.entityViews = new ArrayList<>();
+        modelTimer.stop();
+        viewTimer.stop();
+        waveTimer.stop();
+        upsCount = 0;
+        fpsCount = 0;
+        GameFrame.getINSTANCE().repaint();
+    }
+    public static void start() {
+        wave = 1;
+        inBetweenWaves = true;
+        viewTimer = new Timer((int) FRAME_UPDATE_TIME, e -> updateView()) {{
+            setCoalesce(true);
+        }};
+        modelTimer = new Timer((int) MODEL_UPDATE_TIME, e -> updateModel()) {{
+            setCoalesce(true);
+        }};
+
+        waveTimer = new Timer(10000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                inBetweenWaves = false;
+                spawnEnemies();
+                waveTimer.stop();
+            }
+        });
+        modelTimer.start();
+        viewTimer.start();
+        waveTimer.start();
     }
 }

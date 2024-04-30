@@ -90,4 +90,11 @@ public class Trigorath extends Enemy{
         horizontalSpeed = Math.max(-speed, horizontalSpeed);
         horizontalSpeed = Math.min(speed, horizontalSpeed);
     }
+    public void revive (Point2D location) {
+        setLocation(location);
+        updateShape();
+        setCoolDown(false);
+        setHp(15);
+        setActive(true);
+    }
 }

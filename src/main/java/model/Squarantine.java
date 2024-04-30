@@ -1,5 +1,7 @@
 package model;
 
+import controller.Controller;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -47,7 +49,7 @@ public class Squarantine extends Enemy{
     }
 
     public void changeDash () {
-        int rnd = (int) (Math.random() * 1000);
+        int rnd = (int) (Math.random() * 10000);
         if (rnd == 10) {
             setDash(true);
         }
@@ -96,5 +98,13 @@ public class Squarantine extends Enemy{
             }
             getImpactAngles().removeAll(anglesToRemove);
         }
+    }
+    public void revive (Point2D location) {
+        setLocation(location);
+        updateShape();
+        setCoolDown(false);
+        setDash(false);
+        setHp(10);
+        setActive(true);
     }
 }

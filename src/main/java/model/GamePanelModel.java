@@ -85,6 +85,7 @@ public class GamePanelModel implements Collidable {
     public GamePanelModel() {
         size = INITIAL_PANEL_SIZE;
         setLocationToCenter();
+//        Update.start();
     }
 
     public void setLocationToCenter() {
@@ -162,6 +163,10 @@ public class GamePanelModel implements Collidable {
                 expandRight = false;
             }
         }
+//        double x = Math.max(0, getLocation().getX()), y = Math.max(0, getLocation().getY());
+//        x = Math.min(GAME_FRAME_SIZE.getWidth() - getSize().getWidth(), x);
+//        y = Math.min(GAME_FRAME_SIZE.getHeight() - getSize().getHeight(), y);
+//        setLocation(new Point2D.Double(x, y));
     }
     public void shrink () {
         double x = getLocation().getX();
@@ -181,5 +186,12 @@ public class GamePanelModel implements Collidable {
         if (width == MINIMUM_PANEL_SIZE.getWidth()) horizontalSpeed = 0;
         if (height == MINIMUM_PANEL_SIZE.getHeight()) verticalSpeed = 0;
         if (width == MINIMUM_PANEL_SIZE.getWidth() && height == MINIMUM_PANEL_SIZE.getHeight()) beginning = false;
+//        double x2 = Math.max(0, getLocation().getX()), y2 = Math.max(0, getLocation().getY());
+//        x = Math.min(GAME_FRAME_SIZE.getWidth() - getSize().getWidth(), x2);
+//        y = Math.min(GAME_FRAME_SIZE.getHeight() - getSize().getHeight(), y2);
+//        setLocation(new Point2D.Double(x2, y2));
+    }
+    public static void dispose() {
+        INSTANCE = null;
     }
 }

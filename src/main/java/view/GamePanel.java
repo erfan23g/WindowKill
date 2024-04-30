@@ -16,7 +16,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.Random;
+import java.util.TimeZone;
+import java.util.concurrent.TimeUnit;
 
 import static controller.Constants.*;
 
@@ -48,6 +52,7 @@ public final class GamePanel extends JPanel {
     public JProgressBar getHpBar() {
         return hpBar;
     }
+    private final long startTime;
 
 
     private GamePanel() {
@@ -56,6 +61,7 @@ public final class GamePanel extends JPanel {
         setSize(new Dimension((int) INITIAL_PANEL_SIZE.getWidth(), (int) INITIAL_PANEL_SIZE.getHeight()));
         setLocationToCenter();
         setLayout(null);
+        startTime = System.currentTimeMillis();
         hpBar = new JProgressBar(0, 100);
         hpBar.setVisible(false);
         String text = "HP: " + epsilonHp;
@@ -105,54 +111,21 @@ public final class GamePanel extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        for (EntityView entityView : EntityView.entityViews) {
-//            if (entityView instanceof EpsilonView) {
-//                g.setColor(Color.red);
-//                g.drawOval((int) (entityView.getLocation().getX() - EPSILON_RADIUS),
-//                        (int) (entityView.getLocation().getY() - EPSILON_RADIUS),
-//                        (int) (EPSILON_RADIUS * 2),
-//                        (int) (EPSILON_RADIUS * 2));
-//            } else if (entityView instanceof SquarantineView && ((SquarantineView) entityView).isActive()) {
-//                g.setColor(Color.green);
-//                g.fillPolygon(((SquarantineView) entityView).getShape());
-//                Font font = new Font("Calibri", Font.PLAIN, 12);
-//                g.setFont(font);
-//                FontMetrics fm = g.getFontMetrics();
-//                double stringWidth = SwingUtilities.computeStringWidth(fm, ((SquarantineView) entityView).getHp() + "");
-//                int centerX = (int) (entityView.getLocation().getX() - stringWidth / 2);
-//                int centerY = (int) (entityView.getLocation().getY() + fm.getHeight() / 4);
-//                g.setColor(Color.black);
-//                g.drawString(((SquarantineView) entityView).getHp() + "", centerX, centerY);
-//            } else if (entityView instanceof TrigorathView && ((TrigorathView) entityView).isActive()) {
-//                g.setColor(Color.yellow);
-//                g.fillPolygon(((TrigorathView) entityView).getShape());
-//                Font font = new Font("Calibri", Font.PLAIN, 12);
-//                g.setFont(font);
-//                FontMetrics fm = g.getFontMetrics();
-//                double stringWidth = SwingUtilities.computeStringWidth(fm, ((TrigorathView) entityView).getHp() + "");
-//                int centerX = (int) (entityView.getLocation().getX() - stringWidth / 2);
-//                int centerY = (int) (entityView.getLocation().getY() + fm.getHeight() / 4);
-//                g.setColor(Color.black);
-//                g.drawString(((TrigorathView) entityView).getHp() + "", centerX, centerY);
-//            }
-            entityView.draw(g);
-        }
         for (BulletView bulletView : BulletView.bulletViews) {
             if (bulletView.isActive()) {
-//                g.setColor(Color.red);
-//                g.drawOval((int) (bulletView.getLocation().getX() - BULLET_RADIUS), (int) (bulletView.getLocation().getY() - BULLET_RADIUS), (int) ((BULLET_RADIUS * 2)), (int) (BULLET_RADIUS * 2));
                 bulletView.draw(g);
             }
         }
         for (CollectibleView collectibleView : CollectibleView.collectibleViews) {
             if (collectibleView.isActive()) {
-//                g.setColor(collectibleView.getColor());
-//                g.fillOval((int) (collectibleView.getLocation().getX() - COLLECTIBLE_RADIUS), (int) (collectibleView.getLocation().getY() - COLLECTIBLE_RADIUS), (int) ((COLLECTIBLE_RADIUS * 2)), (int) (COLLECTIBLE_RADIUS * 2));
                 collectibleView.draw(g);
             }
         }
+        for (EntityView entityView : EntityView.entityViews) {
+            entityView.draw(g);
+        }
         if (GameFrame.info) {
-            g.setColor(Color.cyan);
+            g.setColor(Color.MAGENTA);
             Font font = new Font("Times New Roman", Font.PLAIN, 20);
             g.setFont(font);
             FontMetrics fm = g.getFontMetrics();
@@ -162,7 +135,13 @@ public final class GamePanel extends JPanel {
             g.drawString("HP: " + epsilonHp + "/100", 8, 20);
             double stringWidth2 = SwingUtilities.computeStringWidth(fm, "XP: " + epsilonXp);
             g.drawString("XP: " + epsilonXp, (int) (getSize().getWidth() - 8 - stringWidth2), 20);
-            hpBar.setVisible(true);
+            double stringWidth3 = SwingUtilities.computeStringWidth(fm, getElapsedTime());
+            g.drawString(getElapsedTime(), 8, (int) (getSize().getHeight() - 12));
+            double stringWidth4 = SwingUtilities.computeStringWidth(fm, "Wave: " + Update.wave + "/3");
+            if (!Update.inBetweenWaves) {
+                g.drawString("Wave: " + Update.wave + "/3", (int) (getSize().getWidth() - 8 - stringWidth4), (int) (getSize().getHeight() - 12));
+            }
+//            hpBar.setVisible(true);
         } else {
             hpBar.setVisible(false);
         }
@@ -171,6 +150,23 @@ public final class GamePanel extends JPanel {
     public static GamePanel getINSTANCE() {
         if (INSTANCE == null) INSTANCE = new GamePanel();
         return INSTANCE;
+    }
+    private String getElapsedTime () {
+        long milliseconds = System.currentTimeMillis() - startTime;
+
+        long hours = TimeUnit.MILLISECONDS.toHours(milliseconds);
+        long minutes = TimeUnit.MILLISECONDS.toMinutes(milliseconds) % 60;
+        long seconds = TimeUnit.MILLISECONDS.toSeconds(milliseconds) % 60;
+
+        // Format the string to "HH:MM:SS"
+        return String.format("%02d:%02d:%02d", hours, minutes, seconds);
+
+    }
+
+    public static void dispose() {
+        GameFrame.getINSTANCE().remove(INSTANCE);
+        INSTANCE.setVisible(false);
+        INSTANCE = null;
     }
 
 }

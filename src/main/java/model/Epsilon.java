@@ -1,6 +1,7 @@
 package model;
 
 import controller.Controller;
+import controller.Update;
 import model.collision.Collidable;
 import model.movement.Direction;
 import view.GamePanel;
@@ -42,7 +43,7 @@ public class Epsilon extends Entity {
     public void damage(int reduction) {
         setHp(getHp() - reduction);
         if (getHp() <= 0) {
-            die();
+            Update.gameOver();
         }
     }
 
@@ -118,7 +119,8 @@ public class Epsilon extends Entity {
         collectible.setActive(false);
         Controller.deactivateCollectibleView(collectible.getId());
     }
-    private void die () {
-        JOptionPane.showMessageDialog(null, "Game Over!");
+
+    public static void dispose() {
+        INSTANCE = null;
     }
 }

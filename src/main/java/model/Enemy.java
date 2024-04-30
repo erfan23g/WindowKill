@@ -153,4 +153,31 @@ public abstract class Enemy extends Entity implements Collidable {
     public void startCoolDownTimer() {
         coolDownTimer.start();
     }
+
+    public static boolean enemiesLeft() {
+        for (Entity entity : entities) {
+            if (entity instanceof Enemy && ((Enemy) entity).isActive) return true;
+        }
+        return false;
+    }
+    public abstract void revive (Point2D location);
+    public static void spawn(Point2D location, boolean isSquarantine) {
+        if (isSquarantine) {
+            for (Entity entity : entities) {
+                if (entity instanceof Squarantine && !((Squarantine) entity).isActive()) {
+                    ((Squarantine) entity).revive(location);
+                    return;
+                }
+            }
+            new Squarantine(location);
+        } else {
+            for (Entity entity : entities) {
+                if (entity instanceof Trigorath && !((Trigorath) entity).isActive()) {
+                    ((Trigorath) entity).revive(location);
+                    return;
+                }
+            }
+            new Trigorath(location);
+        }
+    }
 }
