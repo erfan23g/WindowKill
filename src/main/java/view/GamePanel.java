@@ -16,6 +16,8 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.Point2D;
+import java.time.Year;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Random;
@@ -124,13 +126,15 @@ public final class GamePanel extends JPanel {
         for (EntityView entityView : EntityView.entityViews) {
             entityView.draw(g);
         }
+        g.setColor(Color.MAGENTA);
+        Font font = new Font("Times New Roman", Font.PLAIN, 20);
+        g.setFont(font);
+        FontMetrics fm = g.getFontMetrics();
         if (GameFrame.info) {
-            g.setColor(Color.MAGENTA);
-            Font font = new Font("Times New Roman", Font.PLAIN, 20);
-            g.setFont(font);
-            FontMetrics fm = g.getFontMetrics();
 
 
+
+            epsilonHp = Math.max(0, epsilonHp);
             double stringWidth = SwingUtilities.computeStringWidth(fm, "HP: " + epsilonHp + "/100");
             g.drawString("HP: " + epsilonHp + "/100", 8, 20);
             double stringWidth2 = SwingUtilities.computeStringWidth(fm, "XP: " + epsilonXp);
@@ -142,8 +146,10 @@ public final class GamePanel extends JPanel {
                 g.drawString("Wave: " + Update.wave + "/3", (int) (getSize().getWidth() - 8 - stringWidth4), (int) (getSize().getHeight() - 12));
             }
 //            hpBar.setVisible(true);
-        } else {
-            hpBar.setVisible(false);
+        }
+        double stringWidth5 = SwingUtilities.computeStringWidth(fm, "Not enough HP!");
+        if (Update.isHpError()) {
+            g.drawString("Not enough HP!", (int) (getSize().getWidth() - stringWidth5) / 2, 35);
         }
     }
 
@@ -152,7 +158,7 @@ public final class GamePanel extends JPanel {
         return INSTANCE;
     }
     private String getElapsedTime () {
-        long milliseconds = System.currentTimeMillis() - startTime;
+        long milliseconds = System.currentTimeMillis() - startTime - Update.getStoreTime2();
 
         long hours = TimeUnit.MILLISECONDS.toHours(milliseconds);
         long minutes = TimeUnit.MILLISECONDS.toMinutes(milliseconds) % 60;

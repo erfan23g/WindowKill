@@ -1,5 +1,7 @@
 package view;
 
+import controller.Update;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusEvent;
@@ -87,6 +89,15 @@ public class GameFrame extends JFrame implements KeyListener {
         }
         if (e.getKeyCode() == SHOW_INFO) {
             info = true;
+        }
+        if (e.getKeyCode() == STORE) {
+            if (!StorePanel.isNull()){
+                if (StorePanel.isOpen){
+                    Update.closeStore();
+                } else {
+                    Update.openStore();
+                }
+            }
         }
     }
 

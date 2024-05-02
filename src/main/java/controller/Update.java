@@ -23,7 +23,14 @@ public class Update {
 
     public static int wave;
     public static boolean inBetweenWaves;
-    private static Timer modelTimer, viewTimer, waveTimer;
+    private static Timer modelTimer, viewTimer, waveTimer, empowerTimer, hpErrorTimer;
+    private static long storeTime, storeTime2;
+    private static boolean doublePower;
+    private static boolean hpError;
+
+    public static boolean isHpError() {
+        return hpError;
+    }
 
     public Update() {
 
@@ -120,7 +127,7 @@ public class Update {
                 if (Epsilon.getINSTANCE().collisionPoint(entity) != null) {
 //                    ((Enemy) entity).rotate(true);
                     if (entity instanceof Squarantine) ((Squarantine) entity).setDash(false);
-                    impact(Epsilon.getINSTANCE().collisionPoint(entity));
+                    impact(Epsilon.getINSTANCE().collisionPoint(entity), false);
                     if (!((Enemy) entity).isCoolDown()) {
                         for (Point2D point2D : ((Enemy) entity).getVertices()) {
                             if (point2D.equals(Epsilon.getINSTANCE().collisionPoint(entity))) {
@@ -136,7 +143,7 @@ public class Update {
 //                        ((Enemy) entity).rotate(true);
 //                        ((Enemy) entity2).rotate(true);
                         if (entity instanceof Squarantine) ((Squarantine) entity).setDash(false);
-                        impact(entity.collisionPoint(entity2));
+                        impact(entity.collisionPoint(entity2), false);
                     }
                 }
                 ((Enemy) entity).updateShape();
@@ -153,14 +160,14 @@ public class Update {
                         if (bullet.collisionPoint(entity) != null) {
                             bullet.setActive(false);
                             Controller.findBulletView(bullet.getId()).setActive(false);
-                            entity.damage(5);
-                            impact(bullet.collisionPoint(entity));
+                            entity.damage(5 * (doublePower ? 2 : 1));
+                            impact(bullet.collisionPoint(entity), false);
                         }
                     }
                 }
                 if (bullet.collisionPoint(GamePanelModel.getINSTANCE()) != null) {
                     bullet.setActive(false);
-                    impact(bullet.collisionPoint(GamePanelModel.getINSTANCE()));
+                    impact(bullet.collisionPoint(GamePanelModel.getINSTANCE()), false);
                     Controller.findBulletView(bullet.getId()).setActive(false);
                     if (bullet.collisionPoint(GamePanelModel.getINSTANCE()).getY() == 0) {
                         GamePanelModel.getINSTANCE().setExpandUp(true);
@@ -188,22 +195,34 @@ public class Update {
     }
 
 
-    public static void impact(Point2D point) {
-        for (Entity entity : Entity.entities) {
-//            System.out.println(entity.getLocation());
-//            System.out.println(point.distance(entity.getLocation()));
-            if (point.distance(entity.getLocation()) < IMPACT_RADIUS) {
-                double angle = Math.atan2(point.getY() - entity.getLocation().getY(), point.getX() - entity.getLocation().getX());
-                double angle2 = (angle > 0) ? angle - Math.PI : angle + Math.PI;
-                HashMap<String, Double> map = new HashMap<>();
-                map.put("angle", angle2);
-                map.put("count", 50.0);
-                if (entity instanceof Epsilon) {
-                    map.put("acceleration", (IMPACT_RADIUS - point.distance(entity.getLocation())) * 0.001);
-                } else {
-                    map.put("acceleration", (IMPACT_RADIUS - point.distance(entity.getLocation())) * 0.01);
+    public static void impact(Point2D point, boolean isBanish) {
+        if (!isBanish) {
+            for (Entity entity : Entity.entities) {
+                if (point.distance(entity.getLocation()) < IMPACT_RADIUS) {
+                    double angle = Math.atan2(point.getY() - entity.getLocation().getY(), point.getX() - entity.getLocation().getX());
+                    double angle2 = (angle > 0) ? angle - Math.PI : angle + Math.PI;
+                    HashMap<String, Double> map = new HashMap<>();
+                    map.put("angle", angle2);
+                    map.put("count", 50.0);
+                    if (entity instanceof Epsilon) {
+                        map.put("acceleration", (IMPACT_RADIUS - point.distance(entity.getLocation())) * 0.001);
+                    } else {
+                        map.put("acceleration", (IMPACT_RADIUS - point.distance(entity.getLocation())) * 0.01);
+                    }
+                    entity.getImpactAngles().add(map);
                 }
-                entity.getImpactAngles().add(map);
+            }
+        } else {
+            for (Entity entity : Entity.entities) {
+                if (!(entity instanceof Epsilon) && point.distance(entity.getLocation()) < IMPACT_RADIUS) {
+                    double angle = Math.atan2(point.getY() - entity.getLocation().getY(), point.getX() - entity.getLocation().getX());
+                    double angle2 = (angle > 0) ? angle - Math.PI : angle + Math.PI;
+                    HashMap<String, Double> map = new HashMap<>();
+                    map.put("angle", angle2);
+                    map.put("count", 250.0);
+                    map.put("acceleration", (IMPACT_RADIUS - point.distance(entity.getLocation())) * 0.01);
+                    entity.getImpactAngles().add(map);
+                }
             }
         }
     }
@@ -222,7 +241,6 @@ public class Update {
         }
     }
     public static void gameOver(){
-        JOptionPane.showMessageDialog(null, "Game Over!");
         JOptionPane.showMessageDialog(null, "Collected XP: " + Epsilon.getINSTANCE().getXp(), "Game Over!", JOptionPane.INFORMATION_MESSAGE);
         Epsilon.dispose();
         GamePanelModel.dispose();
@@ -233,11 +251,22 @@ public class Update {
         CollectibleView.collectibleViews = new ArrayList<>();
         Entity.entities = new ArrayList<>();
         EpsilonView.entityViews = new ArrayList<>();
+        GameFrame.w = false;
+        GameFrame.s = false;
+        GameFrame.a = false;
+        GameFrame.d = false;
+        GameFrame.info = false;
         modelTimer.stop();
         viewTimer.stop();
         waveTimer.stop();
+        empowerTimer.stop();
+        hpErrorTimer.stop();
         upsCount = 0;
         fpsCount = 0;
+        storeTime = 0;
+        storeTime2 = 0;
+        doublePower = false;
+        StartingPanel.getINSTANCE();
         GameFrame.getINSTANCE().repaint();
     }
     public static void start() {
@@ -258,8 +287,83 @@ public class Update {
                 waveTimer.stop();
             }
         });
+        empowerTimer = new Timer(10000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                doublePower = false;
+                empowerTimer.stop();
+            }
+        });
+        hpErrorTimer = new Timer(3000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                hpError = false;
+                hpErrorTimer.stop();
+            }
+        });
         modelTimer.start();
         viewTimer.start();
         waveTimer.start();
+    }
+    public static void openStore() {
+        StorePanel.isOpen = true;
+        modelTimer.stop();
+        viewTimer.stop();
+        waveTimer.stop();
+        empowerTimer.stop();
+        hpErrorTimer.stop();
+        hpError = false;
+        GamePanel.getINSTANCE().setVisible(false);
+        StorePanel.getINSTANCE().setVisible(true);
+        GameFrame.getINSTANCE().repaint();
+        storeTime = System.currentTimeMillis();
+    }
+
+    public static long getStoreTime2() {
+        return storeTime2;
+    }
+
+    public static void closeStore() {
+        StorePanel.isOpen = false;
+        modelTimer.start();
+        viewTimer.start();
+        if (inBetweenWaves) waveTimer.start();
+        if (doublePower) empowerTimer.stop();
+        StorePanel.getINSTANCE().setVisible(false);
+        GamePanel.getINSTANCE().setVisible(true);
+        GameFrame.getINSTANCE().repaint();
+        storeTime2 += (System.currentTimeMillis() - storeTime);
+        storeTime = 0;
+    }
+    public static void banish () {
+        closeStore();
+        if (Epsilon.getINSTANCE().getXp() >= 100) {
+            impact(Epsilon.getINSTANCE().getLocation(), true);
+            Epsilon.getINSTANCE().setXp(Epsilon.getINSTANCE().getXp() - 100);
+        } else {
+            hpError = true;
+            hpErrorTimer.start();
+        }
+    }
+    public static void empower () {
+        closeStore();
+        if (Epsilon.getINSTANCE().getXp() >= 5) {
+            doublePower = true;
+            empowerTimer.start();
+            Epsilon.getINSTANCE().setXp(Epsilon.getINSTANCE().getXp() - 5);
+        } else {
+            hpError = true;
+            hpErrorTimer.start();
+        }
+    }
+    public static void heal () {
+        closeStore();
+        if (Epsilon.getINSTANCE().getXp() >= 50) {
+            Epsilon.getINSTANCE().setHp(Epsilon.getINSTANCE().getHp() + 10);
+            Epsilon.getINSTANCE().setXp(Epsilon.getINSTANCE().getXp() - 50);
+        } else {
+            hpError = true;
+            hpErrorTimer.start();
+        }
     }
 }
