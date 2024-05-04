@@ -4,15 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2175a850-78b1-4066-86a5-a04006f6e081" name="Changes" comment="difficulty added">
-      <change afterPath="$PROJECT_DIR$/src/main/java/data/keycodes.txt" afterDir="false" />
+    <list default="true" id="2175a850-78b1-4066-86a5-a04006f6e081" name="Changes" comment="Key Binding settings added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/KeyCodes.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/KeyCodes.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/Update.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Update.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/data/xp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data/xp.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/GameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GameFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/SettingsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SettingsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Epsilon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Epsilon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/GamePanelModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/GamePanelModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/EntityView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/EntityView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/EpsilonView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/EpsilonView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/StorePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/StorePanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -256,7 +257,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714835470939</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Key Binding settings added">
+      <option name="closed" value="true" />
+      <created>1714855912780</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1714855912780</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -281,6 +290,7 @@
     <MESSAGE value="skill tree added" />
     <MESSAGE value="Epsilon rotation fixed" />
     <MESSAGE value="difficulty added" />
-    <option name="LAST_COMMIT_MESSAGE" value="difficulty added" />
+    <MESSAGE value="Key Binding settings added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Key Binding settings added" />
   </component>
 </project>

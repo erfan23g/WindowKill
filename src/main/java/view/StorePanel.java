@@ -60,7 +60,7 @@ public class StorePanel extends JPanel implements ActionListener {
         if (e.getSource() == banishButton) Update.banish();
         if (e.getSource() == empowerButton) Update.empower();
         if (e.getSource() == healButton) Update.heal();
-        if (e.getSource() == healButton){
+        if (e.getSource() == backButton){
             Update.closeStore();
             Update.gameOver(true);
         }

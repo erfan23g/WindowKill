@@ -29,6 +29,7 @@ public class Constants {
     public static final double BULLET_SPEED = (double) 800 / UPS;
     public static final double BULLET_ACCELERATION = (double) 4 / UPS;
     public static final double EXPANSION_SPEED = (double) 500 / UPS;
+    public static final double EPSILON_EXPANSION_SHRINKAGE_SPEED = (double) 100 / UPS;
     public static final double EXPANSION_ACCELERATION = (double) 10 / UPS;
     public static final double SHRINKAGE_SPEED = (double) 40 / UPS;
     public static final double SHRINKAGE_ACCELERATION = (double) SHRINKAGE_SPEED / 100;

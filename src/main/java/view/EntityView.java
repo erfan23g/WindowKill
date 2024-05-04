@@ -11,6 +11,7 @@ import static model.Entity.entities;
 
 public abstract class EntityView {
     public static ArrayList<EntityView> entityViews = new ArrayList<>();
+    protected double radius1, radius2;
 
     private Point2D location = new Point2D.Double(0, 0);
 
@@ -35,4 +36,8 @@ public abstract class EntityView {
 
     public abstract void draw(Graphics g);
 
+    public void setRadius(double radius1, double radius2) {
+        this.radius1 = radius1;
+        this.radius2 = radius2;
+    }
 }

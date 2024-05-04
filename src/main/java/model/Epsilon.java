@@ -4,6 +4,7 @@ import controller.Controller;
 import controller.Update;
 import model.collision.Collidable;
 import model.movement.Direction;
+import view.GameFrame;
 import view.GamePanel;
 
 import java.awt.*;
@@ -20,6 +21,38 @@ public class Epsilon extends Entity {
     private static Epsilon INSTANCE;
     private double upSpeed, downSpeed, leftSpeed, rightSpeed;
     private int xp = 10000;
+
+
+    private boolean expansion, shrinkage;
+    private double radius1 = EPSILON_RADIUS;
+
+    public double getRadius1() {
+        return radius1;
+    }
+
+    public double getRadius2() {
+        return radius2;
+    }
+
+    private double radius2 = EPSILON_RADIUS;
+
+
+    public boolean isExpansion() {
+        return expansion;
+    }
+
+    public void setExpansion(boolean expansion) {
+        this.expansion = expansion;
+    }
+
+    public boolean isShrinkage() {
+        return shrinkage;
+    }
+
+    public void setShrinkage(boolean shrinkage) {
+        this.shrinkage = shrinkage;
+    }
+
     private int abilityCount;
     private final Timer acesoTimer = new Timer(1000, new ActionListener() {
         @Override
@@ -27,7 +60,8 @@ public class Epsilon extends Entity {
             setHp(Math.min(getHp() + abilityCount, 100));
         }
     });
-    public ArrayList<Point2D> getVertices () {
+
+    public ArrayList<Point2D> getVertices() {
         if (Update.ability != 3) {
             return new ArrayList<>();
         } else {
@@ -90,7 +124,7 @@ public class Epsilon extends Entity {
         }
     }
 
-    public void accelerate (Direction direction, boolean isPositive) {
+    public void accelerate(Direction direction, boolean isPositive) {
         if (getImpactAngles().isEmpty()) {
             if (isPositive) {
                 if (direction.equals(Direction.UP) && upSpeed < EPSILON_SPEED) {
@@ -157,7 +191,8 @@ public class Epsilon extends Entity {
         y = Math.min(GamePanelModel.getINSTANCE().getLocation().getY() + GamePanelModel.getINSTANCE().getSize().getHeight() - EPSILON_RADIUS, y);
         setLocation(new Point2D.Double(x, y));
     }
-    public void eat (Collectible collectible) {
+
+    public void eat(Collectible collectible) {
         setXp(getXp() + collectible.getXp());
         collectible.setActive(false);
         Controller.deactivateCollectibleView(collectible.getId());
@@ -165,5 +200,30 @@ public class Epsilon extends Entity {
 
     public static void dispose() {
         INSTANCE = null;
+    }
+
+    public void setRadius1(double radius1) {
+        this.radius1 = radius1;
+    }
+
+    public void setRadius2(double radius2) {
+        this.radius2 = radius2;
+    }
+
+    public void expand() {
+        if (radius1 < GamePanelModel.getINSTANCE().getSize().getWidth()) {
+            radius1 += EPSILON_EXPANSION_SHRINKAGE_SPEED;
+            radius1 = Math.min(GamePanelModel.getINSTANCE().getSize().getWidth() / 2, radius1);
+        }
+        if (radius2 < GamePanelModel.getINSTANCE().getSize().getHeight()) {
+            radius2 += EPSILON_EXPANSION_SHRINKAGE_SPEED;
+            radius2 = Math.min(GamePanelModel.getINSTANCE().getSize().getHeight() / 2, radius2);
+        }
+        setLocation(new Point2D.Double(Math.max(GamePanelModel.getINSTANCE().getLocation().getX() + radius1, Math.min(getLocation().getX(), GamePanelModel.getINSTANCE().getLocation().getX() + GamePanelModel.getINSTANCE().getSize().getWidth() - radius1)),
+                Math.max(GamePanelModel.getINSTANCE().getLocation().getY() + radius2, Math.min(getLocation().getY(), GamePanelModel.getINSTANCE().getLocation().getY() + GamePanelModel.getINSTANCE().getSize().getHeight() - radius2))));
+        if (radius1 >= GamePanelModel.getINSTANCE().getSize().getWidth() / 2 && radius2 >= GamePanelModel.getINSTANCE().getSize().getHeight() / 2) {
+            expansion = false;
+            shrinkage = true;
+        }
     }
 }

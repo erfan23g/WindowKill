@@ -95,6 +95,7 @@ public class Update {
                     verticeViews.add(relativeLocation(point2D, GamePanelModel.getINSTANCE().getLocation()));
                 }
                 ((EpsilonView) entityView).setVertices(verticeViews);
+                entityView.setRadius(Epsilon.getINSTANCE().getRadius1(), Epsilon.getINSTANCE().getRadius2());
             }
         }
         for (BulletView bulletView : BulletView.bulletViews) {
@@ -143,6 +144,8 @@ public class Update {
             Epsilon.getINSTANCE().accelerate(Direction.RIGHT, false);
         }
         Epsilon.getINSTANCE().move();
+        if (Epsilon.getINSTANCE().isExpansion()) Epsilon.getINSTANCE().expand();
+        if (Epsilon.getINSTANCE().isShrinkage()) GamePanelModel.getINSTANCE().finalShrink();
         for (Collectible collectible : Collectible.collectibles) {
             if (collectible.isActive() && Epsilon.getINSTANCE().collisionPoint(collectible) != null) {
                 Epsilon.getINSTANCE().eat(collectible);
@@ -352,9 +355,13 @@ public class Update {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (inBetweenWaves) {
-                    inBetweenWaves = false;
-                    spawnEnemies();
-                    waveTimer.stop();
+//                    if (wave < 4) {
+//                        inBetweenWaves = false;
+//                        spawnEnemies();
+//                        waveTimer.stop();
+//                    } else {
+//                    }
+                    Epsilon.getINSTANCE().setExpansion(true);
                 }
             }
         });

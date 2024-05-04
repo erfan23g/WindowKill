@@ -191,6 +191,23 @@ public class GamePanelModel implements Collidable {
 //        y = Math.min(GAME_FRAME_SIZE.getHeight() - getSize().getHeight(), y2);
 //        setLocation(new Point2D.Double(x2, y2));
     }
+    public void finalShrink() {
+        double x = getLocation().getX();
+        double y = getLocation().getY();
+        double width = getSize().getWidth() - EPSILON_EXPANSION_SHRINKAGE_SPEED;
+        double height = getSize().getHeight() - EPSILON_EXPANSION_SHRINKAGE_SPEED;
+        x += EPSILON_EXPANSION_SHRINKAGE_SPEED / 2;
+        y += EPSILON_EXPANSION_SHRINKAGE_SPEED / 2;
+        setSize(new MyDimension(width, height));
+        setLocation(new Point2D.Double(x, y));
+        Epsilon.getINSTANCE().setRadius1(width / 2);
+        Epsilon.getINSTANCE().setRadius2(height / 2);
+        Epsilon.getINSTANCE().setLocation(new Point2D.Double(x + Epsilon.getINSTANCE().getRadius1(), y + Epsilon.getINSTANCE().getRadius2()));
+        if (width < 0 && height < 0) {
+            Epsilon.getINSTANCE().setShrinkage(false);
+            Update.gameOver(false);
+        }
+    }
     public static void dispose() {
         INSTANCE = null;
     }
