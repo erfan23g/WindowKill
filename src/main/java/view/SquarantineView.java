@@ -3,7 +3,6 @@ package view;
 import javax.swing.*;
 import java.awt.*;
 
-import static controller.Constants.ENEMY_SIDE_LENGTH;
 
 public class SquarantineView extends EntityView {
     private boolean isActive = true;
@@ -44,7 +43,7 @@ public class SquarantineView extends EntityView {
         if (isActive) {
             g.setColor(Color.green);
             g.fillPolygon(getShape());
-            Font font = new Font("Calibri", Font.PLAIN, 12);
+            Font font = new Font("Calibri", Font.PLAIN, 8);
             g.setFont(font);
             FontMetrics fm = g.getFontMetrics();
             double stringWidth = SwingUtilities.computeStringWidth(fm, (getHp() + ""));

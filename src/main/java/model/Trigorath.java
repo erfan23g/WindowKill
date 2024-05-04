@@ -1,5 +1,6 @@
 package model;
 
+import controller.Update;
 import view.TrigorathView;
 
 import java.awt.*;
@@ -28,10 +29,10 @@ public class Trigorath extends Enemy{
         return super.getShape();
     }
     public void updateShape () {
-        double height = Math.sqrt(3) * ENEMY_SIDE_LENGTH / 2;
+        double height = Math.sqrt(3) * (ENEMY_SIDE_LENGTH * ((double) 2 / Update.getDifficulty())) / 2;
         int[] xPoints = {(int) getLocation().getX(),
-                (int) (getLocation().getX() - ENEMY_SIDE_LENGTH / 2),
-                (int) (getLocation().getX() + ENEMY_SIDE_LENGTH / 2)};
+                (int) (getLocation().getX() - (ENEMY_SIDE_LENGTH * ((double) 2 / Update.getDifficulty())) / 2),
+                (int) (getLocation().getX() + (ENEMY_SIDE_LENGTH * ((double) 2 / Update.getDifficulty())) / 2)};
         int[] yPoints = {(int) (getLocation().getY() - height),
                 (int) (getLocation().getY() + height / 2),
                 (int) (getLocation().getY() + height / 2)};
@@ -41,9 +42,9 @@ public class Trigorath extends Enemy{
         return getLocation().distance(Epsilon.getINSTANCE().getLocation()) > 250;
     }
     public void accelerate() {
-        double speed = isFar() ? FAR_SPEED : ENEMY_SPEED;
+        double speed = isFar() ? FAR_SPEED * ((double) Update.getDifficulty() / 2) : ENEMY_SPEED * ((double) Update.getDifficulty() / 2);
 //        double acceleration = isFar() ? DASH_ACCELERATION : ENEMY_ACCELERATION;
-        double acceleration = ENEMY_ACCELERATION;
+        double acceleration = ENEMY_ACCELERATION * ((double) Update.getDifficulty() / 2);
         if (getImpactAngles().isEmpty()) {
 
             if (angle < 0 && verticalSpeed > -speed) {

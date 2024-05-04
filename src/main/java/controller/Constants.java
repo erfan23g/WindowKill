@@ -23,7 +23,7 @@ public class Constants {
     public static final double COLLECTIBLE_RADIUS = 4;
     public static final double IMPACT_RADIUS = 60;
     public static final double BANISH_RADIUS = 200;
-    public static final double ENEMY_SIDE_LENGTH = 30;
+    public static final double ENEMY_SIDE_LENGTH = 25;
     public static final double EPSILON_SPEED = (double) 200 / UPS;
     public static final double EPSILON_ACCELERATION = (double) 1 / UPS;
     public static final double BULLET_SPEED = (double) 800 / UPS;

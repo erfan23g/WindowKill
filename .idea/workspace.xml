@@ -4,16 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2175a850-78b1-4066-86a5-a04006f6e081" name="Changes" comment="skill tree added">
+    <list default="true" id="2175a850-78b1-4066-86a5-a04006f6e081" name="Changes" comment="Epsilon rotation fixed">
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/SettingsPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/Update.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Update.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/data/skills.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data/skills.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/data/xp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data/xp.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Bullet.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Bullet.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Epsilon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Epsilon.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/GamePanelModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/GamePanelModel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Squarantine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Squarantine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Trigorath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Trigorath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/GamePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GamePanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/SkillTreePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SkillTreePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/SquarantineView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SquarantineView.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/StartingPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/StartingPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/StorePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/StorePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/TrigorathView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/TrigorathView.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -241,7 +249,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714807379396</updated>
     </task>
-    <option name="localTasksCounter" value="20" />
+    <task id="LOCAL-00020" summary="Epsilon rotation fixed">
+      <option name="closed" value="true" />
+      <created>1714828800025</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1714828800025</updated>
+    </task>
+    <option name="localTasksCounter" value="21" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -264,6 +280,7 @@
     <MESSAGE value="Game over added" />
     <MESSAGE value="Store added" />
     <MESSAGE value="skill tree added" />
-    <option name="LAST_COMMIT_MESSAGE" value="skill tree added" />
+    <MESSAGE value="Epsilon rotation fixed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Epsilon rotation fixed" />
   </component>
 </project>

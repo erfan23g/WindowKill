@@ -2,10 +2,7 @@ package org.example;
 
 import controller.Update;
 import model.*;
-import view.GameFrame;
-import view.GamePanel;
-import view.SkillTreePanel;
-import view.StartingPanel;
+import view.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,9 +18,7 @@ public class Main {
             GameFrame.getINSTANCE();
             StartingPanel.getINSTANCE();
             SkillTreePanel.getINSTANCE();
-//            GamePanel.getINSTANCE();
-//            GamePanelModel.getINSTANCE();
-//            Update.start();
+            SettingsPanel.getINSTANCE();
 
             new Timer(1000, new ActionListener() {
                 @Override

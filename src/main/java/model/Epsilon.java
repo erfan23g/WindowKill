@@ -94,30 +94,30 @@ public class Epsilon extends Entity {
         if (getImpactAngles().isEmpty()) {
             if (isPositive) {
                 if (direction.equals(Direction.UP) && upSpeed < EPSILON_SPEED) {
-                    upSpeed += EPSILON_ACCELERATION;
+                    upSpeed += EPSILON_ACCELERATION * ((double) Update.getSensitivity() / 50);
                     upSpeed = Math.min(EPSILON_SPEED, upSpeed);
                 } else if (direction.equals(Direction.DOWN) && downSpeed < EPSILON_SPEED) {
-                    downSpeed += EPSILON_ACCELERATION;
+                    downSpeed += EPSILON_ACCELERATION * ((double) Update.getSensitivity() / 50);
                     downSpeed = Math.min(EPSILON_SPEED, downSpeed);
                 } else if (direction.equals(Direction.RIGHT) && rightSpeed < EPSILON_SPEED) {
-                    rightSpeed += EPSILON_ACCELERATION;
+                    rightSpeed += EPSILON_ACCELERATION * ((double) Update.getSensitivity() / 50);
                     rightSpeed = Math.min(EPSILON_SPEED, rightSpeed);
                 } else if (direction.equals(Direction.LEFT) && leftSpeed < EPSILON_SPEED) {
-                    leftSpeed += EPSILON_ACCELERATION;
+                    leftSpeed += EPSILON_ACCELERATION * ((double) Update.getSensitivity() / 50);
                     leftSpeed = Math.min(EPSILON_SPEED, leftSpeed);
                 }
             } else {
                 if (direction.equals(Direction.UP) && upSpeed > 0) {
-                    upSpeed -= EPSILON_ACCELERATION;
+                    upSpeed -= EPSILON_ACCELERATION * ((double) Update.getSensitivity() / 50);
                     upSpeed = Math.max(0, upSpeed);
                 } else if (direction.equals(Direction.DOWN) && downSpeed > 0) {
-                    downSpeed -= EPSILON_ACCELERATION;
+                    downSpeed -= EPSILON_ACCELERATION * ((double) Update.getSensitivity() / 50);
                     downSpeed = Math.max(0, downSpeed);
                 } else if (direction.equals(Direction.RIGHT) && rightSpeed > 0) {
-                    rightSpeed -= EPSILON_ACCELERATION;
+                    rightSpeed -= EPSILON_ACCELERATION * ((double) Update.getSensitivity() / 50);
                     rightSpeed = Math.max(0, rightSpeed);
                 } else if (direction.equals(Direction.LEFT) && leftSpeed > 0) {
-                    leftSpeed -= EPSILON_ACCELERATION;
+                    leftSpeed -= EPSILON_ACCELERATION * ((double) Update.getSensitivity() / 50);
                     leftSpeed = Math.max(0, leftSpeed);
                 }
             }

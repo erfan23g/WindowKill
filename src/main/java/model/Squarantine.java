@@ -1,6 +1,7 @@
 package model;
 
 import controller.Controller;
+import controller.Update;
 
 import java.awt.*;
 import java.awt.geom.Point2D;
@@ -32,14 +33,14 @@ public class Squarantine extends Enemy{
         return super.getShape();
     }
     public void updateShape() {
-        int[] xPoints = {(int) (getLocation().getX() - ENEMY_SIDE_LENGTH / 2),
-                (int) (getLocation().getX() + ENEMY_SIDE_LENGTH / 2),
-                (int) (getLocation().getX() + ENEMY_SIDE_LENGTH / 2),
-                (int) (getLocation().getX() - ENEMY_SIDE_LENGTH / 2)};
-        int[] yPoints = {(int) (getLocation().getY() - ENEMY_SIDE_LENGTH / 2),
-                (int) (getLocation().getY() - ENEMY_SIDE_LENGTH / 2),
-                (int) (getLocation().getY() + ENEMY_SIDE_LENGTH / 2),
-                (int) (getLocation().getY() + ENEMY_SIDE_LENGTH / 2)};
+        int[] xPoints = {(int) (getLocation().getX() - (ENEMY_SIDE_LENGTH * ((double) 2 / Update.getDifficulty())) / 2),
+                (int) (getLocation().getX() + (ENEMY_SIDE_LENGTH * ((double) 2 / Update.getDifficulty())) / 2),
+                (int) (getLocation().getX() + (ENEMY_SIDE_LENGTH * ((double) 2 / Update.getDifficulty())) / 2),
+                (int) (getLocation().getX() - (ENEMY_SIDE_LENGTH * ((double) 2 / Update.getDifficulty())) / 2)};
+        int[] yPoints = {(int) (getLocation().getY() - (ENEMY_SIDE_LENGTH * ((double) 2 / Update.getDifficulty())) / 2),
+                (int) (getLocation().getY() - (ENEMY_SIDE_LENGTH * ((double) 2 / Update.getDifficulty())) / 2),
+                (int) (getLocation().getY() + (ENEMY_SIDE_LENGTH * ((double) 2 / Update.getDifficulty())) / 2),
+                (int) (getLocation().getY() + (ENEMY_SIDE_LENGTH * ((double) 2 / Update.getDifficulty())) / 2)};
         setShape(new Polygon(xPoints, yPoints, 4));
     }
 
@@ -55,8 +56,8 @@ public class Squarantine extends Enemy{
         }
     }
     public void accelerate() {
-        double speed = dash ? DASH_SPEED : ENEMY_SPEED;
-        double acceleration = dash ? DASH_ACCELERATION : ENEMY_ACCELERATION;
+        double speed = dash ? DASH_SPEED * ((double) Update.getDifficulty() / 2) : ENEMY_SPEED * ((double) Update.getDifficulty() / 2);
+        double acceleration = dash ? DASH_ACCELERATION * ((double) Update.getDifficulty() / 2) : ENEMY_ACCELERATION * ((double) Update.getDifficulty() / 2);
         if (getImpactAngles().isEmpty()) {
 
             if (angle < 0 && verticalSpeed > -speed) {

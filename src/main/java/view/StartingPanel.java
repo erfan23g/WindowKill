@@ -74,6 +74,7 @@ public class StartingPanel extends JPanel implements ActionListener {
         tutorialButton.addActionListener(this);
         settingsButton.addActionListener(this);
         exitButton.addActionListener(this);
+
         add(newGameButton);
         add(skillTreeButton);
         add(tutorialButton);
@@ -135,7 +136,10 @@ public class StartingPanel extends JPanel implements ActionListener {
         } else if (e.getSource() == tutorialButton) {
 
         } else if (e.getSource() == settingsButton) {
-
+            SettingsPanel.isOpen = true;
+            setVisible(false);
+            SettingsPanel.getINSTANCE().setVisible(true);
+            GameFrame.getINSTANCE().repaint();
         } else if (e.getSource() == exitButton) {
             GameFrame.getINSTANCE().dispose();
         }

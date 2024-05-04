@@ -38,6 +38,25 @@ public class Update {
     private static Timer modelTimer, viewTimer, waveTimer, empowerTimer, errorTimer, abilityCoolDownTimer;
     private static long storeTime, storeTime2;
     private static boolean tripleShot, abilityCoolDown;
+    private static int difficulty = 2;
+
+    public static int getDifficulty() {
+        return difficulty;
+    }
+
+    public static void setDifficulty(int difficulty) {
+        Update.difficulty = difficulty;
+    }
+
+    public static int getSensitivity() {
+        return sensitivity;
+    }
+
+    public static void setSensitivity(int sensitivity) {
+        Update.sensitivity = sensitivity;
+    }
+
+    private static int sensitivity = 50;
 
 
     public static void updateView() {
@@ -251,7 +270,7 @@ public class Update {
     }
 
     public static void spawnEnemies() {
-        for (int i = 0; i < ENEMIES_PER_WAVE * wave / 2; i++) {
+        for (int i = 0; i < ENEMIES_PER_WAVE * ((double) Update.getDifficulty() / 2) * wave / 2; i++) {
             Point2D sqPoint;
             do {
                 sqPoint = new Point2D.Double(Math.random() * GameFrame.getINSTANCE().getWidth(), Math.random() * GameFrame.getINSTANCE().getHeight());

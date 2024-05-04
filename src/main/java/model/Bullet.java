@@ -1,6 +1,7 @@
 package model;
 
 import controller.Controller;
+import controller.Update;
 import model.collision.Collidable;
 
 import java.awt.geom.Point2D;
@@ -49,9 +50,9 @@ public class Bullet implements Collidable {
         Controller.createBulletView(id);
     }
     public void accelerate () {
-        if (speed < BULLET_SPEED) {
-            speed += BULLET_ACCELERATION;
-            speed = Math.min(BULLET_SPEED, speed);
+        if (speed < BULLET_SPEED * ((double) 2 / Update.getDifficulty())) {
+            speed += BULLET_ACCELERATION * ((double) 2 / Update.getDifficulty());
+            speed = Math.min(BULLET_SPEED * ((double) 2 / Update.getDifficulty()), speed);
         }
     }
     public void move() {

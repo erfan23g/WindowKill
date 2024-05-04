@@ -58,7 +58,6 @@ public final class GamePanel extends JPanel {
         setLocationToCenter();
         setLayout(null);
         startTime = System.currentTimeMillis();
-        // TODO fix hpBar
         this.addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {

@@ -5,6 +5,7 @@ import model.Epsilon;
 import model.GamePanelModel;
 
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicButtonUI;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,7 +20,6 @@ import static controller.Constants.INITIAL_PANEL_SIZE;
 public class SkillTreePanel extends JPanel implements ActionListener {
     private static SkillTreePanel INSTANCE;
     private ArrayList<String> skills = new ArrayList<>();
-    public static boolean isOpen = false;
     private int xp;
     public static SkillTreePanel getINSTANCE() {
         if (INSTANCE == null) INSTANCE = new SkillTreePanel();

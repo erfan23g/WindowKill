@@ -93,21 +93,21 @@ public class GamePanelModel implements Collidable {
     }
 
     public void accelerate () {
-        if (expandUp && upSpeed < EXPANSION_SPEED) {
+        if (expandUp && upSpeed < EXPANSION_SPEED * ((double) 2 / Update.getDifficulty())) {
             upSpeed += EXPANSION_ACCELERATION;
-            upSpeed = Math.min(upSpeed, EXPANSION_SPEED);
+            upSpeed = Math.min(upSpeed, EXPANSION_SPEED * ((double) 2 / Update.getDifficulty()));
         }
-        if (expandDown && downSpeed < EXPANSION_SPEED) {
+        if (expandDown && downSpeed < EXPANSION_SPEED * ((double) 2 / Update.getDifficulty())) {
             downSpeed += EXPANSION_ACCELERATION;
-            downSpeed = Math.min(downSpeed, EXPANSION_SPEED);
+            downSpeed = Math.min(downSpeed, EXPANSION_SPEED * ((double) 2 / Update.getDifficulty()));
         }
-        if (expandLeft && leftSpeed < EXPANSION_SPEED) {
+        if (expandLeft && leftSpeed < EXPANSION_SPEED * ((double) 2 / Update.getDifficulty())) {
             leftSpeed += EXPANSION_ACCELERATION;
-            leftSpeed = Math.min(leftSpeed, EXPANSION_SPEED);
+            leftSpeed = Math.min(leftSpeed, EXPANSION_SPEED * ((double) 2 / Update.getDifficulty()));
         }
-        if (expandRight && rightSpeed < EXPANSION_SPEED) {
+        if (expandRight && rightSpeed < EXPANSION_SPEED * ((double) 2 / Update.getDifficulty())) {
             rightSpeed += EXPANSION_ACCELERATION;
-            rightSpeed = Math.min(rightSpeed, EXPANSION_SPEED);
+            rightSpeed = Math.min(rightSpeed, EXPANSION_SPEED * ((double) 2 / Update.getDifficulty()));
         }
         if (beginning) {
             if (getSize().getWidth() > MINIMUM_PANEL_SIZE.getWidth() && horizontalSpeed < INITIAL_SHRINKAGE_SPEED) {
@@ -119,13 +119,13 @@ public class GamePanelModel implements Collidable {
                 verticalSpeed = Math.min(INITIAL_SHRINKAGE_SPEED, verticalSpeed);
             }
         } else {
-            if (getSize().getWidth() > MINIMUM_PANEL_SIZE.getWidth() && horizontalSpeed < SHRINKAGE_SPEED) {
+            if (getSize().getWidth() > MINIMUM_PANEL_SIZE.getWidth() && horizontalSpeed < SHRINKAGE_SPEED * ((double) Update.getDifficulty() / 2)) {
                 horizontalSpeed += SHRINKAGE_ACCELERATION;
-                horizontalSpeed = Math.min(SHRINKAGE_SPEED, horizontalSpeed);
+                horizontalSpeed = Math.min(SHRINKAGE_SPEED * ((double) Update.getDifficulty() / 2), horizontalSpeed);
             }
-            if (getSize().getHeight() > MINIMUM_PANEL_SIZE.getHeight() && verticalSpeed < SHRINKAGE_SPEED) {
+            if (getSize().getHeight() > MINIMUM_PANEL_SIZE.getHeight() && verticalSpeed < SHRINKAGE_SPEED * ((double) Update.getDifficulty() / 2)) {
                 verticalSpeed += SHRINKAGE_ACCELERATION;
-                verticalSpeed = Math.min(SHRINKAGE_SPEED, verticalSpeed);
+                verticalSpeed = Math.min(SHRINKAGE_SPEED * ((double) Update.getDifficulty() / 2), verticalSpeed);
             }
         }
     }
@@ -134,7 +134,7 @@ public class GamePanelModel implements Collidable {
         if (upSpeed > 0) {
             setLocation(new Point2D.Double(location.getX(), location.getY() - upSpeed));
             setSize(new MyDimension(getSize().getWidth(), getSize().getHeight() + upSpeed));
-            if (upSpeed == EXPANSION_SPEED) {
+            if (upSpeed == EXPANSION_SPEED * ((double) 2 / Update.getDifficulty())) {
                 upSpeed = 0;
                 expandUp = false;
             }
@@ -142,7 +142,7 @@ public class GamePanelModel implements Collidable {
         if (downSpeed > 0) {
             setSize(new MyDimension(getSize().getWidth(), getSize().getHeight() + downSpeed));
             setLocation(new Point2D.Double(location.getX(), location.getY() + downSpeed));
-            if (downSpeed == EXPANSION_SPEED) {
+            if (downSpeed == EXPANSION_SPEED * ((double) 2 / Update.getDifficulty())) {
                 downSpeed = 0;
                 expandDown = false;
             }
@@ -150,7 +150,7 @@ public class GamePanelModel implements Collidable {
         if (leftSpeed > 0) {
             setLocation(new Point2D.Double(location.getX() - leftSpeed, location.getY()));
             setSize(new MyDimension(getSize().getWidth() + leftSpeed, getSize().getHeight()));
-            if (leftSpeed == EXPANSION_SPEED) {
+            if (leftSpeed == EXPANSION_SPEED * ((double) 2 / Update.getDifficulty())) {
                 leftSpeed = 0;
                 expandLeft = false;
             }
@@ -158,7 +158,7 @@ public class GamePanelModel implements Collidable {
         if (rightSpeed > 0) {
             setSize(new MyDimension(getSize().getWidth() + rightSpeed, getSize().getHeight()));
             setLocation(new Point2D.Double(location.getX() + rightSpeed, location.getY()));
-            if (rightSpeed == EXPANSION_SPEED) {
+            if (rightSpeed == EXPANSION_SPEED * ((double) 2 / Update.getDifficulty())) {
                 rightSpeed = 0;
                 expandRight = false;
             }
