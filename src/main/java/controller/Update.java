@@ -151,11 +151,11 @@ public class Update {
 //                            }
 //                        }
 //                    }
-                    if (Epsilon.getINSTANCE().getVertices().contains(epsilonCollisionPoint) && !entity.getVertices().contains(epsilonCollisionPoint) && !Epsilon.getINSTANCE().isCoolDown()) {
+                    if (Epsilon.getINSTANCE().containsPoint(epsilonCollisionPoint) && !entity.getVertices().contains(epsilonCollisionPoint) && !Epsilon.getINSTANCE().isCoolDown()) {
                         entity.damage(10);
                         Epsilon.getINSTANCE().setCoolDown(true);
                         Epsilon.getINSTANCE().startCoolDownTimer();
-                    } else if (!Epsilon.getINSTANCE().getVertices().contains(epsilonCollisionPoint) && entity.getVertices().contains(epsilonCollisionPoint) && !entity.isCoolDown()) {
+                    } else if (!Epsilon.getINSTANCE().containsPoint(epsilonCollisionPoint) && entity.getVertices().contains(epsilonCollisionPoint) && !entity.isCoolDown()) {
                         Epsilon.getINSTANCE().damage(((Enemy) entity).getPower());
                         entity.setCoolDown(true);
                         entity.startCoolDownTimer();
@@ -242,7 +242,7 @@ public class Update {
                     double angle2 = (angle > 0) ? angle - Math.PI : angle + Math.PI;
                     HashMap<String, Double> map = new HashMap<>();
                     map.put("angle", angle2);
-                    map.put("count", 100.0);
+                    map.put("count", 200.0);
                     map.put("acceleration", (BANISH_RADIUS - point.distance(entity.getLocation())) * 0.1);
                     entity.getImpactAngles().add(map);
                 }
@@ -251,7 +251,6 @@ public class Update {
     }
 
     public static void spawnEnemies() {
-        System.out.println("hi");
         for (int i = 0; i < ENEMIES_PER_WAVE * wave / 2; i++) {
             Point2D sqPoint;
             do {
@@ -266,7 +265,7 @@ public class Update {
         }
     }
 
-    public static void gameOver() {
+    public static void gameOver(boolean isBack) {
         File file = new File("src/main/java/data/xp.txt");
         try {
             Scanner scanner = new Scanner(file);
@@ -279,7 +278,9 @@ public class Update {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        JOptionPane.showMessageDialog(null, "Collected XP: " + Epsilon.getINSTANCE().getXp(), "Game Over!", JOptionPane.INFORMATION_MESSAGE);
+        if (!isBack) {
+            JOptionPane.showMessageDialog(null, "Collected XP: " + Epsilon.getINSTANCE().getXp(), "Game Over!", JOptionPane.INFORMATION_MESSAGE);
+        }
         Epsilon.dispose();
         GamePanelModel.dispose();
         GamePanel.dispose();
@@ -316,7 +317,6 @@ public class Update {
     }
 
     public static void start() {
-        System.out.println(Entity.entities.size());
         wave = 1;
         inBetweenWaves = true;
         viewTimer = new Timer((int) FRAME_UPDATE_TIME, e -> updateView()) {{

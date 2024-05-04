@@ -33,7 +33,6 @@ public class Epsilon extends Entity {
         } else {
             ArrayList<Point2D> vertices = new ArrayList<>();
             double angle = Math.atan2(Update.getMouse().getY() - getLocation().getY(), Update.getMouse().getX() - getLocation().getX());
-            System.out.println(angle);
             double angle2 = (2 * Math.PI) / abilityCount;
             for (int i = 0; i < abilityCount; i++) {
                 vertices.add(new Point2D.Double(getLocation().getX() + (Math.cos(angle) * EPSILON_RADIUS), getLocation().getY() + (Math.sin(angle) * EPSILON_RADIUS)));
@@ -41,6 +40,15 @@ public class Epsilon extends Entity {
             }
             return vertices;
         }
+    }
+
+    public boolean containsPoint(Point2D point) {
+        for (Point2D point2D : getVertices()) {
+            double angle = Math.atan2(point.getY() - getLocation().getY(), point.getX() - getLocation().getX());
+            double angle2D = Math.atan2(point2D.getY() - getLocation().getY(), point2D.getX() - getLocation().getX());
+            if (angle >= angle2D - 0.1 && angle <= angle2D + 0.1) return true;
+        }
+        return false;
     }
 
     public Timer getAcesoTimer() {
@@ -78,7 +86,7 @@ public class Epsilon extends Entity {
     public void damage(int reduction) {
         setHp(getHp() - reduction);
         if (getHp() <= 0) {
-            Update.gameOver();
+            Update.gameOver(false);
         }
     }
 

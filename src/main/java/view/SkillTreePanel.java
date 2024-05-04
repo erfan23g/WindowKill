@@ -1,6 +1,7 @@
 package view;
 
 import controller.Update;
+import model.Epsilon;
 import model.GamePanelModel;
 
 import javax.swing.*;
@@ -8,6 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -65,32 +67,126 @@ public class SkillTreePanel extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        File skillsFile = new File("src/main/java/data/skills.txt");
+        File xpFile = new File("src/main/java/data/xp.txt");
+
         if (e.getSource() == aresButton) {
             if (skills.contains("Ares")) {
                 Update.ability = 1;
-                //TODO message
+                acesoButton.setForeground(Color.black);
+                proteusButton.setForeground(Color.black);
+                aresButton.setForeground(Color.red);
             } else {
+                int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to buy this skill for 750 XP", "Writ of Ares", JOptionPane.YES_NO_OPTION);
 
+                // Check the user's response
+                if (response == JOptionPane.YES_OPTION) {
+                    if (xp >= 750) {
+                        try {
+                            xp -= 750;
+                            StartingPanel.getINSTANCE().setXp(xp);
+                            FileWriter fw = new FileWriter(skillsFile, true);
+                            fw.append("Ares\n");
+                            fw.flush();
+                            fw.close();
+                            aresButton.setText("Writ of Ares");
+                            fw = new FileWriter(xpFile, false);
+                            fw.append(xp + "");
+                            fw.flush();
+                            fw.close();
+                            skills.add("Ares");
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        Update.ability = 1;
+                        acesoButton.setForeground(Color.black);
+                        proteusButton.setForeground(Color.black);
+                        aresButton.setForeground(Color.red);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Not enough XP", "Task failed", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
             }
         } else if (e.getSource() == acesoButton) {
             if (skills.contains("Aceso")) {
                 Update.ability = 2;
-                //TODO message
+                aresButton.setForeground(Color.black);
+                proteusButton.setForeground(Color.black);
+                acesoButton.setForeground(Color.red);
             } else {
+                int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to buy this skill for 500 XP", "Writ of Aceso", JOptionPane.YES_NO_OPTION);
 
+                // Check the user's response
+                if (response == JOptionPane.YES_OPTION) {
+                    if (xp >= 500) {
+                        try {
+                            xp -= 500;
+                            StartingPanel.getINSTANCE().setXp(xp);
+                            FileWriter fw = new FileWriter(skillsFile, true);
+                            fw.append("Aceso\n");
+                            fw.flush();
+                            fw.close();
+                            acesoButton.setText("Writ of Aceso");
+                            fw = new FileWriter(xpFile, false);
+                            fw.append(xp + "");
+                            fw.flush();
+                            fw.close();
+                            skills.add("Aceso");
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        Update.ability = 2;
+                        aresButton.setForeground(Color.black);
+                        proteusButton.setForeground(Color.black);
+                        acesoButton.setForeground(Color.red);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Not enough XP", "Task failed", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
             }
         } else if (e.getSource() == proteusButton) {
             if (skills.contains("Proteus")) {
                 Update.ability = 3;
-                //TODO message
+                aresButton.setForeground(Color.black);
+                acesoButton.setForeground(Color.black);
+                proteusButton.setForeground(Color.red);
             } else {
+                int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to buy this skill for 1000 XP", "Writ of Proteus", JOptionPane.YES_NO_OPTION);
 
+                // Check the user's response
+                if (response == JOptionPane.YES_OPTION) {
+                    if (xp >= 1000) {
+                        try {
+                            xp -= 1000;
+                            StartingPanel.getINSTANCE().setXp(xp);
+                            FileWriter fw = new FileWriter(skillsFile, true);
+                            fw.append("Proteus\n");
+                            fw.flush();
+                            fw.close();
+                            proteusButton.setText("Writ of Proteus");
+                            fw = new FileWriter(xpFile, false);
+                            fw.append(xp + "");
+                            fw.flush();
+                            fw.close();
+                            skills.add("Proteus");
+                        } catch (IOException ex) {
+                            throw new RuntimeException(ex);
+                        }
+                        Update.ability = 3;
+                        aresButton.setForeground(Color.black);
+                        acesoButton.setForeground(Color.black);
+                        proteusButton.setForeground(Color.red);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Not enough XP", "Task failed", JOptionPane.INFORMATION_MESSAGE);
+                    }
+                }
             }
         } else if (e.getSource() == backButton) {
             this.setVisible(false);
             StartingPanel.getINSTANCE().setVisible(true);
             GameFrame.getINSTANCE().repaint();
         }
+        repaint();
     }
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

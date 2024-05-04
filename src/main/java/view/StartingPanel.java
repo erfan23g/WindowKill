@@ -21,6 +21,15 @@ import static controller.Constants.INITIAL_PANEL_SIZE;
 public class StartingPanel extends JPanel implements ActionListener {
     private JButton newGameButton, skillTreeButton, tutorialButton, settingsButton, exitButton;
     private int xp;
+
+    public int getXp() {
+        return xp;
+    }
+
+    public void setXp(int xp) {
+        this.xp = xp;
+    }
+
     private static StartingPanel INSTANCE;
     public static StartingPanel getINSTANCE() {
         if (INSTANCE == null) INSTANCE = new StartingPanel();

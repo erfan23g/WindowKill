@@ -4,6 +4,7 @@ package view;
 import controller.Constants;
 import controller.Controller;
 import controller.Update;
+import controller.Utils;
 import model.GamePanelModel;
 
 import javax.swing.*;
@@ -82,6 +83,17 @@ public final class GamePanel extends JPanel {
             @Override
             public void mouseExited(MouseEvent e) {
 
+            }
+        });
+        this.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                Update.setMouse(SwingUtilities.convertPoint(GamePanel.getINSTANCE(), e.getPoint(), GameFrame.getINSTANCE()));
             }
         });
         GameFrame.getINSTANCE().add(this);

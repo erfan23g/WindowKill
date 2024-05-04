@@ -17,7 +17,7 @@ public class StorePanel extends JPanel implements ActionListener {
         if (INSTANCE == null) INSTANCE = new StorePanel();
         return INSTANCE;
     }
-    private final JButton banishButton, empowerButton, healButton;
+    private final JButton banishButton, empowerButton, healButton, backButton;
     public StorePanel() {
         setDoubleBuffered(true);
 //        setBackground(Color.black);
@@ -38,15 +38,19 @@ public class StorePanel extends JPanel implements ActionListener {
         banishButton = new JButton("O'Hephaestus، Banish");
         empowerButton = new JButton("O’ Athena، Empower");
         healButton = new JButton("O' Apollo Heal");
+        backButton = new JButton("Back to main menu");
         banishButton.setBounds(60, 40, 160, 80);
         empowerButton.setBounds(60, 180, 160, 80);
         healButton.setBounds(60, 320, 160, 80);
+        backButton.setBounds(60, 460, 160, 80);
         banishButton.addActionListener(this);
         empowerButton.addActionListener(this);
         healButton.addActionListener(this);
+        backButton.addActionListener(this);
         add(banishButton);
         add(empowerButton);
         add(healButton);
+        add(backButton);
         setVisible(false);
         GameFrame.getINSTANCE().add(this);
     }
@@ -56,6 +60,10 @@ public class StorePanel extends JPanel implements ActionListener {
         if (e.getSource() == banishButton) Update.banish();
         if (e.getSource() == empowerButton) Update.empower();
         if (e.getSource() == healButton) Update.heal();
+        if (e.getSource() == healButton){
+            Update.closeStore();
+            Update.gameOver(true);
+        }
     }
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
