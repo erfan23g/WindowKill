@@ -4,6 +4,7 @@ import controller.Update;
 import model.*;
 import view.GameFrame;
 import view.GamePanel;
+import view.SkillTreePanel;
 import view.StartingPanel;
 
 import javax.swing.*;
@@ -19,6 +20,7 @@ public class Main {
         SwingUtilities.invokeLater(() -> {
             GameFrame.getINSTANCE();
             StartingPanel.getINSTANCE();
+            SkillTreePanel.getINSTANCE();
 //            GamePanel.getINSTANCE();
 //            GamePanelModel.getINSTANCE();
 //            Update.start();

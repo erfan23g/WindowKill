@@ -9,4 +9,5 @@ public class KeyCodes {
     public static int MOVE_LEFT = KeyEvent.VK_A;
     public static int SHOW_INFO = KeyEvent.VK_I;
     public static int STORE = KeyEvent.VK_B;
+    public static int ABILITY = KeyEvent.VK_F;
 }

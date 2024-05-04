@@ -4,7 +4,10 @@ import controller.Controller;
 import model.collision.Collidable;
 import model.movement.Direction;
 
+import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -19,6 +22,17 @@ public abstract class Entity implements Collidable {
     }
     private Point2D location;
     private int hp;
+
+
+    private final Timer coolDownTimer;
+    private boolean coolDown;
+    public boolean isCoolDown() {
+        return coolDown;
+    }
+
+    public void setCoolDown(boolean coolDown) {
+        this.coolDown = coolDown;
+    }
 
     public int getHp() {
         return hp;
@@ -38,9 +52,21 @@ public abstract class Entity implements Collidable {
         this.location = location;
         id = UUID.randomUUID().toString();
         entities.add(this);
+        coolDownTimer = new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setCoolDown(false);
+                coolDownTimer.stop();
+            }
+        });
         Controller.createEntityView(id);
     }
 
+    public abstract ArrayList<Point2D> getVertices ();
+
+    public void startCoolDownTimer() {
+        coolDownTimer.start();
+    }
     public Point2D getLocation() {
         return location;
     }

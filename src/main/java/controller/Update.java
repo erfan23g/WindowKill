@@ -2,6 +2,7 @@ package controller;
 
 import model.*;
 import model.movement.Direction;
+import org.example.Main;
 import view.*;
 
 import javax.swing.*;
@@ -9,32 +10,35 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Point2D;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import static controller.Constants.*;
 import static controller.Utils.relativeLocation;
 
 public class Update {
     public static int upsCount = 0, fpsCount = 0;
+    private static Point2D mouse = new Point2D.Double();
 
+    public static Point2D getMouse() {
+        return mouse;
+    }
 
+    public static void setMouse(Point2D mouse) {
+        Update.mouse = mouse;
+    }
 
+    private static String error = "";
+    public static int ability = 0;
     public static int wave;
     public static boolean inBetweenWaves;
-    private static Timer modelTimer, viewTimer, waveTimer, empowerTimer, hpErrorTimer;
+    private static Timer modelTimer, viewTimer, waveTimer, empowerTimer, errorTimer, abilityCoolDownTimer;
     private static long storeTime, storeTime2;
-    private static boolean doublePower;
-    private static boolean hpError;
+    private static boolean tripleShot, abilityCoolDown;
 
-    public static boolean isHpError() {
-        return hpError;
-    }
-
-    public Update() {
-
-    }
 
     public static void updateView() {
         for (EntityView entityView : EntityView.entityViews) {
@@ -65,6 +69,12 @@ public class Update {
                     yPoints[i] = (int) point2D.getY();
                 }
                 ((TrigorathView) entityView).setShape(new Polygon(xPoints, yPoints, 3));
+            } else if (entityView instanceof EpsilonView) {
+                ArrayList<Point2D> verticeViews = new ArrayList<>();
+                for (Point2D point2D : Epsilon.getINSTANCE().getVertices()) {
+                    verticeViews.add(relativeLocation(point2D, GamePanelModel.getINSTANCE().getLocation()));
+                }
+                ((EpsilonView) entityView).setVertices(verticeViews);
             }
         }
         for (BulletView bulletView : BulletView.bulletViews) {
@@ -81,10 +91,13 @@ public class Update {
         GamePanel.getINSTANCE().setSize(new Dimension((int) GamePanelModel.getINSTANCE().getSize().getWidth(), (int) GamePanelModel.getINSTANCE().getSize().getHeight()));
         GamePanel.getINSTANCE().setEpsilonXp(Epsilon.getINSTANCE().getXp());
         GamePanel.getINSTANCE().setEpsilonHp(Epsilon.getINSTANCE().getHp());
-        GamePanel.getINSTANCE().getHpBar().setValue(Epsilon.getINSTANCE().getHp());
 
         GamePanel.getINSTANCE().repaint();
         fpsCount++;
+    }
+
+    public static boolean isTripleShot() {
+        return tripleShot;
     }
 
     public static void updateModel() {
@@ -124,18 +137,28 @@ public class Update {
                 if (entity instanceof Squarantine) ((Squarantine) entity).changeDash();
                 ((Enemy) entity).accelerate();
                 ((Enemy) entity).move();
-                if (Epsilon.getINSTANCE().collisionPoint(entity) != null) {
+                Point2D epsilonCollisionPoint = Epsilon.getINSTANCE().collisionPoint(entity);
+                if (epsilonCollisionPoint != null) {
 //                    ((Enemy) entity).rotate(true);
                     if (entity instanceof Squarantine) ((Squarantine) entity).setDash(false);
                     impact(Epsilon.getINSTANCE().collisionPoint(entity), false);
-                    if (!((Enemy) entity).isCoolDown()) {
-                        for (Point2D point2D : ((Enemy) entity).getVertices()) {
-                            if (point2D.equals(Epsilon.getINSTANCE().collisionPoint(entity))) {
-                                Epsilon.getINSTANCE().damage(((Enemy) entity).getPower());
-                                ((Enemy) entity).setCoolDown(true);
-                                ((Enemy) entity).startCoolDownTimer();
-                            }
-                        }
+//                    if (!(entity).isCoolDown()) {
+//                        for (Point2D point2D : ((Enemy) entity).getVertices()) {
+//                            if (point2D.equals(Epsilon.getINSTANCE().collisionPoint(entity))) {
+//                                Epsilon.getINSTANCE().damage(((Enemy) entity).getPower());
+//                                (entity).setCoolDown(true);
+//                                (entity).startCoolDownTimer();
+//                            }
+//                        }
+//                    }
+                    if (Epsilon.getINSTANCE().getVertices().contains(epsilonCollisionPoint) && !entity.getVertices().contains(epsilonCollisionPoint) && !Epsilon.getINSTANCE().isCoolDown()) {
+                        entity.damage(10);
+                        Epsilon.getINSTANCE().setCoolDown(true);
+                        Epsilon.getINSTANCE().startCoolDownTimer();
+                    } else if (!Epsilon.getINSTANCE().getVertices().contains(epsilonCollisionPoint) && entity.getVertices().contains(epsilonCollisionPoint) && !entity.isCoolDown()) {
+                        Epsilon.getINSTANCE().damage(((Enemy) entity).getPower());
+                        entity.setCoolDown(true);
+                        entity.startCoolDownTimer();
                     }
                 }
                 for (Entity entity2 : Entity.entities) {
@@ -160,7 +183,7 @@ public class Update {
                         if (bullet.collisionPoint(entity) != null) {
                             bullet.setActive(false);
                             Controller.findBulletView(bullet.getId()).setActive(false);
-                            entity.damage(5 * (doublePower ? 2 : 1));
+                            entity.damage(ability == 1 ? (5 + (Epsilon.getINSTANCE().getAbilityCount() * 2)) : 5);
                             impact(bullet.collisionPoint(entity), false);
                         }
                     }
@@ -214,19 +237,21 @@ public class Update {
             }
         } else {
             for (Entity entity : Entity.entities) {
-                if (!(entity instanceof Epsilon) && point.distance(entity.getLocation()) < IMPACT_RADIUS) {
+                if (!(entity instanceof Epsilon) && point.distance(entity.getLocation()) < BANISH_RADIUS) {
                     double angle = Math.atan2(point.getY() - entity.getLocation().getY(), point.getX() - entity.getLocation().getX());
                     double angle2 = (angle > 0) ? angle - Math.PI : angle + Math.PI;
                     HashMap<String, Double> map = new HashMap<>();
                     map.put("angle", angle2);
-                    map.put("count", 250.0);
-                    map.put("acceleration", (IMPACT_RADIUS - point.distance(entity.getLocation())) * 0.01);
+                    map.put("count", 100.0);
+                    map.put("acceleration", (BANISH_RADIUS - point.distance(entity.getLocation())) * 0.1);
                     entity.getImpactAngles().add(map);
                 }
             }
         }
     }
-    public static void spawnEnemies () {
+
+    public static void spawnEnemies() {
+        System.out.println("hi");
         for (int i = 0; i < ENEMIES_PER_WAVE * wave / 2; i++) {
             Point2D sqPoint;
             do {
@@ -240,7 +265,20 @@ public class Update {
             Enemy.spawn(trPoint, false);
         }
     }
-    public static void gameOver(){
+
+    public static void gameOver() {
+        File file = new File("src/main/java/data/xp.txt");
+        try {
+            Scanner scanner = new Scanner(file);
+            int xp = Integer.parseInt(scanner.next());
+            FileWriter fw = new FileWriter(file, false);
+            int newXp = xp + Epsilon.getINSTANCE().getXp();
+            fw.append(newXp + "");
+            fw.flush();
+            fw.close();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         JOptionPane.showMessageDialog(null, "Collected XP: " + Epsilon.getINSTANCE().getXp(), "Game Over!", JOptionPane.INFORMATION_MESSAGE);
         Epsilon.dispose();
         GamePanelModel.dispose();
@@ -260,16 +298,25 @@ public class Update {
         viewTimer.stop();
         waveTimer.stop();
         empowerTimer.stop();
-        hpErrorTimer.stop();
+        errorTimer.stop();
+        abilityCoolDownTimer.stop();
         upsCount = 0;
         fpsCount = 0;
         storeTime = 0;
         storeTime2 = 0;
-        doublePower = false;
+        tripleShot = false;
+        abilityCoolDown = false;
         StartingPanel.getINSTANCE();
         GameFrame.getINSTANCE().repaint();
     }
+
+
+    public static String getError() {
+        return error;
+    }
+
     public static void start() {
+        System.out.println(Entity.entities.size());
         wave = 1;
         inBetweenWaves = true;
         viewTimer = new Timer((int) FRAME_UPDATE_TIME, e -> updateView()) {{
@@ -282,37 +329,46 @@ public class Update {
         waveTimer = new Timer(10000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                inBetweenWaves = false;
-                spawnEnemies();
-                waveTimer.stop();
+                if (inBetweenWaves) {
+                    inBetweenWaves = false;
+                    spawnEnemies();
+                    waveTimer.stop();
+                }
             }
         });
         empowerTimer = new Timer(10000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                doublePower = false;
+                tripleShot = false;
                 empowerTimer.stop();
             }
         });
-        hpErrorTimer = new Timer(3000, new ActionListener() {
+        errorTimer = new Timer(3000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                hpError = false;
-                hpErrorTimer.stop();
+                error = "";
+            }
+        });
+        abilityCoolDownTimer = new Timer(3, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                abilityCoolDown = false;
+                abilityCoolDownTimer.stop();
             }
         });
         modelTimer.start();
         viewTimer.start();
         waveTimer.start();
     }
+
     public static void openStore() {
         StorePanel.isOpen = true;
         modelTimer.stop();
         viewTimer.stop();
         waveTimer.stop();
         empowerTimer.stop();
-        hpErrorTimer.stop();
-        hpError = false;
+        errorTimer.stop();
+        error = "";
         GamePanel.getINSTANCE().setVisible(false);
         StorePanel.getINSTANCE().setVisible(true);
         GameFrame.getINSTANCE().repaint();
@@ -328,42 +384,76 @@ public class Update {
         modelTimer.start();
         viewTimer.start();
         if (inBetweenWaves) waveTimer.start();
-        if (doublePower) empowerTimer.stop();
+        if (tripleShot) empowerTimer.stop();
         StorePanel.getINSTANCE().setVisible(false);
         GamePanel.getINSTANCE().setVisible(true);
         GameFrame.getINSTANCE().repaint();
         storeTime2 += (System.currentTimeMillis() - storeTime);
         storeTime = 0;
     }
-    public static void banish () {
+
+    public static void banish() {
         closeStore();
         if (Epsilon.getINSTANCE().getXp() >= 100) {
             impact(Epsilon.getINSTANCE().getLocation(), true);
             Epsilon.getINSTANCE().setXp(Epsilon.getINSTANCE().getXp() - 100);
         } else {
-            hpError = true;
-            hpErrorTimer.start();
+            changeError("You need 100 XP for that");
         }
     }
-    public static void empower () {
+
+    public static void empower() {
         closeStore();
-        if (Epsilon.getINSTANCE().getXp() >= 5) {
-            doublePower = true;
-            empowerTimer.start();
-            Epsilon.getINSTANCE().setXp(Epsilon.getINSTANCE().getXp() - 5);
+        tripleShot = true;
+        empowerTimer.start();
+        if (Epsilon.getINSTANCE().getXp() >= 75) {
+            Epsilon.getINSTANCE().setXp(Epsilon.getINSTANCE().getXp() - 75);
         } else {
-            hpError = true;
-            hpErrorTimer.start();
+            changeError("You need 75 XP for that");
         }
     }
-    public static void heal () {
+
+    public static void heal() {
         closeStore();
         if (Epsilon.getINSTANCE().getXp() >= 50) {
-            Epsilon.getINSTANCE().setHp(Epsilon.getINSTANCE().getHp() + 10);
+            Epsilon.getINSTANCE().setHp(Math.min(100, Epsilon.getINSTANCE().getHp() + 10));
             Epsilon.getINSTANCE().setXp(Epsilon.getINSTANCE().getXp() - 50);
         } else {
-            hpError = true;
-            hpErrorTimer.start();
+            changeError("You need 50 XP for that");
         }
     }
+
+    public static void activateAbility() {
+        if (!abilityCoolDown && Epsilon.getINSTANCE().getXp() >= 100) {
+            Epsilon.getINSTANCE().setAbilityCount(Epsilon.getINSTANCE().getAbilityCount() + 1);
+            if (ability == 1) {
+                Epsilon.getINSTANCE().setXp(Epsilon.getINSTANCE().getXp() - 100);
+                abilityCoolDown = true;
+                abilityCoolDownTimer.start();
+            } else if (ability == 2) {
+                if (Epsilon.getINSTANCE().getAbilityCount() == 1) {
+                    Epsilon.getINSTANCE().getAcesoTimer().start();
+                }
+                Epsilon.getINSTANCE().setXp(Epsilon.getINSTANCE().getXp() - 100);
+                abilityCoolDown = true;
+                abilityCoolDownTimer.start();
+            } else if (ability == 3) {
+                Epsilon.getINSTANCE().setXp(Epsilon.getINSTANCE().getXp() - 100);
+                abilityCoolDown = true;
+                abilityCoolDownTimer.start();
+            } else {
+                changeError("You do not have any skill enabled");
+            }
+        } else if (abilityCoolDown && Epsilon.getINSTANCE().getXp() >= 100) {
+            changeError("You have to wait 5 full minutes before using your skills again");
+        } else {
+            changeError("You need 100 XP for that");
+        }
+    }
+
+    public static void changeError(String text) {
+        error = text;
+        errorTimer.restart();
+    }
+
 }

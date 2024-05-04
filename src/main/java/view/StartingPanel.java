@@ -1,6 +1,7 @@
 package view;
 
 import controller.Update;
+import model.Epsilon;
 import model.GamePanelModel;
 import org.example.Main;
 
@@ -10,12 +11,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Scanner;
 
 import static controller.Constants.INITIAL_PANEL_SIZE;
 
 public class StartingPanel extends JPanel implements ActionListener {
     private JButton newGameButton, skillTreeButton, tutorialButton, settingsButton, exitButton;
+    private int xp;
     private static StartingPanel INSTANCE;
     public static StartingPanel getINSTANCE() {
         if (INSTANCE == null) INSTANCE = new StartingPanel();
@@ -23,6 +28,13 @@ public class StartingPanel extends JPanel implements ActionListener {
     }
     public StartingPanel() {
         setDoubleBuffered(true);
+        File file = new File("src/main/java/data/xp.txt");
+        try {
+            Scanner scanner = new Scanner(file);
+            xp = Integer.parseInt(scanner.next());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 //        setBackground(Color.black);
         setSize(new Dimension((int) INITIAL_PANEL_SIZE.getWidth(), (int) INITIAL_PANEL_SIZE.getHeight()));
         setLocation((int) (GameFrame.getINSTANCE().getWidth() / 2 - GamePanelModel.getINSTANCE().getSize().getWidth() / 2), (int) (GameFrame.getINSTANCE().getHeight() / 2 - GamePanelModel.getINSTANCE().getSize().getHeight() / 2));
@@ -65,42 +77,56 @@ public class StartingPanel extends JPanel implements ActionListener {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         g.drawImage(new ImageIcon("src/main/java/pictures/amogus.jpg").getImage(), 0, 0, getWidth(), getHeight(), null);
+        g.setColor(Color.MAGENTA);
+        Font font = new Font("Times New Roman", Font.PLAIN, 20);
+        g.setFont(font);
+        FontMetrics fm = g.getFontMetrics();
+        double stringWidth = SwingUtilities.computeStringWidth(fm, "XP: " + xp);
+        g.drawString("XP: " + xp, (int) ((getWidth() - stringWidth) / 2), 35);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == newGameButton) {
-            if (System.getProperty("os.name").toLowerCase().contains("mac")) {
-                try {
-                    String appName = "java"; // Modify this to match your Java app's name
-                    String script = "tell application \"System Events\"\n"
-                            + "set allProcesses to every application process where visible is true and name is not \"" + appName + "\"\n"
-                            + "repeat with proc in allProcesses\n"
-                            + "set proc's visible to false\n"
-                            + "end repeat\n"
-                            + "end tell";
-
-                    String[] cmd = { "osascript", "-e", script };
-                    Runtime.getRuntime().exec(cmd);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            } else if (System.getProperty("os.name").toLowerCase().contains("windows")) {
-                try {
-                    String[] command = {
-                            "powershell.exe",
-                            "Get-Process | Where-Object {$_.MainWindowTitle -ne \"\" -and $_.ProcessName -notlike \"*java*\"} | ForEach-Object { $_.MainWindowHandle | ForEach-Object { Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.SendKeys]::SendWait(\"% n\") }}"
-                    };
-                    Runtime.getRuntime().exec(command);
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-            }
+//            if (System.getProperty("os.name").toLowerCase().contains("mac")) {
+//                try {
+//                    String appName = "java"; // Modify this to match your Java app's name
+//                    String script = "tell application \"System Events\"\n"
+//                            + "set allProcesses to every application process where visible is true and name is not \"" + appName + "\"\n"
+//                            + "repeat with proc in allProcesses\n"
+//                            + "set proc's visible to false\n"
+//                            + "end repeat\n"
+//                            + "end tell";
+//
+//                    String[] cmd = { "osascript", "-e", script };
+//                    Runtime.getRuntime().exec(cmd);
+//                } catch (IOException ex) {
+//                    ex.printStackTrace();
+//                }
+//            } else if (System.getProperty("os.name").toLowerCase().contains("windows")) {
+//                try {
+//                    String[] command = {
+//                            "powershell.exe",
+//                            "Get-Process | Where-Object {$_.MainWindowTitle -ne \"\" -and $_.ProcessName -notlike \"*java*\"} | ForEach-Object { $_.MainWindowHandle | ForEach-Object { Add-Type -AssemblyName System.Windows.Forms; [System.Windows.Forms.SendKeys]::SendWait(\"% n\") }}"
+//                    };
+//                    Runtime.getRuntime().exec(command);
+//                } catch (IOException ex) {
+//                    ex.printStackTrace();
+//                }
+//            }
             dispose();
             GamePanel.getINSTANCE();
             GamePanelModel.getINSTANCE();
             StorePanel.getINSTANCE();
             Update.start();
+        } else if (e.getSource() == skillTreeButton) {
+            this.setVisible(false);
+            SkillTreePanel.getINSTANCE().setVisible(true);
+            GameFrame.getINSTANCE().repaint();
+        } else if (e.getSource() == tutorialButton) {
+
+        } else if (e.getSource() == settingsButton) {
+
         } else if (e.getSource() == exitButton) {
             GameFrame.getINSTANCE().dispose();
         }

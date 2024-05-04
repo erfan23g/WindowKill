@@ -21,7 +21,7 @@ public class Trigorath extends Enemy{
     public void die() {
         setActive(false);
         new Collectible(Color.yellow, getLocation(), COLLECTIBLE_XP);
-        new Collectible(Color.yellow, getVertices()[0], COLLECTIBLE_XP);
+        new Collectible(Color.yellow, getVertices().get(0), COLLECTIBLE_XP);
     }
 
     public Polygon getShape () {

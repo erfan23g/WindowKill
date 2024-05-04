@@ -18,15 +18,7 @@ import static controller.Constants.*;
 public abstract class Enemy extends Entity implements Collidable {
     private Polygon shape;
     protected int power;
-    private boolean coolDown;
 
-    public boolean isCoolDown() {
-        return coolDown;
-    }
-
-    public void setCoolDown(boolean coolDown) {
-        this.coolDown = coolDown;
-    }
 
     public int getPower() {
         return power;
@@ -40,7 +32,7 @@ public abstract class Enemy extends Entity implements Collidable {
         this.shape = shape;
     }
 
-    private final Timer coolDownTimer;
+
     protected double verticalSpeed, horizontalSpeed;
     protected double angle = 0;
     private boolean isActive = true;
@@ -66,13 +58,7 @@ public abstract class Enemy extends Entity implements Collidable {
     public Enemy(Point2D location) {
         super(location);
         updateShape();
-        coolDownTimer = new Timer(100, new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                setCoolDown(false);
-                coolDownTimer.stop();
-            }
-        });
+
     }
 
 
@@ -97,10 +83,10 @@ public abstract class Enemy extends Entity implements Collidable {
         setHp(getHp() - reduction);
         if (getHp() <= 0) die();
     }
-    public Point2D[] getVertices () {
-        Point2D[] vertices = new Point2D[getShape().npoints];
+    public ArrayList<Point2D> getVertices () {
+        ArrayList<Point2D> vertices = new ArrayList<>();
         for (int i = 0; i < getShape().npoints; i++) {
-            vertices[i] = new Point2D.Double(getShape().xpoints[i], getShape().ypoints[i]);
+            vertices.add(new Point2D.Double(getShape().xpoints[i], getShape().ypoints[i]));
         }
         return vertices;
     }
@@ -131,7 +117,7 @@ public abstract class Enemy extends Entity implements Collidable {
         rotationAngles.removeAll(anglesToRemove);
     }
     public void rotatePolygon(Polygon p) {
-        System.out.println(rotationSpeed);
+//        System.out.println(rotationSpeed);
 //        System.out.println(rotationAngles.size());
         AffineTransform at = AffineTransform.getRotateInstance(Math.toRadians(rotationSpeed), getLocation().getX(), getLocation().getY());
         for (int i = 0; i < p.npoints; i++) {
@@ -149,9 +135,6 @@ public abstract class Enemy extends Entity implements Collidable {
         rotationAngle.put("direction", (double) (isClockwise ? 1 : -1));
         rotationAngle.put("accelerating", 1.0);
         rotationAngles.add(rotationAngle);
-    }
-    public void startCoolDownTimer() {
-        coolDownTimer.start();
     }
 
     public static boolean enemiesLeft() {

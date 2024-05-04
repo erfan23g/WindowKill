@@ -4,10 +4,8 @@ import controller.Update;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
+import java.awt.event.*;
+import java.time.Year;
 
 import static controller.Constants.GAME_FRAME_SIZE;
 import static controller.KeyCodes.*;
@@ -27,6 +25,17 @@ public class GameFrame extends JFrame implements KeyListener {
         this.addKeyListener(this);
         setLocationRelativeTo(null);
 
+        this.addMouseMotionListener(new MouseMotionListener() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+
+            }
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+                Update.setMouse(e.getPoint());
+            }
+        });
         setVisible(true);
         setLayout(null);
 
@@ -95,9 +104,16 @@ public class GameFrame extends JFrame implements KeyListener {
                 if (StorePanel.isOpen){
                     Update.closeStore();
                 } else {
-                    Update.openStore();
+                    if (Update.isTripleShot()) {
+                        Update.changeError("Cannot use store while \"O’ Athena، Empower\" is enabled");
+                    } else {
+                        Update.openStore();
+                    }
                 }
             }
+        }
+        if (e.getKeyCode() == ABILITY) {
+            Update.activateAbility();
         }
     }
 

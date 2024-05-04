@@ -59,6 +59,10 @@ public class Controller {
     public static void fireBullet(Point2D point){
         double angle = Math.atan2(point.getY() - Utils.relativeLocation(Epsilon.getINSTANCE().getLocation(), GamePanelModel.getINSTANCE().getLocation()).getY(), point.getX() - Utils.relativeLocation(Epsilon.getINSTANCE().getLocation(), GamePanelModel.getINSTANCE().getLocation()).getX());
         new Bullet(Epsilon.getINSTANCE().getLocation(), angle);
+        if (Update.isTripleShot()) {
+            new Bullet(Epsilon.getINSTANCE().getLocation(), angle - 0.05);
+            new Bullet(Epsilon.getINSTANCE().getLocation(), angle + 0.05);
+        }
     }
     public static void createCollectibleView (String id) {
         Collectible collectible = findCollectible(id);

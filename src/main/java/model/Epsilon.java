@@ -19,7 +19,41 @@ import static controller.Constants.*;
 public class Epsilon extends Entity {
     private static Epsilon INSTANCE;
     private double upSpeed, downSpeed, leftSpeed, rightSpeed;
-    private int xp;
+    private int xp = 10000;
+    private int abilityCount;
+    private final Timer acesoTimer = new Timer(1000, new ActionListener() {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            setHp(Math.min(getHp() + abilityCount, 100));
+        }
+    });
+    public ArrayList<Point2D> getVertices () {
+        if (Update.ability != 3) {
+            return new ArrayList<>();
+        } else {
+            ArrayList<Point2D> vertices = new ArrayList<>();
+            double angle = Math.atan2(Update.getMouse().getY() - getLocation().getY(), Update.getMouse().getX() - getLocation().getX());
+            System.out.println(angle);
+            double angle2 = (2 * Math.PI) / abilityCount;
+            for (int i = 0; i < abilityCount; i++) {
+                vertices.add(new Point2D.Double(getLocation().getX() + (Math.cos(angle) * EPSILON_RADIUS), getLocation().getY() + (Math.sin(angle) * EPSILON_RADIUS)));
+                angle += angle2;
+            }
+            return vertices;
+        }
+    }
+
+    public Timer getAcesoTimer() {
+        return acesoTimer;
+    }
+
+    public int getAbilityCount() {
+        return abilityCount;
+    }
+
+    public void setAbilityCount(int abilityCount) {
+        this.abilityCount = abilityCount;
+    }
 
     public int getXp() {
         return xp;
@@ -37,6 +71,7 @@ public class Epsilon extends Entity {
     public Epsilon(Point2D location) {
         super(location);
         setHp(100);
+
     }
 
     @Override

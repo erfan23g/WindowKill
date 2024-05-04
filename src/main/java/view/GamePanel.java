@@ -10,10 +10,7 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicProgressBarUI;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
+import java.awt.event.*;
 import java.awt.font.FontRenderContext;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
@@ -31,7 +28,6 @@ public final class GamePanel extends JPanel {
 
     private static GamePanel INSTANCE;
     private int epsilonXp;
-    private final JProgressBar hpBar;
 
     public int getEpsilonHp() {
         return epsilonHp;
@@ -51,9 +47,6 @@ public final class GamePanel extends JPanel {
         this.epsilonXp = epsilonXp;
     }
 
-    public JProgressBar getHpBar() {
-        return hpBar;
-    }
     private final long startTime;
 
 
@@ -64,16 +57,6 @@ public final class GamePanel extends JPanel {
         setLocationToCenter();
         setLayout(null);
         startTime = System.currentTimeMillis();
-        hpBar = new JProgressBar(0, 100);
-        hpBar.setVisible(false);
-        String text = "HP: " + epsilonHp;
-        AffineTransform affinetransform = new AffineTransform();
-        FontRenderContext frc = new FontRenderContext(affinetransform,true,true);
-        Font font = new Font("Times New Roman", Font.PLAIN, 20);
-        int textwidth = (int)(font.getStringBounds(text, frc).getWidth());
-        int textheight = (int)(font.getStringBounds(text, frc).getHeight());
-        hpBar.setBounds(8, textheight, textwidth, 50);
-//        add(hpBar);
         // TODO fix hpBar
         this.addMouseListener(new MouseListener() {
             @Override
@@ -147,9 +130,9 @@ public final class GamePanel extends JPanel {
             }
 //            hpBar.setVisible(true);
         }
-        double stringWidth5 = SwingUtilities.computeStringWidth(fm, "Not enough HP!");
-        if (Update.isHpError()) {
-            g.drawString("Not enough HP!", (int) (getSize().getWidth() - stringWidth5) / 2, 35);
+        if (!Update.getError().isEmpty()) {
+            double stringWidth5 = SwingUtilities.computeStringWidth(fm, Update.getError());
+            g.drawString(Update.getError(), (int) (getSize().getWidth() - stringWidth5) / 2, 35);
         }
     }
 

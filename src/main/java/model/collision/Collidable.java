@@ -75,7 +75,7 @@ public interface Collidable {
             return null;
         } else if (this instanceof Enemy && collidable instanceof Enemy) {
             Polygon shape = ((Enemy) this).getShape();
-            Point2D[] vertices = ((Enemy) collidable).getVertices();
+            ArrayList<Point2D> vertices = ((Enemy) collidable).getVertices();
             for (Point2D point : vertices) {
                 if (shape.contains(point)) return point;
             }
