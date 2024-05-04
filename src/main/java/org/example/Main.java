@@ -1,5 +1,6 @@
 package org.example;
 
+import controller.KeyCodes;
 import controller.Update;
 import model.*;
 import view.*;
@@ -19,6 +20,7 @@ public class Main {
             StartingPanel.getINSTANCE();
             SkillTreePanel.getINSTANCE();
             SettingsPanel.getINSTANCE();
+            KeyCodes.loadKeyCodes();
 
             new Timer(1000, new ActionListener() {
                 @Override

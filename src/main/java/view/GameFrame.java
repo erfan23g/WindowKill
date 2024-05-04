@@ -1,6 +1,7 @@
 package view;
 
 import controller.Update;
+import model.GamePanelModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -79,60 +80,66 @@ public class GameFrame extends JFrame implements KeyListener {
     }
 
     public void keyTyped(KeyEvent e){
-
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (e.getKeyCode() == MOVE_UP) {
-            w = true;
-        }
-        if (e.getKeyCode() == MOVE_DOWN) {
-            s = true;
-        }
-        if (e.getKeyCode() == MOVE_LEFT) {
-            a = true;
-        }
-        if (e.getKeyCode() == MOVE_RIGHT) {
-            d = true;
-        }
-        if (e.getKeyCode() == SHOW_INFO) {
-            info = true;
-        }
-        if (e.getKeyCode() == STORE) {
-            if (!StorePanel.isNull()){
-                if (StorePanel.isOpen){
-                    Update.closeStore();
-                } else {
-                    if (Update.isTripleShot()) {
-                        Update.changeError("Cannot use store while \"O’ Athena، Empower\" is enabled");
+        if (Update.inGame) {
+
+            if (e.getKeyCode() == MOVE_UP) {
+                w = true;
+            }
+            if (e.getKeyCode() == MOVE_DOWN) {
+                s = true;
+            }
+            if (e.getKeyCode() == MOVE_LEFT) {
+                a = true;
+            }
+            if (e.getKeyCode() == MOVE_RIGHT) {
+                d = true;
+            }
+            System.out.println(SHOW_INFO);
+            System.out.println(e.getKeyCode());
+            if (e.getKeyCode() == SHOW_INFO) {
+                info = true;
+            }
+            if (e.getKeyCode() == STORE) {
+                if (!StorePanel.isNull()){
+                    if (StorePanel.isOpen){
+                        Update.closeStore();
                     } else {
-                        Update.openStore();
+                        if (Update.isTripleShot()) {
+                            Update.changeError("Cannot use store while \"O’ Athena، Empower\" is enabled");
+                        } else {
+                            Update.openStore();
+                        }
                     }
                 }
             }
-        }
-        if (e.getKeyCode() == ABILITY) {
-            Update.activateAbility();
+            if (e.getKeyCode() == ABILITY) {
+                Update.activateAbility();
+            }
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == MOVE_UP) {
-            w = false;
-        }
-        if (e.getKeyCode() == MOVE_DOWN) {
-            s = false;
-        }
-        if (e.getKeyCode() == MOVE_LEFT) {
-            a = false;
-        }
-        if (e.getKeyCode() == MOVE_RIGHT) {
-            d = false;
-        }
-        if (e.getKeyCode() == SHOW_INFO) {
-            info = false;
+        if (Update.inGame) {
+            if (e.getKeyCode() == MOVE_UP) {
+                w = false;
+            }
+            if (e.getKeyCode() == MOVE_DOWN) {
+                s = false;
+            }
+            if (e.getKeyCode() == MOVE_LEFT) {
+                a = false;
+            }
+            if (e.getKeyCode() == MOVE_RIGHT) {
+                d = false;
+            }
+            if (e.getKeyCode() == SHOW_INFO) {
+                info = false;
+            }
         }
     }
 

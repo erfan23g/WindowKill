@@ -35,6 +35,7 @@ public class Update {
     public static int ability = 0;
     public static int wave;
     public static boolean inBetweenWaves;
+    public static boolean inGame;
     private static Timer modelTimer, viewTimer, waveTimer, empowerTimer, errorTimer, abilityCoolDownTimer;
     private static long storeTime, storeTime2;
     private static boolean tripleShot, abilityCoolDown;
@@ -285,6 +286,7 @@ public class Update {
     }
 
     public static void gameOver(boolean isBack) {
+        inGame = false;
         File file = new File("src/main/java/data/xp.txt");
         try {
             Scanner scanner = new Scanner(file);
@@ -336,6 +338,7 @@ public class Update {
     }
 
     public static void start() {
+        inGame = true;
         wave = 1;
         inBetweenWaves = true;
         viewTimer = new Timer((int) FRAME_UPDATE_TIME, e -> updateView()) {{
