@@ -15,7 +15,15 @@ import static controller.KeyCodes.*;
 public class GameFrame extends JFrame implements KeyListener {
     private static GameFrame INSTANCE;
     public static boolean w, s, a, d, info;
+    private static int volume = 50;
 
+    public static int getVolume() {
+        return volume;
+    }
+
+    public static void setVolume(int volume) {
+        GameFrame.volume = volume;
+    }
 
     private GameFrame() throws HeadlessException {
         setUndecorated(true);
@@ -98,8 +106,6 @@ public class GameFrame extends JFrame implements KeyListener {
             if (e.getKeyCode() == MOVE_RIGHT) {
                 d = true;
             }
-            System.out.println(SHOW_INFO);
-            System.out.println(e.getKeyCode());
             if (e.getKeyCode() == SHOW_INFO) {
                 info = true;
             }

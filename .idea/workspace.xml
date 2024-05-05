@@ -4,16 +4,22 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2175a850-78b1-4066-86a5-a04006f6e081" name="Changes" comment="Key Binding settings added">
+    <list default="true" id="2175a850-78b1-4066-86a5-a04006f6e081" name="Changes" comment="Game ending implemented">
+      <change afterPath="$PROJECT_DIR$/src/main/java/soundeffects/damage.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/soundeffects/enemy_death.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/soundeffects/game_over.wav" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/soundeffects/victory.wav" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Constants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Constants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/Update.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Update.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Utils.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/data/xp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data/xp.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Enemy.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Entity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/model/Epsilon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Epsilon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/GamePanelModel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/GamePanelModel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/EntityView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/EntityView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/EpsilonView.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/EpsilonView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/StorePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/StorePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Squarantine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Squarantine.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/model/Trigorath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Trigorath.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/GameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GameFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/SettingsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SettingsPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,24 +47,27 @@
   &quot;associatedIndex&quot;: 5
 }</component>
   <component name="ProjectId" id="2f2GJlpZNII6MfLKqjCxdoA8Rtt" />
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Gradle.Priejct_Phase1_Try1 [:Main.main()].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/Users/erfanghorbani/Priejct_Phase1_Try1/src/main/java/pictures&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "Gradle.Priejct_Phase1_Try1 [:Main.main()].executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/Users/erfanghorbani/Priejct_Phase1_Try1/src/main/java/pictures",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/main/java/pictures" />
@@ -265,10 +274,19 @@
       <option name="project" value="LOCAL" />
       <updated>1714855912780</updated>
     </task>
-    <option name="localTasksCounter" value="23" />
+    <task id="LOCAL-00023" summary="Game ending implemented">
+      <option name="closed" value="true" />
+      <created>1714859231063</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1714859231064</updated>
+    </task>
+    <option name="localTasksCounter" value="24" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
     <MESSAGE value="GameFrame created" />
     <MESSAGE value="Epsilon movement with keys implemented" />
     <MESSAGE value="Shooting mechanism added" />
@@ -291,6 +309,7 @@
     <MESSAGE value="Epsilon rotation fixed" />
     <MESSAGE value="difficulty added" />
     <MESSAGE value="Key Binding settings added" />
-    <option name="LAST_COMMIT_MESSAGE" value="Key Binding settings added" />
+    <MESSAGE value="Game ending implemented" />
+    <option name="LAST_COMMIT_MESSAGE" value="Game ending implemented" />
   </component>
 </project>

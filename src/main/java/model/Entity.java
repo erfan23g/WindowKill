@@ -1,6 +1,7 @@
 package model;
 
 import controller.Controller;
+import controller.Utils;
 import model.collision.Collidable;
 import model.movement.Direction;
 
@@ -74,5 +75,7 @@ public abstract class Entity implements Collidable {
     public void setLocation(Point2D location) {
         this.location = location;
     }
-    public abstract void damage(int reduction);
+    public void damage(int reduction) {
+        Utils.playSound("src/main/java/soundeffects/damage.wav");
+    };
 }

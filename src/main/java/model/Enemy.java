@@ -80,6 +80,7 @@ public abstract class Enemy extends Entity implements Collidable {
 
     @Override
     public void damage(int reduction) {
+        super.damage(reduction);
         setHp(getHp() - reduction);
         if (getHp() <= 0) die();
     }
@@ -90,7 +91,9 @@ public abstract class Enemy extends Entity implements Collidable {
         }
         return vertices;
     }
-    public abstract void die ();
+    public void die () {
+        Utils.playSound("src/main/java/soundeffects/enemy_death.wav");
+    }
 
     private final ArrayList<HashMap<String, Double>> rotationAngles = new ArrayList<>();
 

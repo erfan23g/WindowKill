@@ -2,6 +2,7 @@ package model;
 
 import controller.Controller;
 import controller.Update;
+import controller.Utils;
 import model.collision.Collidable;
 import model.movement.Direction;
 import view.GameFrame;
@@ -20,7 +21,7 @@ import static controller.Constants.*;
 public class Epsilon extends Entity {
     private static Epsilon INSTANCE;
     private double upSpeed, downSpeed, leftSpeed, rightSpeed;
-    private int xp = 10000;
+    private int xp = 0;
 
 
     private boolean expansion, shrinkage;
@@ -118,8 +119,10 @@ public class Epsilon extends Entity {
 
     @Override
     public void damage(int reduction) {
+        super.damage(reduction);
         setHp(getHp() - reduction);
         if (getHp() <= 0) {
+            Utils.playSound("src/main/java/soundeffects/game_over.wav");
             Update.gameOver(false);
         }
     }
@@ -193,6 +196,7 @@ public class Epsilon extends Entity {
     }
 
     public void eat(Collectible collectible) {
+        Utils.playSound("src/main/java/soundeffects/lick.wav");
         setXp(getXp() + collectible.getXp());
         collectible.setActive(false);
         Controller.deactivateCollectibleView(collectible.getId());

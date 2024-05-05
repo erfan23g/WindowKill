@@ -25,6 +25,7 @@ public class Squarantine extends Enemy{
 
     @Override
     public void die() {
+        super.die();
         setActive(false);
         new Collectible(Color.green, getLocation(), COLLECTIBLE_XP);
     }

@@ -20,6 +20,7 @@ public class Trigorath extends Enemy{
 
     @Override
     public void die() {
+        super.die();
         setActive(false);
         new Collectible(Color.yellow, getLocation(), COLLECTIBLE_XP);
         new Collectible(Color.yellow, getVertices().get(0), COLLECTIBLE_XP);

@@ -355,13 +355,14 @@ public class Update {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (inBetweenWaves) {
-//                    if (wave < 4) {
-//                        inBetweenWaves = false;
-//                        spawnEnemies();
-//                        waveTimer.stop();
-//                    } else {
-//                    }
-                    Epsilon.getINSTANCE().setExpansion(true);
+                    if (wave < 4) {
+                        inBetweenWaves = false;
+                        spawnEnemies();
+                        waveTimer.stop();
+                    } else {
+                        Utils.playSound("src/main/java/soundeffects/victory.wav");
+                        Epsilon.getINSTANCE().setExpansion(true);
+                    }
                 }
             }
         });
@@ -378,7 +379,7 @@ public class Update {
                 error = "";
             }
         });
-        abilityCoolDownTimer = new Timer(3, new ActionListener() {
+        abilityCoolDownTimer = new Timer(300000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 abilityCoolDown = false;
@@ -433,9 +434,9 @@ public class Update {
 
     public static void empower() {
         closeStore();
-        tripleShot = true;
-        empowerTimer.start();
         if (Epsilon.getINSTANCE().getXp() >= 75) {
+            tripleShot = true;
+            empowerTimer.start();
             Epsilon.getINSTANCE().setXp(Epsilon.getINSTANCE().getXp() - 75);
         } else {
             changeError("You need 75 XP for that");

@@ -45,7 +45,6 @@ public class SettingsPanel extends JPanel {
                     KeyEvent keyEvent = (KeyEvent) event;
                     if (keyEvent.getID() == KeyEvent.KEY_PRESSED) {
                         if (isOpen) {
-                            System.out.println("hi");
                             changeKeys(keyEvent.getKeyCode());
                         }
                     }
@@ -109,6 +108,7 @@ public class SettingsPanel extends JPanel {
             @Override
             public void stateChanged(ChangeEvent e) {
                 int value = volumeSlider.getValue();
+                GameFrame.setVolume(value);
             }
         });
 
