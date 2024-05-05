@@ -4,14 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2175a850-78b1-4066-86a5-a04006f6e081" name="Changes" comment="sound effects added">
-      <change afterPath="$PROJECT_DIR$/src/main/java/pics/logo.png" afterDir="false" />
+    <list default="true" id="2175a850-78b1-4066-86a5-a04006f6e081" name="Changes" comment="final cut">
+      <change afterPath="$PROJECT_DIR$/src/main/java/view/TutorialPanel.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Update.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Update.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data/skills.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data/skills.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/data/xp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data/xp.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/SettingsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SettingsPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/SkillTreePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SkillTreePanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/StartingPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/StartingPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -282,7 +279,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714911885897</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="final cut">
+      <option name="closed" value="true" />
+      <created>1714913020771</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1714913020771</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -311,6 +316,7 @@
     <MESSAGE value="Key Binding settings added" />
     <MESSAGE value="Game ending implemented" />
     <MESSAGE value="sound effects added" />
-    <option name="LAST_COMMIT_MESSAGE" value="sound effects added" />
+    <MESSAGE value="final cut" />
+    <option name="LAST_COMMIT_MESSAGE" value="final cut" />
   </component>
 </project>

@@ -20,6 +20,7 @@ public class Main {
             StartingPanel.getINSTANCE();
             SkillTreePanel.getINSTANCE();
             SettingsPanel.getINSTANCE();
+            TutorialPanel.getINSTANCE();
             KeyCodes.loadKeyCodes();
 
             new Timer(1000, new ActionListener() {
