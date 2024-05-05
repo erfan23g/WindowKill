@@ -156,7 +156,7 @@ public class SettingsPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
 //                int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to buy this skill for 500 XP", "Writ of Aceso", JOptionPane.YES_NO_OPTION);
                 String[] options = {"WASD", "Arrow keys"};
-                int response2 = JOptionPane.showOptionDialog(null, "Do you work with WASD or arrow keys?", "Movement keys", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, JOptionPane.YES_OPTION);
+                int response2 = JOptionPane.showOptionDialog(null, "Do you work with WASD or arrow keys?", "Movement keys", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, new ImageIcon("src/main/java/pics/logo.png"), options, JOptionPane.YES_OPTION);
                 if (response2 == 0) {
                     KeyCodes.MOVE_UP = KeyEvent.VK_W;
                     KeyCodes.MOVE_DOWN = KeyEvent.VK_S;
@@ -237,7 +237,7 @@ public class SettingsPanel extends JPanel {
                     KeyCodes.ABILITY == keyCode ||
                     KeyCodes.SHOW_INFO == keyCode ||
                     KeyCodes.STORE == keyCode) {
-                JOptionPane.showMessageDialog(null, "This key is occupied", "Task failed", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(null, "This key is occupied", "Task failed", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("src/main/java/pics/logo.png"));
                 return;
             }
             switch (activeButton) {

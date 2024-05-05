@@ -4,22 +4,14 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="2175a850-78b1-4066-86a5-a04006f6e081" name="Changes" comment="Game ending implemented">
-      <change afterPath="$PROJECT_DIR$/src/main/java/soundeffects/damage.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/soundeffects/enemy_death.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/soundeffects/game_over.wav" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/soundeffects/victory.wav" afterDir="false" />
+    <list default="true" id="2175a850-78b1-4066-86a5-a04006f6e081" name="Changes" comment="sound effects added">
+      <change afterPath="$PROJECT_DIR$/src/main/java/pics/logo.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/controller/Update.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Update.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/controller/Utils.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/controller/Utils.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/data/skills.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data/skills.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/data/xp.txt" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/data/xp.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Enemy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Enemy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Entity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Entity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Epsilon.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Epsilon.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Squarantine.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Squarantine.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/model/Trigorath.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/model/Trigorath.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/view/GameFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/GameFrame.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/view/SettingsPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SettingsPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/view/SkillTreePanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/view/SkillTreePanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -282,7 +274,15 @@
       <option name="project" value="LOCAL" />
       <updated>1714859231064</updated>
     </task>
-    <option name="localTasksCounter" value="24" />
+    <task id="LOCAL-00024" summary="sound effects added">
+      <option name="closed" value="true" />
+      <created>1714911885897</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1714911885897</updated>
+    </task>
+    <option name="localTasksCounter" value="25" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -310,6 +310,7 @@
     <MESSAGE value="difficulty added" />
     <MESSAGE value="Key Binding settings added" />
     <MESSAGE value="Game ending implemented" />
-    <option name="LAST_COMMIT_MESSAGE" value="Game ending implemented" />
+    <MESSAGE value="sound effects added" />
+    <option name="LAST_COMMIT_MESSAGE" value="sound effects added" />
   </component>
 </project>

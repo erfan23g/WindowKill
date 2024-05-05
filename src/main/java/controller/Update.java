@@ -151,9 +151,6 @@ public class Update {
                 Epsilon.getINSTANCE().eat(collectible);
             }
         }
-//        if (Epsilon.getINSTANCE().collisionPoint(GamePanelModel.getINSTANCE()) != null) {
-//            impact(Epsilon.getINSTANCE().collisionPoint(GamePanelModel.getINSTANCE()));
-//        }
         for (Entity entity : Entity.entities) {
             if (entity instanceof Enemy && ((Enemy) entity).isActive()) {
                 ((Enemy) entity).updateAngle(Epsilon.getINSTANCE().getLocation());
@@ -162,18 +159,8 @@ public class Update {
                 ((Enemy) entity).move();
                 Point2D epsilonCollisionPoint = Epsilon.getINSTANCE().collisionPoint(entity);
                 if (epsilonCollisionPoint != null) {
-//                    ((Enemy) entity).rotate(true);
                     if (entity instanceof Squarantine) ((Squarantine) entity).setDash(false);
                     impact(Epsilon.getINSTANCE().collisionPoint(entity), false);
-//                    if (!(entity).isCoolDown()) {
-//                        for (Point2D point2D : ((Enemy) entity).getVertices()) {
-//                            if (point2D.equals(Epsilon.getINSTANCE().collisionPoint(entity))) {
-//                                Epsilon.getINSTANCE().damage(((Enemy) entity).getPower());
-//                                (entity).setCoolDown(true);
-//                                (entity).startCoolDownTimer();
-//                            }
-//                        }
-//                    }
                     if (Epsilon.getINSTANCE().containsPoint(epsilonCollisionPoint) && !entity.getVertices().contains(epsilonCollisionPoint) && !Epsilon.getINSTANCE().isCoolDown()) {
                         entity.damage(10);
                         Epsilon.getINSTANCE().setCoolDown(true);
@@ -186,15 +173,11 @@ public class Update {
                 }
                 for (Entity entity2 : Entity.entities) {
                     if (entity2 instanceof Enemy && !entity2.getId().equals(entity.getId()) && ((Enemy) entity2).isActive() && entity.collisionPoint(entity2) != null) {
-//                        ((Enemy) entity).rotate(true);
-//                        ((Enemy) entity2).rotate(true);
                         if (entity instanceof Squarantine) ((Squarantine) entity).setDash(false);
                         impact(entity.collisionPoint(entity2), false);
                     }
                 }
                 ((Enemy) entity).updateShape();
-//                ((Enemy) entity).rotatePolygon(((Enemy) entity).getShape());
-//                ((Enemy) entity).accelerateRotation();
             }
         }
         for (Bullet bullet : Bullet.bullets) {
@@ -302,9 +285,6 @@ public class Update {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        if (!isBack) {
-            JOptionPane.showMessageDialog(null, "Collected XP: " + Epsilon.getINSTANCE().getXp(), "Game Over!", JOptionPane.INFORMATION_MESSAGE);
-        }
         Epsilon.dispose();
         GamePanelModel.dispose();
         GamePanel.dispose();
@@ -332,6 +312,7 @@ public class Update {
         tripleShot = false;
         abilityCoolDown = false;
         StartingPanel.getINSTANCE();
+        JOptionPane.showMessageDialog(null, "Collected XP: " + Epsilon.getINSTANCE().getXp(), "Game Over!", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("src/main/java/pics/logo.png"));
         GameFrame.getINSTANCE().repaint();
     }
 

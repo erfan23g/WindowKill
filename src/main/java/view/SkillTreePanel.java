@@ -77,7 +77,7 @@ public class SkillTreePanel extends JPanel implements ActionListener {
                 proteusButton.setForeground(Color.black);
                 aresButton.setForeground(Color.red);
             } else {
-                int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to buy this skill for 750 XP", "Writ of Ares", JOptionPane.YES_NO_OPTION);
+                int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to buy this skill for 750 XP", "Writ of Ares", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, new ImageIcon("src/main/java/pics/logo.png"));
 
                 // Check the user's response
                 if (response == JOptionPane.YES_OPTION) {
@@ -103,7 +103,7 @@ public class SkillTreePanel extends JPanel implements ActionListener {
                         proteusButton.setForeground(Color.black);
                         aresButton.setForeground(Color.red);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Not enough XP", "Task failed", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Not enough XP", "Task failed", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("src/main/java/pics/logo.png"));
                     }
                 }
             }
@@ -114,7 +114,7 @@ public class SkillTreePanel extends JPanel implements ActionListener {
                 proteusButton.setForeground(Color.black);
                 acesoButton.setForeground(Color.red);
             } else {
-                int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to buy this skill for 500 XP", "Writ of Aceso", JOptionPane.YES_NO_OPTION);
+                int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to buy this skill for 500 XP", "Writ of Aceso", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, new ImageIcon("src/main/java/pics/logo.png"));
 
                 // Check the user's response
                 if (response == JOptionPane.YES_OPTION) {
@@ -140,7 +140,7 @@ public class SkillTreePanel extends JPanel implements ActionListener {
                         proteusButton.setForeground(Color.black);
                         acesoButton.setForeground(Color.red);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Not enough XP", "Task failed", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Not enough XP", "Task failed", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("src/main/java/pics/logo.png"));
                     }
                 }
             }
@@ -151,7 +151,7 @@ public class SkillTreePanel extends JPanel implements ActionListener {
                 acesoButton.setForeground(Color.black);
                 proteusButton.setForeground(Color.red);
             } else {
-                int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to buy this skill for 1000 XP", "Writ of Proteus", JOptionPane.YES_NO_OPTION);
+                int response = JOptionPane.showConfirmDialog(null, "Are you sure you want to buy this skill for 1000 XP", "Writ of Proteus", JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, new ImageIcon("src/main/java/pics/logo.png"));
 
                 // Check the user's response
                 if (response == JOptionPane.YES_OPTION) {
@@ -177,7 +177,7 @@ public class SkillTreePanel extends JPanel implements ActionListener {
                         acesoButton.setForeground(Color.black);
                         proteusButton.setForeground(Color.red);
                     } else {
-                        JOptionPane.showMessageDialog(null, "Not enough XP", "Task failed", JOptionPane.INFORMATION_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Not enough XP", "Task failed", JOptionPane.INFORMATION_MESSAGE, new ImageIcon("src/main/java/pics/logo.png"));
                     }
                 }
             }
